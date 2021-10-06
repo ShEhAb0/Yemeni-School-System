@@ -17,10 +17,7 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-    'superAdmin'=>[
-        'driver'=>'eloquent',
-        'model'=>App\Models\Admin::class,
-    ],
+
     'admin'=>[
         'driver'=>'eloquent',
         'model'=>App\Models\Admin::class,
@@ -52,14 +49,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'superAdmin'=>[
-            'driver'=>'session',
-            'provider'=>'superAdmins',
-        ],
-        'superAdmin-api' => [
-            'driver' => 'token',
-            'provider' => 'superAdmins',
-        ],
+
         'admin'=>[
             'driver'=>'session',
             'provider'=>'admins',
@@ -105,10 +95,7 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-        'superAdmins'=>[
-            'driver'=>'eloquent',
-            'model'=>App\Models\Admin::class,
-        ],
+
         'admins'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Admin::class,
@@ -141,10 +128,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'superAdmins'=>[
-            'driver'=>'eloquent',
-            'model'=>App\Models\Admin::class,
-        ],
+
         'admins'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Admin::class,

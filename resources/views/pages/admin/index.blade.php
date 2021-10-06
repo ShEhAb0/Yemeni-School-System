@@ -35,7 +35,6 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Teachers Number</p>
                                     <h5 class="font-weight-bolder mb-0">
-
                                     </h5>
                                 </div>
                             </div>
@@ -98,8 +97,14 @@
                             <div class="col-lg-12">
                                 <h5 class="font-weight-bolder">News</h5>
                                 <div class="max-height-vh-60 h-60" style="overflow-y: auto;">
-                                    <div class="d-flex flex-column card mt-2" style="padding: 20px;background-color: #e4e9ff;">
-
+                                    <div class="d-flex flex-column card mt-2" style="padding: 20px;background-color: #e4e9ff;        ">
+                                        <p class="mb-1 pt-2 text-bold">Published at </p>
+                                        <h5 class="font-weight-bolder">News Name</h5>
+                                        <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
+                                        <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
+                                            Read More
+                                            <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
+                                        </a>
                                     </div>
 
 
@@ -120,33 +125,6 @@
 @section('scripts')
     <script src="{{asset('/js/chartjs.min.js')}}"></script>
     <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
-
-    <script type="text/javascript">
-        // Hide the extra content initially, using JS so that if JS is disabled, no problemo:
-        $('.read-more-content').addClass('hide_content')
-        $('.read-more-show, .read-more-hide').removeClass('hide_content')
-
-        // Set up the toggle effect:
-        $('.read-more-show').on('click', function(e) {
-            $(this).next('.read-more-content').removeClass('hide_content');
-            $(this).addClass('hide_content');
-            e.preventDefault();
-        });
-
-        // Changes contributed by @diego-rzg
-        $('.read-more-hide').on('click', function(e) {
-            var p = $(this).parent('.read-more-content');
-            p.addClass('hide_content');
-            p.prev('.read-more-show').removeClass('hide_content'); // Hide only the preceding "Read More"
-            e.preventDefault();
-        });
-    </script>
-
-
-
-
-
-
     <script>
 
         var ctx2 = document.getElementById("chart-line").getContext("2d");
@@ -251,4 +229,3 @@
             },
         });
     </script>
-
