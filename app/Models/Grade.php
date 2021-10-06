@@ -11,4 +11,49 @@ class Grade extends Model
     use HasFactory ;
     protected $table = "grades";
     protected $fillable = ['id' , 'grade_code', 'grade_name' , 'status'];
+
+    public function levelsAssignments()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
+    public function levelsAttachments()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+    public function levelsAttendances()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+    public function levelsExams()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
+    public function levelsLessons()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
+    public function levelsSchedules()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
+    public function levelsSubjects()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
+    public function teachersLevels()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+    }
 }

@@ -17,6 +17,18 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    'superAdmin'=>[
+        'driver'=>'eloquent',
+        'model'=>App\Models\Admin::class,
+    ],
+    'admin'=>[
+        'driver'=>'eloquent',
+        'model'=>App\Models\Admin::class,
+    ],
+    'teacher'=>[
+        'driver'=>'eloquent',
+        'model'=>App\Models\Teacher::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -39,6 +51,30 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+        'superAdmin'=>[
+            'driver'=>'session',
+            'provider'=>'superAdmins',
+        ],
+        'superAdmin-api' => [
+            'driver' => 'token',
+            'provider' => 'superAdmins',
+        ],
+        'admin'=>[
+            'driver'=>'session',
+            'provider'=>'admins',
+        ],
+        'admin-api' => [
+            'driver' => 'token',
+            'provider' => 'admins',
+        ],
+        'teacher'=>[
+            'driver'=>'session',
+            'provider'=>'teachers',
+        ],
+        'teacher-api' => [
+            'driver' => 'token',
+            'provider' => 'teachers',
         ],
     ],
 
@@ -69,6 +105,18 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'superAdmins'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Admin::class,
+        ],
+        'admins'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Admin::class,
+        ],
+        'teachers'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Teacher::class,
+        ],
     ],
 
     /*
@@ -92,6 +140,18 @@ return [
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
+        ],
+        'superAdmins'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Admin::class,
+        ],
+        'admins'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Admin::class,
+        ],
+        'teachers'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Teacher::class,
         ],
     ],
 

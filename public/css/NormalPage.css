@@ -1,0 +1,115 @@
+.eye{
+    font-size: 18px;
+    position: absolute;
+    top: 6px;
+    background: #fff;
+    right: 10px;
+    cursor: pointer;
+}
+.hidden{
+    display: none!important;
+}
+.icon_pos{
+    position: absolute;
+    top: 33%;
+    left: 6%;
+}
+.w_50{
+    width: 45%!important;
+}
+
+/*slide exam*/
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+  }
+  
+  /* varsayılan olarak görselleri gizliyoruz */
+  .mySlides {
+    display: none;
+  }
+  .mySlides2 {
+    display: none;
+  }
+  
+  /* sonraki ve önceki butonları */
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0,0,0,0.3);
+  }
+  
+  /* sonraki butonunun pozisyonu */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  
+  /* üzerine gelince hafif bir efekt verelim */
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  
+  /* görsel başlığı */
+  .text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* görsel numaraları */
+  .numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+  }
+  
+  /* nokta navigasyonu */
+ 
+  
+  /* geçiş animasyonu */
+  .w_70{
+      width: 70%!important;
+  }
+  .w_20{
+    width: 20%!important;
+}
+.Login_bg{
+
+  background-image: url("../img/illustrations/Asset4.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+min-height: 800px;
+  
+
+}
+.pos_res{
+  position: relative;
+}
+.person_bg{
+  background-image: url("../img/illustrations/personlogin.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 414px;
+  top: 280px;
+  position: relative;
+  right: -163px;
+
+}

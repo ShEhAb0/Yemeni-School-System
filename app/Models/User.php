@@ -22,6 +22,11 @@ class User extends Authenticatable
     protected $fillable = ['id' , 'student_name ', 'username' , 'email' ,'password' , 'gender ' ,'phone' , 'address' , 'image' , 'level_id' , 'term_id' , 'status' ];
 
 
+    public function studentsAssignments()
+    {
+        return $this->hasMany('App\Models\User' , 'student_id');
+
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

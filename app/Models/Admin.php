@@ -14,4 +14,8 @@ class Admin extends Authenticatable
     protected $table = "admins";
     protected $fillable = ['id' , 'admin_name' , 'username' , 'email' ,'gender', 'password' , 'image' , 'type' , 'status'];
 
+    public function adminsLogs()
+    {
+        return $this->hasMany('App\Models\Admin' , 'admin_id');
+    }
 }

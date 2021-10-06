@@ -9,5 +9,5 @@ class UserParent extends Model
 {
     use HasFactory;
     protected $table = "users_parents";
-    protected $fillable = ['id' , 'student_id' , 'parent_id'];
+    protected $fillable = ['id' , 'user_id' , 'parent_id'];
 }

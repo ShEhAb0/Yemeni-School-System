@@ -11,4 +11,9 @@ class Question extends Model
     protected $table = "questions";
     protected $fillable = ['id' , 'title ', 'choice_1' , 'choice_2' ,'choice_3' , 'choice_4 ' ,'correct_answer' , 'mark' , 'exam_id' ];
 
+    public function questionsExams()
+    {
+        return $this->belongsTo('App\Models\Exam' , 'exam_id');
+
+    }
 }
