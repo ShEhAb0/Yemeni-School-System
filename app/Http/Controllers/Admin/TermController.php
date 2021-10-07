@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Grade;
+use App\Models\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-class GradeController extends Controller
+class TermController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::get();
-        return view('pages.admin.grade-menu.grade-index' )->with('grades' , $grades);
-
+        //
+        $terms = Term::all();
+        return view('pages.admin.term-menu.term-index',compact('terms'));
     }
 
     /**
@@ -41,18 +41,14 @@ class GradeController extends Controller
     {
         //
         $request->validate([
-           'grade_name' => 'required',
-           'grade_code' => 'required',
-           'status' => 'required',
+            'term_name' => 'required'
         ]);
 
-        $grade = new Grade();
-        $grade->grade_name = $request->input('grade_name');
-        $grade->grade_code = $request->input('grade_code');
-        $grade->status = $request->input('status');
-        $grade->save();
+        $term = new Term();
+        $term->name = $request->input('term_name');
+        $term->save();
 
-        return redirect('/admin/grades')->withSuccess('New grade has been added successfully..!');
+        return redirect('/admin/terms')->withSuccess('New term has been added successfully..');
     }
 
     /**
@@ -75,8 +71,8 @@ class GradeController extends Controller
     public function edit($id)
     {
         //
-        $grade = Grade::find($id);
-        return response($grade,200);
+        $term = Term::find($id);
+        return response($term,200);
     }
 
     /**
@@ -90,18 +86,12 @@ class GradeController extends Controller
     {
         //
         $request->validate([
-            'grade_name' => 'required',
-            'grade_code' => 'required',
-            'status' => 'required',
+            'term_name' => 'required'
         ]);
 
-        Grade::where('id',$id)->update([
-            'grade_name'=>$request->input('grade_name'),
-            'grade_code'=>$request->input('grade_code'),
-            'status'=>$request->input('status'),
-            ]);
+        Term::where('id',$id)->update(['name'=>$request->term_name]);
 
-        return redirect('/admin/grades')->withSuccess('Grade has been updated successfully..!');
+        return redirect('/admin/terms')->withSuccess('Term has been updated successfully..');
     }
 
     /**
@@ -113,7 +103,7 @@ class GradeController extends Controller
     public function destroy($id)
     {
         //
-        Grade::find($id)->delete();
-        return redirect('/admin/grades')->withSuccess('Grade has been deleted successfully..!');
+        Term::find($id)->delete();
+        return redirect('/admin/terms')->withSuccess('Term has been deleted successfully..');
     }
 }

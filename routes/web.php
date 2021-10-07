@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\Admin\AdminController;
@@ -58,14 +59,18 @@ Auth::routes();
 Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['guest:admin'])->group(function(){
-        Route::view('/login' , 'pages.admin.login')->name('login');
-        Route::post('/check',[AdminController::class,'check'])->name('check');
+        Route::get('/','App\Http\Controllers\Auth\AdminLoginController@showLoginForm')->name('login');
+        Route::get('/login','App\Http\Controllers\Auth\AdminLoginController@showLoginForm')->name('login');
+        Route::post('/login', 'App\Http\Controllers\Auth\AdminLoginController@login')->name('login');
+//        Route::view('/' , 'pages.admin.login')->name('login');
+//        Route::post('/check',[AdminController::class,'check'])->name('check');
     });
 
 
     Route::middleware(['auth:admin'])->group(function(){
         Route::view('/index' , 'pages.admin.index')->name('index');
 
+        Route::resource('/terms' , 'App\Http\Controllers\Admin\TermController');
         Route::resource('/parents' , 'App\Http\Controllers\Admin\ParentController');
         Route::resource('/subjects' , 'App\Http\Controllers\Admin\SubjectController');
         Route::resource('/grades' , 'App\Http\Controllers\Admin\GradeController');
@@ -78,7 +83,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/settings' , 'App\Http\Controllers\Admin\SettingController');
 
 
-        Route::post('/logout',[AdminController::class,'logout'])->name('logout');
+        Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });
 
 });

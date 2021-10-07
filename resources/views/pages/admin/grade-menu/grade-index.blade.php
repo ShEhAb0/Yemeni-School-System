@@ -9,6 +9,18 @@
 
 
     <div class="container-fluid">
+        @if($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endif
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endforeach
         <br/>
         <br/>
         <br/>
@@ -43,59 +55,53 @@
                             <h6>Grades table</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
+                            @if($grades->count() > 0)
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0" id="datatable">
                                     <thead>
                                     <tr>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Grade Code</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Grade Name</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Students Number</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Creation Date And Time</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Grade Code</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    @foreach($grades as $grade)
                                         <tr>
-                                            <th scope="row" class="text-sm font-weight-bold mb-0 text-center">
-
-                                            </th>
                                             <td class="text-secondary text-sm font-weight-bold text-center">
-
+                                                {{$grade->id}}
                                             </td>
                                             <td class="text-sm font-weight-bold mb-0 text-center">
-
+                                                {{$grade->grade_name}}
                                             </td>
-
-
-
-                                            <td class="text-center">
-                                                <p class="text-sm font-weight-bold mb-0">}</p>
-
+                                            <td class="text-sm font-weight-bold mb-0 text-center">
+                                                {{$grade->grade_code}}
                                             </td>
-
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
+                                            <td class="text-sm font-weight-bold mb-0 text-center {{$grade->status == 0 ? 'text-danger' : 'text-info'}}">
+                                                {{$grade->status == 1 ? 'Enabled' : 'Disabled'}}
                                             </td>
                                             <td class="align-middle text-center">
 
-                                                <a  href="" class="text-secondary font-weight-bold text-xs  me-3 " data-bs-toggle="modal" data-bs-target="#editModal" role="button" >
+                                                <a class="text-secondary font-weight-bold text-xs  me-3 " role="button" onclick="getGrade({{$grade->id}});">
                                                     <i class="fas fa-edit purplel-color  " style="font-size: 20px;"></i>
                                                 </a>
 
-                                                <a href="#" class="text-secondary font-weight-bold text-xs me-3 " data-bs-toggle="modal" data-bs-target="#deleteModal"  role="button"     >
+                                                <a class="text-secondary font-weight-bold text-xs me-3 " role="button" onclick="deleteGrade({{$grade->id}});">
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
-
-
                                             </td>
                                         </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no grades yet..!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -114,16 +120,19 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="my-1 py-1" >
-                                {{csrf_field()}}
-
-                                <input class="form-control my-1 mb-2  " required type="text"  placeholder="Grade Code"
-                                       name="grade_code" aria-label="Grade Code" >
+                            <form class="my-1 py-1" method="POST" action="/admin/grades">
+                                @csrf
+                                @method('POST')
 
                                 <input class="form-control my-1 mb-2" required   type="text" placeholder="Grade Name" name="grade_name"
                                        aria-label="Grade Name">
-
-
+                                <input class="form-control my-1 mb-2" required type="text"  placeholder="Grade Code"
+                                       name="grade_code" aria-label="Grade Code" >
+                                <select name="status" class="form-select" required>
+                                    <option value="" disabled selected>Choose grade status</option>
+                                    <option value="1">Enabled</option>
+                                    <option value="0">Disabled</option>
+                                </select>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -149,13 +158,16 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="my-1 py-1"  id="editForm" >
-                                {{csrf_field()}}
-                                {{method_field('PUT')}}
+                            <form class="my-1 py-1"  id="editForm" method="POST" action="">
+                                @csrf
+                                @method('PUT')
 
-                                <input class="form-control my-1 mb-2 " type="text" name="grade_code" id="grade_code" placeholder="Name of Subject" aria-label="Name of Subject" >
                                 <input class="form-control my-1 mb-2 " type="text" name="grade_name" id="grade_name" placeholder="Subject Code" aria-label="Subject Code">
-
+                                <input class="form-control my-1 mb-2 " type="text" name="grade_code" id="grade_code" placeholder="Name of Subject" aria-label="Name of Subject" >
+                                <select name="status" id="status" class="form-select" required>
+                                    <option value="1">Enabled</option>
+                                    <option value="0">Disabled</option>
+                                </select>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -186,16 +198,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="my-1 py-1"  id="deleteForm">
-                        {{csrf_field()}}
-                        {{ method_field('DELETE') }}
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" id="id" value="">
-
-                        <p>Are you sure you want to delete this grade?</p>
+                    <form class="my-1 py-1"  id="deleteForm" method="POST" action="">
+                        @csrf
+                        @method('DELETE')
+                        <p class="text-danger text-center">Are you sure you want to delete this grade?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                            <button type="submit" class="btn btn-danger" >Delete</button>
                         </div>
                     </form>
 
@@ -204,43 +213,29 @@
         </div>
 
         <!-------------------------End Delete Grade------------------------------->
-
-
-    @endsection
-
-
-    @section('scripts')
-
-
+        @section('scripts')
+            <script src="{{asset('js/axios.min.js')}}"></script>
             <script>
-                var editModal = document.getElementById('#editModal')
+                function getGrade(id) {
+                    axios({
+                        method:'get',
+                        url:'/admin/grades/' + id + '/edit'
+                    })
+                        .then(response =>{
+                            if(response.status === 200){
+                                $('#editForm').attr('action','/admin/grades/'+id);
+                                $('#grade_name').val(response.data.grade_name);
+                                $('#grade_code').val(response.data.grade_code);
+                                $('#status').val(response.data.status);
+                                $('#editModal').modal('show');
+                            }
+                        })
+                }
 
-
-                $('#editModal').on('show.bs.modal' , function (event){
-
-
-                    var button = $(event.relatedTarget)
-                    var id = button.data('id')
-                    var grade_name = button.data('grade_name')
-                    var grade_code = button.data('grade_code')
-                    var modal = $(this)
-                    modal.find('.modal-body #id').val(id);
-                    modal.find('.modal-body #grade_name').val(grade_name);
-                    modal.find('.modal-body #grade_code').val(grade_code);
-
-                })
-
-                $('#deleteModal').on('show.bs.modal' , function (event){
-
-
-                    var button = $(event.relatedTarget)
-                    var id = button.data('id')
-
-                    var modal = $(this)
-                    modal.find('.modal-body #id').val(id);
-
-                })
-
+                function deleteGrade(id) {
+                    $('#deleteForm').attr('action','/admin/grades/'+id);
+                    $('#deleteModal').modal('show');
+                }
             </script>
-
+@endsection
 @endsection
