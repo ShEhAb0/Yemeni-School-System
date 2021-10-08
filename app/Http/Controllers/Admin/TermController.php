@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use App\Models\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TermController extends Controller
 {
@@ -48,6 +50,14 @@ class TermController extends Controller
         $term->name = $request->input('term_name');
         $term->save();
 
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Add_Term";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new term ($term->name).";
+        $log->action_name = $term->name;
+        $log->created_at = now();
+        $log->save();
+
         return redirect('/admin/terms')->withSuccess('New term has been added successfully..');
     }
 
@@ -89,7 +99,20 @@ class TermController extends Controller
             'term_name' => 'required'
         ]);
 
-        Term::where('id',$id)->update(['name'=>$request->term_name]);
+        $term = Term::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Update_Term";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update term ($term->name) to ($request->term_name).";
+        $log->action_name = $request->term_name;
+        $log->created_at = now();
+        $log->save();
+
+        $term->name = $request->term_name;
+        $term->save();
+
+
 
         return redirect('/admin/terms')->withSuccess('Term has been updated successfully..');
     }
@@ -103,7 +126,18 @@ class TermController extends Controller
     public function destroy($id)
     {
         //
-        Term::find($id)->delete();
+        $term = Term::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Delete_Term";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete term ($term->name).";
+        $log->action_name = $term->name;
+        $log->created_at = now();
+        $log->save();
+
+        $term->delete();
+
         return redirect('/admin/terms')->withSuccess('Term has been deleted successfully..');
     }
 }

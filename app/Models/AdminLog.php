@@ -10,6 +10,7 @@ class AdminLog extends Model
     use HasFactory;
 
     protected $table = "admins_log";
+    public $timestamps = false;
     protected $fillable = ['id' , 'admin_id ', 'action' , 'details' ,'action_name' ];
 
     public function adminsLogs()

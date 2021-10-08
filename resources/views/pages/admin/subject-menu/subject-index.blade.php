@@ -8,6 +8,18 @@
 @section('content')
 
     <div class="container-fluid">
+        @if($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endif
+        @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endforeach
         <br/>
         <br/>
         <br/>
@@ -42,6 +54,7 @@
                         <!-------------------------Start Subjects Table------------------------------->
 
                         <div class="card-body px-0 pt-0 pb-2">
+                            @if($subjects->count() > 0)
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0" id="datatable" >
                                     <thead>
@@ -49,44 +62,67 @@
                                         <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Subject Name</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Subject Code</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Creation Date And Time</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Term</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Grade</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Teacher</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Created at</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Status</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($subjects as $subject)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->id}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject_name}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject_code}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->term->name}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->grade->grade_name}}</p>
+                                            </td>
+                                            <td>
+                                                @foreach($subject->teacher as $teacher)
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$teacher->teacher_name}}</p>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->created_at}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center {{$subject->status == 1 ? "text-info" : "text-danger"}}">
+                                                    {{$subject->status == 1 ? "Enabled" : "Disabled"}}
+                                                </p>
                                             </td>
 
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
-                                            </td>
-
                                             <td class="align-middle text-center">
 
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  data-bs-toggle="modal" data-bs-target="#editModal" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  onclick="getSubject({{$subject->id}});" role="button" >
                                                     <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                 </a>
-
-                                                <a  class="text-secondary font-weight-bold text-xs me-3" data-bs-toggle="modal" data-bs-target="#deleteModal" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteSubject({{$subject->id}});" role="button" >
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
 
                                             </td>
 
                                         </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no subjects yet..!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -104,14 +140,40 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="my-1 py-1" >
-                                {{csrf_field()}}
+                            <form method="POST" action="/admin/subjects" class="my-1 py-1" >
+                                @csrf
+                                @method('POST')
                                 <input class="form-control my-1 mb-2 " required type="text" name="subject_name" placeholder="Name of Subject" aria-label="Name of Subject">
                                 <input class="form-control my-1 mb-2 " required type="text" name="subject_code" placeholder="Subject Code" aria-label="Subject Code">
-                                <p>Choose Grade</p>
-
-                                <p>Choose Teacher</p>
-
+                                <select class="form-select my-1 mb-2" name="term" required>
+                                    @if($terms->count() > 0)
+                                    <option value="" disabled selected>Select the term</option>
+                                    @foreach($terms as $term)
+                                    <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                        @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="grade" required>
+                                    @if($grades->count() > 0)
+                                        <option value="" disabled selected>Select the grade</option>
+                                        @foreach($grades as $grade)
+                                    <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
+                                        @endforeach
+                                        @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="teacher" required>
+                                    @if($teachers->count() > 0)
+                                    <option value="" disabled selected>Select the teacher</option>
+                                    @foreach($teachers as $teacher)
+                                    <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
+                                        @endforeach
+                                        @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="status" required>
+                                    <option value="" disabled selected>Select the status</option>
+                                    <option value="1">Enabled</option>
+                                    <option value="0">Disabled</option>
+                                </select>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -145,16 +207,37 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="my-1 py-1"   id="editForm" >
-                                {{csrf_field()}}
-                                {{method_field('PUT')}}
-
+                            <form class="my-1 py-1" method="POST" action="" id="editForm">
+                                @csrf
+                                @method('PUT')
 
                                 <input class="form-control my-1 mb-2 " type="text" name="subject_name" id="subject_name" placeholder="Name of Subject" aria-label="Name of Subject" >
                                 <input class="form-control my-1 mb-2 " type="text" name="subject_code" id="subject_code" placeholder="Subject Code" aria-label="Subject Code">
-                                <p>Choose Grade</p>
-
-                                <p>Choose Teacher</p>
+                                <select class="form-select my-1 mb-2" name="term" id="term" required>
+                                    @if($terms->count() > 0)
+                                        @foreach($terms as $term)
+                                            <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="grade" id="grade" required>
+                                    @if($grades->count() > 0)
+                                        @foreach($grades as $grade)
+                                            <option value="{{$grade->id}}">{{$grade->`grade_`name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="teacher" id="teacher" required>
+                                    @if($teachers->count() > 0)
+                                        @foreach($teachers as $teacher)
+                                            <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                                <select class="form-select my-1 mb-2" name="status" id="status">
+                                    <option value="1">Enabled</option>
+                                    <option value="0">Disabled</option>
+                                </select>
 
 
                                 <div class="modal-footer">
@@ -188,17 +271,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="my-1 py-1" id="deleteForm">
-                        {{csrf_field()}}
-                        {{ method_field('DELETE') }}
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" id="id" value="">
-
-
-                        <p>Are you sure you want to delete this subject?</p>
+                    <form class="my-1 py-1" method="POST" action="" id="deleteForm">
+                        @csrf
+                        @method('DELETE')
+                        <p class="text-center text-danger">Are you sure you want to delete this subject?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                            <button type="submit" class="btn btn-danger" >Delete</button>
                         </div>
                     </form>
 
@@ -207,41 +286,31 @@
         </div>
 
         <!-------------------------End Delete Subject------------------------------->
-
-    @endsection
-
-    @section('scripts')
-
+        @section('scripts')
+            <script src="{{asset('js/axios.min.js')}}"></script>
             <script>
-                var editModal = document.getElementById('#editModal')
+                function getSubject(id) {
+                    axios({
+                        method:'get',
+                        url:'/admin/subjects/' + id + '/edit'
+                    })
+                        .then(response =>{
+                            if(response.status === 200){
+                                $('#editForm').attr('action','/admin/subjects/'+id);
+                                $('#subject_name').val(response.data.subject_name);
+                                $('#subject_code').val(response.data.subject_code);
+                                $('#term').val(response.data.term_id);
+                                $('#grade').val(response.data.level_id);
+                                $('#status').val(response.data.status);
+                                $('#editModal').modal('show');
+                            }
+                        })
+                }
 
-
-                $('#editModal').on('show.bs.modal' , function (event){
-
-
-                    var button = $(event.relatedTarget)
-                    var id = button.data('id')
-                    var subject_name = button.data('subject_name')
-                    var subject_code = button.data('subject_code')
-                    var modal = $(this)
-                    modal.find('.modal-body #id').val(id);
-                    modal.find('.modal-body #subject_name').val(subject_name);
-                    modal.find('.modal-body #subject_code').val(subject_code);
-
-                })
-
-                $('#deleteModal').on('show.bs.modal' , function (event){
-
-
-                    var button = $(event.relatedTarget)
-                    var id = button.data('id')
-
-                    var modal = $(this)
-                    modal.find('.modal-body #id').val(id);
-
-                })
-
+                function deleteSubject(id) {
+                    $('#deleteForm').attr('action','/admin/subjects/'+id);
+                    $('#deleteModal').modal('show');
+                }
             </script>
-
-
+@endsection
 @endsection
