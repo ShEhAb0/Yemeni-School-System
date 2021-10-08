@@ -34,53 +34,52 @@
                             <h6>Tracking table</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
+                            @if($logs->count() > 0)
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                     <tr>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">Tracking title</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center ">Admin</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center ">Action</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Tracking Details</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">ID</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Date</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($logs as $log)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$log->id}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">
+                                                    {{$log->admin->admin_name}} "{{$log->admin->username}}"
+                                                </p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
-
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$log->action}}</p>
                                             </td>
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$log->detils}}</p>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$log->created_at}}</p>
                                             </td>
                                         </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
 
                             </div>
-
+                                <div class="text-center my-5">
+                                    {{$logs->render()}}
+                                </div>
+                            @else
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no logs yet..!</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

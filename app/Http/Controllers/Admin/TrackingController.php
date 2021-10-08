@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use Illuminate\Http\Request;
 
 class TrackingController extends Controller
@@ -14,8 +15,9 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.tracking-menu.tracking-index' );
-
+        $logs = AdminLog::with('admin')->orderBy('created_at','desc')->paginate(10);
+//        dd($logs);
+        return view('pages.admin.tracking-menu.tracking-index',compact('logs'));
     }
 
     /**
