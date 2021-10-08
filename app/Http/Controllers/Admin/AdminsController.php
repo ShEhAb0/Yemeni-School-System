@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\AdminLog;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
 {
@@ -15,8 +19,9 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admin = Admin::get();
-        return view('pages.admin.admin-menu.admin-index' )->with('admins' , $admin);
+        $admins = Admin::paginate(15);
+
+        return view('pages.admin.admin-menu.admin-index', compact('admins'));
 
     }
 
@@ -39,6 +44,36 @@ class AdminsController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'fullname' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'gender' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+
+        $admin = new Admin();
+        $admin->admin_name = $request->input('fullname');
+        $admin->username = $request->input('username');
+        $admin->email = $request->input('email');
+        $admin->password = Hash::make($request->input('password'));
+        $admin->gender = $request->input('gender');
+        $admin->image = 'default.jpg';
+        $admin->type = $request->input('type');
+        $admin->status = $request->input('status');
+        $admin->save();
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Add_Admin";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new admin ($admin->admin_name '$admin->username').";
+        $log->action_name = $admin->admin_name. " $admin->username";
+        $log->created_at = now();
+        $log->save();
+
+        return redirect('/admin/admins')->withSuccess('New admin has been added successfully..');
     }
 
     /**
@@ -61,6 +96,8 @@ class AdminsController extends Controller
     public function edit($id)
     {
         //
+        $admin = Admin::find($id);
+        return response($admin,200);
     }
 
     /**
@@ -73,6 +110,44 @@ class AdminsController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'fullname' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'gender' => 'required',
+            'type' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($request->input('password') != null){
+            $request->validate([
+                'password' => 'required|confirmed'
+            ]);
+        }
+
+        $admin = Admin::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Update_Admin";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update admin ($admin->admin_name '$admin->username').";
+        $log->action_name = $admin->admin_name. " $admin->username";
+        $log->created_at = now();
+        $log->save();
+
+        $admin->admin_name = $request->input('fullname');
+        $admin->username = $request->input('username');
+        $admin->email = $request->input('email');
+        if ($request->input('password') != null) {
+            $admin->password = Hash::make($request->input('password'));
+        }
+        $admin->gender = $request->input('gender');
+        $admin->type = $request->input('type');
+        $admin->status = $request->input('status');
+        $admin->save();
+
+        return redirect('/admin/admins')->withSuccess('Admin has been updated successfully..');
+
     }
 
     /**
@@ -84,5 +159,19 @@ class AdminsController extends Controller
     public function destroy($id)
     {
         //
+        $admin = Admin::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Delete_Admin";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete admin ($admin->admin_name '$admin->username').";
+        $log->action_name = $admin->admin_name. " $admin->username";
+        $log->created_at = now();
+        $log->save();
+
+        $admin->delete();
+
+        return redirect('/admin/admins')->withSuccess('Admin has been deleted successfully..');
+
     }
 }

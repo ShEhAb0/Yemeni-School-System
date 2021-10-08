@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Term;
-use App\Models\AdminLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +22,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with(['teacher','term','grade'])->get();
+        $subjects = Subject::with(['teacher','term','grade'])->paginate(10);
         $terms = Term::all();
         $grades = Grade::all();
         $teachers = Teacher::all();

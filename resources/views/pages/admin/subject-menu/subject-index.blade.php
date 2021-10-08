@@ -89,8 +89,16 @@
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->grade->grade_name}}</p>
                                             </td>
                                             <td>
+<<<<<<< HEAD
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->teacher->teacher_name}}</p>
 
+||||||| e352bc6
+                                                @foreach($subject->teacher as $teacher)
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$teacher->teacher_name}}</p>
+                                                @endforeach
+=======
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->teacher->teacher_name}}</p>
+>>>>>>> refs/remotes/origin/master
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->created_at}}</p>
@@ -117,6 +125,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                                <div class="text-center my-5">
+                                    {{$subjects->render()}}
+                                </div>
                             @else
                                 <div class="text-center">
                                     <p class="h5 text-danger">There are no subjects yet..!</p>

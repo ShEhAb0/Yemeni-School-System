@@ -11,9 +11,9 @@ class AdminLog extends Model
 
     protected $table = "admins_log";
     public $timestamps = false;
-    protected $fillable = ['id' , 'admin_id ', 'action' , 'details' ,'action_name' ];
+    protected $fillable = ['id' , 'admin_id ', 'action' , 'detils' ,'action_name' ];
 
-    public function adminsLogs()
+    public function admin()
     {
         return $this->belongsTo('App\Models\Admin' , 'admin_id');
     }

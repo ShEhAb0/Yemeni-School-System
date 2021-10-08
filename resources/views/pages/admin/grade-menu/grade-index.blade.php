@@ -97,6 +97,9 @@
                                     </tbody>
                                 </table>
                             </div>
+                                <div class="text-center my-5">
+                                    {{$grades->render()}}
+                                </div>
                             @else
                                 <div class="text-center">
                                     <p class="h5 text-danger">There are no grades yet..!</p>

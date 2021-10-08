@@ -19,7 +19,7 @@ class TermController extends Controller
     public function index()
     {
         //
-        $terms = Term::all();
+        $terms = Term::paginate(10);
         return view('pages.admin.term-menu.term-index',compact('terms'));
     }
 
