@@ -7,6 +7,7 @@ use App\Models\AdminLog;
 use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\Teacher;
+use App\Models\TeacherSubject;
 use App\Models\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with(['teacher','term','grade'])->paginate(10);
+        $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->paginate(10);
         $terms = Term::all();
         $grades = Grade::all();
         $teachers = Teacher::all();
@@ -67,7 +68,14 @@ class SubjectController extends Controller
         $subject->status = $request->input('status');
         $subject->save();
 
-        DB::table('teacher_subject')->insert(['subject_id'=>$subject->id, 'teacher_id'=>$request->teacher]);
+        $ts = new TeacherSubject();
+        $ts->teacher_id = $request->teacher;
+        $ts->subject_id = $subject->id;
+        $ts->level_id = $subject->level_id;
+        $ts->term_id = $subject->term_id;
+        $ts->assign_date = now();
+        $ts->status = 1;
+        $ts->save();
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
@@ -140,7 +148,13 @@ class SubjectController extends Controller
         $subject->status = $request->input('status');
         $subject->save();
 
-        DB::table('teacher_subject')->where('subject_id',$request->subject_id)->update(['teacher_id'=>$request->teacher_id]);
+        $ts = TeacherSubject::where('subject_id',$id)->first();
+        $ts->teacher_id = $request->teacher;
+        $ts->level_id = $subject->level_id;
+        $ts->term_id = $subject->term_id;
+        $ts->assign_date = now();
+        $ts->status = 1;
+        $ts->save();
 
         return redirect('/admin/subjects')->withSuccess('Subject has been updated successfully..');
     }

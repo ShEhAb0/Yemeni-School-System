@@ -84,7 +84,6 @@ class TeacherController extends Controller
         $teacher->save();
 
 
-
         $log = new AdminLog();
         $log->admin_id = Auth::id();
         $log->action = "Add_Teacher";

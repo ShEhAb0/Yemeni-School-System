@@ -9,6 +9,7 @@ class Subject extends Model
 {
     use HasFactory;
     protected $table = "subjects";
+    public $timestamps = false;
     protected $fillable = ['id' , 'subject_name ', 'subject_code' , 'term_id' ,'code' , 'level_id ' ,'has_teacher' , 'status ' ];
 
     public function subjectsAssignments()
@@ -45,12 +46,11 @@ class Subject extends Model
     }
     public function teachersSubjects()
     {
-        return $this->hasMany('App\Models\Subjects' , 'subjects_id');
+        return $this->hasMany('App\Models\Subject' , 'subject_id');
     }
     public function teacher()
     {
-
-        return $this->belongsTo('App\Models\Teacher');
+        return $this->belongsTo('App\Models\Teacher','teacher_id');
 
     }
 

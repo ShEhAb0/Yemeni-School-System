@@ -74,13 +74,13 @@
                                     @foreach($subjects as $subject)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->id}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->id}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject_name}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->subject_name}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject_code}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->subject_code}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->term->name}}</p>
@@ -89,32 +89,24 @@
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->grade->grade_name}}</p>
                                             </td>
                                             <td>
-<<<<<<< HEAD
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->teacher->teacher_name}}</p>
 
-||||||| e352bc6
-                                                @foreach($subject->teacher as $teacher)
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$teacher->teacher_name}}</p>
-                                                @endforeach
-=======
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->teacher->teacher_name}}</p>
->>>>>>> refs/remotes/origin/master
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->created_at}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->created_at}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center {{$subject->status == 1 ? "text-info" : "text-danger"}}">
-                                                    {{$subject->status == 1 ? "Enabled" : "Disabled"}}
+                                                <p class="text-sm font-weight-bold mb-0 text-center {{$subject->subject->status == 1 ? "text-info" : "text-danger"}}">
+                                                    {{$subject->subject->status == 1 ? "Enabled" : "Disabled"}}
                                                 </p>
                                             </td>
 
                                             <td class="align-middle text-center">
 
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  onclick="getSubject({{$subject->id}});" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  onclick="getSubject({{$subject->subject->id}});" role="button" >
                                                     <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                 </a>
-                                                <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteSubject({{$subject->id}});" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteSubject({{$subject->subject->id}});" role="button" >
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
 
