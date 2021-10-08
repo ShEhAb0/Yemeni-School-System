@@ -223,7 +223,7 @@
                                 <select class="form-select my-1 mb-2" name="grade" id="grade" required>
                                     @if($grades->count() > 0)
                                         @foreach($grades as $grade)
-                                            <option value="{{$grade->id}}">{{$grade->`grade_`name}}</option>
+                                            <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
                                         @endforeach
                                     @endif
                                 </select>
