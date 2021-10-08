@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
+use App\Models\Grade;
+use App\Models\Term;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -14,8 +20,16 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('pages.admin.student-menu.student-index' );
+        $student = User::with(['term' , 'grade'])->get();
+        $terms = Term::all();
+        $grades = Grade::all('grade_name');
+        return view('pages.admin.student-menu.student-index' , compact('terms' , 'grades'))->with('students' , $student);
 
+    }
+    public function getGrades()
+    {
+        $grades = Grade::pluck('grade_name');
+        return view('pages.admin.student-menu.student-index' , compact('grades'));
     }
 
     /**
@@ -36,7 +50,46 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request ,[
+            'student_name' => 'required',
+            'username' => 'required|max:20',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'level_id' => 'required',
+            'term_id' => 'required',
+            'status' => 'required',
+
+        ]);
+
+        $student = new User();
+        $student->student_name = $request->input('student_name');
+        $student->username = $request->input('username');
+        $student->email = $request->input('email');
+        $student->password = Hash::make($request->input('password'));
+        $student->gender = $request->input('gender');
+        $student->phone = $request->input('phone');
+        $student->address = $request->input('address');
+        $student->level_id = $request->input('level_id');
+        $student->term_id = $request->input('term_id');
+
+        $student->status = $request->input('status');
+        $student->save();
+
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Add_Student";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new student ($student->student_name).";
+        $log->action_name = $student->student_name;
+        $log->created_at = now();
+        $log->save();
+
+        return redirect('/admin/students')->withSuccess('New student has been added successfully..!');
+
+
     }
 
     /**

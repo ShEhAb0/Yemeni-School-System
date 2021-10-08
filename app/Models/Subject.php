@@ -35,12 +35,12 @@ class Subject extends Model
 
     public function grade()
     {
-        return $this->hasOne('App\Models\Grade' , 'level_id');
+        return $this->belongsTo('App\Models\Grade' , 'level_id');
 
     }
     public function term()
     {
-        return $this->hasOne('App\Models\Term' , 'term_id');
+        return $this->belongsTo('App\Models\Term' , 'term_id');
 
     }
     public function teachersSubjects()
@@ -49,7 +49,7 @@ class Subject extends Model
     }
     public function teacher()
     {
-        return $this->belongsToMany('App\Models\Teacher');
+        return $this->belongsTo('App\Models\Teacher' , 'teacher_id');
     }
 
 }

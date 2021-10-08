@@ -89,9 +89,8 @@
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->grade->grade_name}}</p>
                                             </td>
                                             <td>
-                                                @foreach($subject->teacher as $teacher)
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$teacher->teacher_name}}</p>
-                                                @endforeach
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->teacher->teacher_name}}</p>
+
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->created_at}}</p>

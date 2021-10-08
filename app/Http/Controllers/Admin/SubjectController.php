@@ -7,6 +7,7 @@ use App\Models\Grade;
 use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\Term;
+use App\Models\AdminLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
