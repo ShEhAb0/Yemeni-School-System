@@ -45,7 +45,7 @@ Auth::routes();
 //        Route::resource('/news' , 'App\Http\Controllers\SuperAdmin\NewsController');
 //        Route::resource('/admins' , 'App\Http\Controllers\SuperAdmin\AdminController');
 //        Route::resource('/tracking' , 'App\Http\Controllers\SuperAdmin\TrackingController');
-//        Route::resource('/settings' , 'App\Http\Controllers\SuperAdmin\SettingController');
+//        Route::resource('/settings' , 'App\Http\Controllers\SuperAdmin\SchoolSettingController');
 //
 //
 //
@@ -80,7 +80,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/news' , 'App\Http\Controllers\Admin\NewsController');
         Route::resource('/admins' , 'App\Http\Controllers\Admin\AdminsController');
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
-        Route::resource('/settings' , 'App\Http\Controllers\Admin\SettingController');
+        Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
 
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');

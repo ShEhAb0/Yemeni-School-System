@@ -14,7 +14,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        return view('pages.super-admin.setting-menu.setting-index' );
+        return view('pages.super-admin.school-setting-menu.setting-index' );
 
     }
 

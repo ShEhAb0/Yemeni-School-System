@@ -7,70 +7,77 @@
 @endsection
 @section('content')
 
-
     <div class="container-fluid py-4">
+        @if($school_settings->count() > 0)
 
         <div class="row g-2 my-1 py-2">
-            <form class="row g-2 my-1 py-2" enctype="multiform/form-data">
+            @foreach($school_settings as $school_setting)
+            <form class="row g-2 my-1 py-2" action="{{action('App\Http\Controllers\Admin\SchoolSettingController@store')}}" method="POST" enctype="multiform/form-data">
                 @csrf
 
 
                     <div class="col-auto w_50">
+
                         <p>Name of School</p>
-                        <input class="form-control my-1 mb-2" type="text" placeholder="Name of School" value=""   name="school_name" >
+                        <input class="form-control my-1 mb-2" type="text" placeholder="Name of School" value="{{$school_setting->school_name}}"  name="school_name" >
                     </div>
                     <div class="col-auto w_50">
                         <p>Phone of School</p>
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="Phone of School" value="" name="school_phone" >
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="Phone of School" value="{{$school_setting->school_phone}}" name="school_phone" >
                     </div>
                     <div class="col-auto w_50">
                         <p>School Email</p>
-                        <input class="form-control my-1 mb-2 " type="Email" placeholder="School Email" value="" name="school_email" >
+                        <input class="form-control my-1 mb-2 " type="Email" placeholder="School Email" value="{{$school_setting->school_email}}" name="school_email" >
                     </div>
                     <div class="col-auto w_50">
                         <p>Academic Year</p>
-                        <input class="form-control my-1 mb-2 " type="date" placeholder="Academic Year" name="academic_year" value=""
+                        <input class="form-control my-1 mb-2 " type="date" placeholder="Academic Year" name="academic_year" value="{{ $school_setting->academic_year }}"
                                type="date" >
                     </div>
                     <div class="col-auto w-100">
                         <p>School Address</p>
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="School Address" value="" name="school_address" >
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="School Address" value="{{$school_setting->school_address}}" name="school_address" >
                     </div>
                     <div class="col-auto w_50">
                         <p>First Term Begin</p>
-                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term Begin" value="" name="first_term_begin">
+                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term Begin" value="{{$school_setting->first_term_begin}}" name="first_term_begin">
                     </div>
 
                     <div class="col-auto w_50">
                         <p>First Term End</p>
-                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term End" value="" name="first_term_end"  >
+                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term End" value="{{$school_setting->first_term_end}}" name="first_term_end"  >
                     </div>
 
                     <div class="col-auto w_50">
                         <p>Second Term Begin</p>
-                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term Begin" value="" name="second_term_begin" >
+                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term Begin" value="{{$school_setting->second_term_begin}}" name="second_term_begin" >
                     </div>
 
                     <div class="col-auto w_50">
                         <p>Second Term End</p>
-                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term End" value=""  name="second_term_end">
+                        <input class="form-control my-1 mb-2 " type="date" placeholder="This Term End" value="{{$school_setting->second_term_end}}"  name="second_term_end">
                     </div>
 
                     <div >
                         <p>School Icon</p>
-                        <img src="" class="avatar" style="width: 150px" height="150px" >
+                        <img src="{{asset('/images/school_logo/'.$school_setting->school_logo)}}" class="avatar" style="width: 150px" height="150px" >
                     </div>
 
-
+                @endforeach
 
 
                 <div class="col-auto w_50 text-center">
                     <button type="submit" class="btn btn-primary mb-3 w_50">Save</button>
                 </div>
                 <div class="col-auto w_50 text-center">
-                    <button type="button" class="btn btn-secondary mb-3 w_50" data-bs-toggle="modal" data-bs-target="#editModal"  >Edit</button>
+                    <button type="button" class="btn btn-secondary mb-3 w_50" data-bs-toggle="modal" data-bs-target="#editModal"  data-id="{{$school_setting->id}}" data-school_name="{{$school_setting->school_name}}" data-school_phone="{{$school_setting->school_phone}}" data-school_email="{{$school_setting->school_email}}" data-school_address="{{$school_setting->school_address}}" data-academic_year="{{$school_setting->academic_year}}" data-first_term_begin="{{$school_setting->first_term_begin}}" data-first_term_end="{{$school_setting->first_term_end}}" data-second_term_begin="{{$school_setting->second_term_begin}}" data-second_term_end="{{$school_setting->second_term_end}}" data-school_logo="{{$school_setting->school_logo}}">Edit</button>
                 </div>
             </form>
+            @else
+                <div class="text-center">
+                    <p class="h5 text-danger">There are no teachers yet..!</p>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -87,11 +94,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-2 my-1 py-2"  id="editForm" enctype="multiform/form-data">
+                    <form class="row g-2 my-1 py-2"  action="{{route('admin.settings.update' , 'test')}}" method="POST" id="editForm" enctype="multiform/form-data">
                         @csrf
                         {{csrf_field()}}
                         {{method_field('PUT')}}
-                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="id" value="{{$school_setting['id']}}">
                         <div class="col-auto w_50">
                             <p>Name of School</p>
                             <input class="form-control my-1 mb-2" type="text" placeholder="Name of School"  name="school_name" id="school_name" >
@@ -192,8 +199,6 @@
 
 
             </script>
-
-
 
 
 @endsection
