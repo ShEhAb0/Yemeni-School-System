@@ -48,5 +48,11 @@ class Term extends Model
         return $this->hasMany('App\Models\Term' , 'term_id');
 
     }
+    public function termsStudents()
+    {
+        return $this->hasMany('App\Models\Term' , 'term_id');
+
+    }
+
 
 }

@@ -20,11 +20,16 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = User::with(['term' , 'grade'])->get();
-        $terms = Term::all();
+        $student = User::all();
+        $terms = Term::all('name');
         $grades = Grade::all('grade_name');
         return view('pages.admin.student-menu.student-index' , compact('terms' , 'grades'))->with('students' , $student);
 
+    }
+    public function getTerms()
+    {
+        $terms = Term::pluck('name');
+        return view('pages.admin.student-menu.student-index' , compact('terms'));
     }
     public function getGrades()
     {
@@ -100,7 +105,6 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -111,7 +115,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $student = User::find($id);
+        return response($student,200);
     }
 
     /**
@@ -123,7 +129,44 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request ,[
+            'student_name' => 'required',
+            'username' => 'required|max:20',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'phone' => 'required',
+            'address' => 'required',
+            'level_id' => 'required',
+            'term_id' => 'required',
+            'status' => 'required',
+
+        ]);
+            $student = User::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Update_Student";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update student ($student->student_name) to ($request->student_name).";
+        $log->action_name = $request->student_name;
+        $log->created_at = now();
+        $log->save();
+
+
+        $student->student_name = $request->input('student_name');
+        $student->username = $request->input('username');
+        $student->email = $request->input('email');
+        $student->password = Hash::make($request->input('password'));
+        $student->gender = $request->input('gender');
+        $student->phone = $request->input('phone');
+        $student->address = $request->input('address');
+        $student->level_id = $request->input('level_id');
+        $student->term_id = $request->input('term_id');
+        $student->status = $request->input('status');
+        $student->save();
+
+        return redirect('/admin/students')->withSuccess('Student has been updated successfully..!');
+
     }
 
     /**
@@ -134,6 +177,18 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = User::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Delete_Student";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete student ($student->student_name).";
+        $log->action_name = $student->student_name;
+        $log->created_at = now();
+        $log->save();
+
+        $student->delete();
+
+        return redirect('/admin/students')->withSuccess('Student has been deleted successfully..!');
     }
 }

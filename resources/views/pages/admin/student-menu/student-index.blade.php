@@ -88,7 +88,7 @@
 
                                         </td>
                                         <td class="text-center">
-                                            <p class="text-sm font-weight-bold mb-0">{{$student->grade_code}}</p>
+                                            <p class="text-sm font-weight-bold mb-0">{{$student->level_id}} + name</p>
 
                                         </td>
                                         <td class="align-middle text-center">
@@ -101,11 +101,11 @@
                                             </td>
 
                                         <td class="align-middle text-center">
-                                            <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal" href="#examplUpdate" role="button">
+                                            <a  class="text-secondary font-weight-bold text-xs  me-3"  onclick="getStudent({{$student->id}});" role="button">
                                                 <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                             </a>
 
-                                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
+                                            <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteStudent({{$student->id}});" role="button">
                                                 <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                             </a>
                                             <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#Schedule" role="button">
@@ -131,116 +131,106 @@
             <!--end-->
 
 
-            <div class="modal  fade" id="examplUpdate" tabindex="-1" aria-labelledby="exampleModalLabelUpda" aria-hidden="true">
+            <div class="modal  fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabelUpda">Update Student</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Student</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-2">
-
+                            <form class="row g-2"  id="editForm" method="POST" action="">
+                                @csrf
+                                @method('PUT')
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control  " type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">
-
-                                </div>
-                                <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <span class="input-group-text mr-2" id="basic-addon1">@</span>
-                                    <input type="email" class="form-control  " placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">
+                                    <input class="form-control " required name="student_name" id="student_name" type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">
 
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" type="text" placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">
+                                    <input class="form-control " required name="username" id="username" type="text" placeholder="Enter Student Username" aria-label="Enter Student Username">
+
+
                                 </div>
+                                <div class="input-group col-auto my-1 mb-2 w_50">
+                                    <span class="input-group-text mr-2" >@</span>
+                                    <input type="email" class="form-control  " required name="email" id="email" placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">
+
+                                </div>
+
+
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" type="text" placeholder="Enter Student ID" aria-label="ID">
+                                    <input class="form-control my-1 mb-2 " required name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
                                 </div>
 
-                                <div class="row w_50 ">
-                                    <p>Choose Student Gender</p>
+                                <div class="row ">
+                                    <p>Enter Student Gender</p>
                                     <div class="form-check col-5 " style="margin-left: 20px;">
-                                        <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios12" value="option1" checked>
+                                        <input class="form-check-input" type="radio" name="gender" id="gender" value="male" checked>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check col-5">
-                                        <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios22" value="option2">
+                                        <input class="form-check-input" type="radio" name="gender" id="gender" value="female">
                                         <label class="form-check-label" for="exampleRadios2">
                                             Female
                                         </label>
                                     </div>
                                 </div>
+                                <div class="input-group col-auto my-1 mb-2 w_50">
+                                    <input class="form-control" type="text" name="phone" id="phone" required placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">
+                                </div>
+
+                                <div class="input-group col-auto my-1 mb-2 w_50">
+                                    <input class="form-control" type="text" name="address" id="address" required placeholder="Enter Student Address" aria-label="Enter Student Address">
+                                </div>
+
                                 <div class="row w_50 ">
+                                    <p>Choose Student Term </p>
+                                    <select name="term_id" id="term_id" class="form-select"  required>                                        @if($terms->count() > 0)
+                                            <option value="" disabled selected>Select the term</option>
+                                            @if(isset($terms) && $terms -> count() >0)
+                                                @foreach ($terms as $key)
+                                                    <option value="{{ $key->id }}">{{ $key->name }}</option>
+                                                @endforeach
+                                            @endif
+                                        @endif
+                                    </select>
+                                </div>
+
+                                <div class="row w_50">
                                     <p>Choose Student Grade</p>
-                                    <select class="form-select " aria-label="Choose Student Grade">
-                                        <option value="1">First Grade</option>
-                                        <option value="2">Second Grade</option>
-                                        <option value="3">Three Grade</option>
-                                        <option value="4">Forth Grade</option>
-                                        <option value="5">Fifth Grade</option>
+                                    <select name="level_id" id="level_id" class="form-select"  required>
+                                        <option value="" disabled selected>Select the grade</option>
+                                        @if(isset($grades) && $grades -> count() >0)
+                                            @foreach ($grades as $key)
+                                                <option value="{{ $key->id }}">{{ $key->grade_name }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
-                                </div>
-                                <div class="row w_50" id="parentexsits">
-                                    <p>Choose Parent</p>
-                                    <select class="form-select " aria-label="Choose Parent">
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                                <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
-                                    <input class="form-check-input" type="checkbox" name="choose" id="Choose" value="1" >
-                                    <label class="form-check-label" for="Choose">
-                                        Add to exsist Parents
-                                    </label>
+
                                 </div>
 
-                                <div id="ParentInfo" class="hidden">
-                                    <div class="row g-2">
-                                        <p>Add new Parent</p>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control  " type="text" placeholder="Enter Parent Full Name" aria-label="Enter Parent Full Name">
 
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <span class="input-group-text mr-2" id="basic-addon1">@</span>
-                                            <input type="email" class="form-control  " placeholder="Enter Parent Email" aria-label="Email" aria-describedby="basic-addon1">
+                                <p>Choose Student Status</p>
 
-                                        </div>
+                                <select name="status" id="status" class="form-select"  required>
+                                    <option value="" disabled selected>Choose student status</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Suspend</option>
+                                </select>
 
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Parent Phone Number" aria-label="Enter Parent Phone Number">
-                                        </div>
 
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Parent ID" aria-label="Enter Parent ID">
-                                        </div>
 
-                                        <div class="row w_50 col-auto my-1 mb-2 w_50" >
-                                            <p>upload parent ID or Passport</p>
-                                            <input class="form-control " type="file" id="formFile">
-                                        </div>
 
-                                        <div class="row w_50 col-auto my-1 mb-2 w_50" style="margin-left: 12px;">
-                                            <p>upload Student last certification</p>
-                                            <input class="form-control " type="file" id="formFile2" name="formFile2">
-                                        </div>
-
-                                    </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-outline-primary" >Save Changes</button>
                                 </div>
+
                             </form>
-
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-outline-primary" >Save changes</button>
-                        </div>
                     </div>
                 </div>
 
@@ -357,9 +347,70 @@
             </div>
             <!--Modle update-->
 
+
+
         </div>
     </div>
 
+            <!-------------------------Start Delete Teacher------------------------------->
 
 
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Student</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="my-1 py-1" id="deleteForm" action="" method="POST">
+                                {{csrf_field()}}
+                                {{ method_field('DELETE') }}
+
+                                <p>Are you sure you want to delete this student?</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-------------------------End Delete Teacher------------------------------->
+
+
+
+            @section('scripts')
+                <script src="{{asset('js/axios.min.js')}}"></script>
+                <script>
+                    function getStudent(id) {
+                        axios({
+                            method:'get',
+                            url:'/admin/students/' + id + '/edit'
+                        })
+                            .then(response =>{
+                                if(response.status === 200){
+                                    $('#editForm').attr('action','/admin/students/'+id);
+                                    $('#student_name').val(response.data.student_name);
+                                    $('#username').val(response.data.username);
+                                    $('#email').val(response.data.email);
+                                    $('#password').val(response.data.password);
+                                    $('#phone').val(response.data.phone);
+                                    $('#address').val(response.data.address);
+                                    $('#term_id').val(response.data.term_id);
+                                    $('#level_id').val(response.data.level_id);
+                                    $('#status').val(response.data.status);
+                                    $('#editModal').modal('show');
+                                }
+                            })
+                    }
+
+                    function deleteStudent(id) {
+                        $('#deleteForm').attr('action','/admin/students/'+id);
+                        $('#deleteModal').modal('show');
+                    }
+                </script>
+@endsection
 @endsection

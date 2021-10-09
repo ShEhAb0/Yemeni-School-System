@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Parents;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ParentController extends Controller
@@ -16,8 +17,15 @@ class ParentController extends Controller
     public function index()
     {
         $parent = Parents::get();
-        return view('pages.admin.parent-menu.parent-index' )->with('parents' , $parent);
+        $students = User::all('student_name');
+        return view('pages.admin.parent-menu.parent-index' , compact('students') )->with('parents' , $parent);
 
+    }
+
+    public function getStudents()
+    {
+        $students = User::pluck('student_name');
+        return view('pages.admin.parent-menu.parent-index' , compact('students'));
     }
 
     /**

@@ -29,6 +29,15 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\User' , 'student_id');
 
     }
+    public function termsStudents()
+    {
+        return $this->belongsTo('App\Models\Term' , 'term_id');
+
+    }
+    public function studendsLevels()
+    {
+        return $this->belongsTo('App\Models\Grade' , 'level_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
