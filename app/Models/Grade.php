@@ -63,4 +63,11 @@ class Grade extends Model
     {
         return $this->hasMany('App\Models\Grade' , 'level_id');
     }
+
+    public function grade()
+    {
+        return $this->hasMany('App\Models\Grade' , 'level_id');
+
+    }
+
 }

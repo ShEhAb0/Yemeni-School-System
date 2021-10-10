@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AdminLog;
 use App\Models\Grade;
+use App\Models\Teacher;
 use App\Models\Term;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,22 +21,14 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = User::all();
-        $terms = Term::all('name');
-        $grades = Grade::all('grade_name');
-        return view('pages.admin.student-menu.student-index' , compact('terms' , 'grades'))->with('students' , $student);
+        $students = User::all();
+        $terms = Term::all();
+        $grades = Grade::all();
+
+        return view('pages.admin.student-menu.student-index' , compact('students' ,'terms' , 'grades'));
 
     }
-    public function getTerms()
-    {
-        $terms = Term::pluck('name');
-        return view('pages.admin.student-menu.student-index' , compact('terms'));
-    }
-    public function getGrades()
-    {
-        $grades = Grade::pluck('grade_name');
-        return view('pages.admin.student-menu.student-index' , compact('grades'));
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -63,12 +56,11 @@ class StudentController extends Controller
             'gender' => 'required',
             'phone' => 'required',
             'address' => 'required',
-            'level_id' => 'required',
-            'term_id' => 'required',
+            'term' => 'required',
+            'grade' => 'required',
             'status' => 'required',
 
         ]);
-
         $student = new User();
         $student->student_name = $request->input('student_name');
         $student->username = $request->input('username');
@@ -77,8 +69,9 @@ class StudentController extends Controller
         $student->gender = $request->input('gender');
         $student->phone = $request->input('phone');
         $student->address = $request->input('address');
-        $student->level_id = $request->input('level_id');
-        $student->term_id = $request->input('term_id');
+
+        $student->term_id = $request->input('term');
+        $student->level_id = $request->input('grade');
 
         $student->status = $request->input('status');
         $student->save();
@@ -91,6 +84,7 @@ class StudentController extends Controller
         $log->action_name = $student->student_name;
         $log->created_at = now();
         $log->save();
+
 
         return redirect('/admin/students')->withSuccess('New student has been added successfully..!');
 

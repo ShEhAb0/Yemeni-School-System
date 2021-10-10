@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Parents;
 use App\Models\User;
+use App\Models\UserParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Symfony\Component\Console\Input\Input;
 
 class ParentController extends Controller
 {
@@ -16,9 +20,9 @@ class ParentController extends Controller
      */
     public function index()
     {
-        $parent = Parents::get();
-        $students = User::all('student_name');
-        return view('pages.admin.parent-menu.parent-index' , compact('students') )->with('parents' , $parent);
+        $parent = Parents::all();
+        $users = User::all('student_name');
+        return view('pages.admin.parent-menu.parent-index' , compact('users') )->with('parents' , $parent);
 
     }
 
@@ -46,7 +50,48 @@ class ParentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'parent_name' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'parent_id_or_passport' => 'required',
+            'user' => 'required',
+            'status' => 'required',
+        ]);
+
+
+        $parent = new Parents();
+        $parent->parent_name = $request->input('parent_name');
+        $parent->username = $request->input('username');
+        $parent->email = $request->input('email');
+        $parent->password = Hash::make($request->input('password'));
+        $parent->gender = $request->input('gender');
+        $parent->address = $request->input('address');
+        $parent->phone = $request->input('phone');
+
+        $parent->parent_id_or_passport = $request->input('parent_id_or_passport');
+        $parent_id_or_passport = $request->file('parent_id_or_passport');
+        $filename = time().'.'.$parent_id_or_passport->getClientOriginalExtension();
+        $request->parent_id_or_passport->move(public_path('images/parents_IDs') , $filename);
+        $parent->parent_id_or_passport=$filename;
+
+        $parent->status = $request->input('status');
+        $parent->save();
+
+        DB::table('users_parents')->insert(['parent_id'=>$parent->id, 'user_id'=>$request->input('user')]);
+
+//        $user = new UserParent();
+//        $parent -> parent_id = Input::get('parent_id');
+//        $user->user_id= Input::get('user_id');
+//        $user->save();
+
+        return redirect('/admin/parents')->withSuccess('New parent has been added successfully..!');
+
+
     }
 
     /**

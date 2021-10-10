@@ -16,4 +16,11 @@ class Parents extends Model
     public function parentsStudents()
     {
     }
+
+    public function user()
+    {
+
+        return $this->belongsToMany('App\Models\User');
+
+    }
 }
