@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use App\Models\Parents;
 use App\Models\User;
 use App\Models\UserParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\Console\Input\Input;
@@ -84,10 +86,13 @@ class ParentController extends Controller
 
         DB::table('users_parents')->insert(['parent_id'=>$parent->id, 'user_id'=>$request->input('user')]);
 
-//        $user = new UserParent();
-//        $parent -> parent_id = Input::get('parent_id');
-//        $user->user_id= Input::get('user_id');
-//        $user->save();
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Add_Parent";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new parent ($parent->parent_name).";
+        $log->action_name = $parent->parent_name;
+        $log->created_at = now();
+        $log->save();
 
         return redirect('/admin/parents')->withSuccess('New parent has been added successfully..!');
 
@@ -113,7 +118,8 @@ class ParentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parent = Parents::find($id);
+        return response($parent,200);
     }
 
     /**
@@ -125,7 +131,48 @@ class ParentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'parent_name' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'parent_id_or_passport' => 'required',
+            'user' => 'required',
+            'status' => 'required',
+        ]);
+
+        $parent = Parents::find($id);
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Update_Parent";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update parent ($parent->parent_name) to ($request->parent_name).";
+        $log->action_name = $request->parent_name;
+        $log->created_at = now();
+        $log->save();
+
+
+        $parent->parent_name = $request->input('parent_name');
+        $parent->username = $request->input('username');
+        $parent->email = $request->input('email');
+        $parent->password = Hash::make($request->input('password'));
+        $parent->gender = $request->input('gender');
+        $parent->address = $request->input('address');
+        $parent->phone = $request->input('phone');
+
+        $parent->parent_id_or_passport = $request->input('parent_id_or_passport');
+        $parent_id_or_passport = $request->file('parent_id_or_passport');
+        $filename = time().'.'.$parent_id_or_passport->getClientOriginalExtension();
+        $request->parent_id_or_passport->move(public_path('images/parents_IDs') , $filename);
+        $parent->parent_id_or_passport=$filename;
+
+        $parent->status = $request->input('status');
+        $parent->save();
+
+        return redirect('/admin/parents')->withSuccess('Parent has been updated successfully..!');
+
     }
 
     /**
@@ -136,6 +183,18 @@ class ParentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $parent = Parents::find($id);
+
+        $log = new AdminLog();
+        $log->admin_id = Auth::id();
+        $log->action = "Delete_Parent";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete parent ($parent->parent_name).";
+        $log->action_name = $parent->parent_name;
+        $log->created_at = now();
+        $log->save();
+
+        $parent->delete();
+        return redirect('/admin/parents')->withSuccess('Parent has been deleted successfully..!');
+
     }
 }

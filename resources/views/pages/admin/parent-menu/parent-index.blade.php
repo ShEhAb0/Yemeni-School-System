@@ -60,7 +60,9 @@
                                         <th class="text-secondary opacity-9 purplel-color text-center">#</th>
                                         <th class="text-secondary opacity-9 purplel-color text-center">Parent Name</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Students Number</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">ID</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Username</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
+
                                         <th class="text-secondary opacity-9  purplel-color text-center">Controllers</th>
                                     </tr>
                                     </thead>
@@ -88,6 +90,10 @@
                                             </td>
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-sm font-weight-bold">{{$parent->username}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm font-weight-bold {{$parent->status == 1 ? "text-info" : "text-danger"}}">
+                                                        {{$parent->status == 1 ? "Active" : "Suspend"}}</span>
                                             </td>
                                             <td class="align-middle text-center">
 
@@ -209,10 +215,10 @@
                                     </select>
                                 </div>
 
-                                <p>Choose Student Status</p>
+                                <p>Choose Parent Status</p>
 
                                 <select name="status" class="form-select"  required>
-                                    <option value="" disabled selected>Choose student status</option>
+                                    <option value="" disabled selected>Choose parent status</option>
                                     <option value="1">Active</option>
                                     <option value="0">Suspend</option>
                                 </select>
@@ -307,35 +313,34 @@
                                 @csrf
                                 @method('PUT')
 
-
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" required type="text" name="parent_name" placeholder="Enter Parent Full Name" aria-label="Enter Parent Full Name">
+                                    <input class="form-control" required type="text" name="parent_name" id="parent_name" placeholder="Enter Parent Full Name" aria-label="Enter Parent Full Name">
 
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" type="text" required name="username" placeholder="Enter Parent Username" aria-label="Enter Parent Username">
+                                    <input class="form-control" type="text" required name="username" id="username" placeholder="Enter Parent Username" aria-label="Enter Parent Username">
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
                                     <span class="input-group-text mr-2" id="basic-addon1">@</span>
-                                    <input type="email" class="form-control  " required name="email" placeholder="Enter Parent Email" aria-label="Email" aria-describedby="basic-addon1">
+                                    <input type="email" class="form-control  " required name="email" id="email" placeholder="Enter Parent Email" aria-label="Email" aria-describedby="basic-addon1">
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control my-1 mb-2" required name="password" type="Password" placeholder="Password" aria-label="Password">
+                                    <input class="form-control my-1 mb-2" required name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
 
                                 </div>
                                 <div class="row ">
                                     <p>Enter Parent Gender</p>
                                     <div class="form-check col-5 "  style="margin-left: 20px;">
-                                        <input class="form-check-input"  type="radio" name="gender" id="exampleRadios12" value="male" checked>
+                                        <input class="form-check-input"  type="radio" name="gender" id="gender" value="male" checked>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check col-5">
-                                        <input class="form-check-input"  type="radio" name="gender" id="exampleRadios22" value="female">
+                                        <input class="form-check-input"  type="radio" name="gender" id="gender" value="female">
                                         <label class="form-check-label" for="exampleRadios2">
                                             Female
                                         </label>
@@ -344,11 +349,11 @@
 
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" type="text" name="phone" required placeholder="Enter Parent Phone Number" aria-label="Enter Parent Phone Number">
+                                    <input class="form-control" type="text" name="phone" id="phone" required placeholder="Enter Parent Phone Number" aria-label="Enter Parent Phone Number">
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control" type="text" name="address" required placeholder="Enter Student Address" aria-label="Enter Student Address">
+                                    <input class="form-control" type="text" name="address" id="address" required placeholder="Enter Student Address" aria-label="Enter Student Address">
                                 </div>
                                 <div class="row ">
                                     <div class="row w_50 col-auto my-1 mb-2 w_50" >
@@ -357,10 +362,10 @@
                                     </div>
                                 </div>
 
+                                <div class="row w_50 hidden" id="parentexsits" >
+                                    <p>Choose Student</p>
+                                    <select class="form-select my-1 mb-2" name="user" id="user" required>
 
-                                <div class="row w_50 hidden" id="parentexsits2" >
-                                    <p>Choose Student </p>
-                                    <select class="form-select my-1 mb-2" name="user" required>
                                         @if($users->count() > 0)
                                             <option value="" disabled selected>Select the student</option>
                                             @foreach($users as $user)
@@ -370,19 +375,16 @@
                                     </select>
                                 </div>
 
-                                <p>Choose Student Status</p>
+                                <p>Choose Parent Status</p>
 
-                                <select name="status" class="form-select"  required>
-                                    <option value="" disabled selected>Choose student status</option>
+                                <select name="status" class="form-select" id="status"  required>
+                                    <option value="" disabled selected>Choose parent status</option>
                                     <option value="1">Active</option>
                                     <option value="0">Suspend</option>
                                 </select>
-                                <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
-                                    <input class="form-check-input" type="checkbox" name="choose" id="Choose2" value="1" >
-                                    <label class="form-check-label" for="Choose2" checked>
-                                        Add to exist Student
-                                    </label>
-                                </div>
+
+
+
                                 <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
                                     <input class="form-check-input" type="checkbox" name="choose" id="Choose" value="1" >
                                     <label class="form-check-label" for="Choose2" checked>
@@ -459,6 +461,7 @@
     <!-------------------------Start Delete Parent------------------------------->
 
 
+
     <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -467,14 +470,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="my-1 py-1" id="deleteForm">
+                    <form class="my-1 py-1" id="deleteForm" action="" method="POST">
                         {{csrf_field()}}
                         {{ method_field('DELETE') }}
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="id" id="id" value="">
 
-
-                        <p>Are you sure you want to delete this parent?</p>
+                        <p>Are you sure you want to delete this Parent?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-outline-primary" >Delete</button>
@@ -483,6 +483,10 @@
 
                 </div>
             </div>
+        </div>
+    </div>
+
+
         </div>
     </div>
 
@@ -519,52 +523,35 @@
     </script>
 
 
+        <script src="{{asset('js/axios.min.js')}}"></script>
     <script>
-        var editModal = document.getElementById('#editModal')
+        function getParents(id) {
+            axios({
+                method:'get',
+                url:'/admin/parents/' + id + '/edit'
+            })
+                .then(response =>{
+                    if(response.status === 200){
+                        $('#editForm').attr('action','/admin/parents/'+id);
+                        $('#parent_name').val(response.data.parent_name);
+                        $('#username').val(response.data.username);
+                        $('#email').val(response.data.email);
+                        $('#password').val(response.data.password);
+                        $('#phone').val(response.data.phone);
+                        $('#address').val(response.data.address);
+                        $('#user').val(response.data.user);
+                        $('#status').val(response.data.status);
+                        $('#editModal').modal('show');
+                    }
+                })
+        }
 
-
-        $('#editModal').on('show.bs.modal' , function (event){
-
-
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var full_name = button.data('full_name')
-            var username = button.data('username')
-            var email = button.data('email')
-            var password = button.data('password')
-            var gender = button.data('gender')
-            var phone = button.data('phone')
-            var address = button.data('address')
-            var parent_id_or_passport = button.data('parent_id_or_passport')
-            var student_id = button.data('student_id')
-
-
-            var modal = $(this)
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #full_name').val(full_name);
-            modal.find('.modal-body #username').val(username);
-            modal.find('.modal-body #email').val(email);
-            modal.find('.modal-body #password').val(password);
-            modal.find('.modal-body #gender').val(gender);
-            modal.find('.modal-body #phone').val(phone);
-            modal.find('.modal-body #address').val(address);
-            modal.find('.modal-body #parent_id_or_passport').val(parent_id_or_passport);
-            modal.find('.modal-body #student_id').val(student_id);
-
-        })
-
-        $('#deleteModal').on('show.bs.modal' , function (event){
-
-
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-
-            var modal = $(this)
-            modal.find('.modal-body #id').val(id);
-
-        })
-
+        function deleteParents(id) {
+            $('#deleteForm').attr('action','/admin/parents/'+id);
+            $('#deleteModal').modal('show');
+        }
     </script>
+
 
 
 @endsection
