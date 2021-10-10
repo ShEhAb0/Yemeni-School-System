@@ -202,18 +202,17 @@
                                     </div>
                                 </div>
 
-
+                                @if($users->count() > 0)
                                 <div class="row w_50 hidden" id="parentexsits2" >
                                     <p>Choose Student </p>
                                     <select class="form-select my-1 mb-2" name="user" required>
-                                        @if($users->count() > 0)
                                             <option value="" disabled selected>Select the student</option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->student_name}}</option>
                                             @endforeach
-                                        @endif
                                     </select>
                                 </div>
+                                @endif
 
                                 <p>Choose Parent Status</p>
 
