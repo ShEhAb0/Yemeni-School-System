@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Teacher\TeacherController;
+use App\Http\Controllers\Auth\TeacherLoginController;
 
 
 /*
@@ -17,9 +19,7 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
@@ -84,6 +84,42 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
+    });
+
+});
+
+
+
+
+
+Route::view('/','welcome')->name('login');
+
+
+Route::prefix('teacher')->name('teacher.')->group(function(){
+
+    Route::middleware(['guest:teacher'])->group(function(){
+        //Route::view('/login','pages.teacher.login')->name('login');
+        //   Route::post('/check',[TeacherController::class,'check'])->name('check');
+        Route::post('/login', 'App\Http\Controllers\Auth\TeacherLoginController@login')->name('login');
+
+    });
+
+    Route::middleware(['auth:teacher'])->group(function(){
+        // Route::view('/index' , 'pages.teacher.index')->name('index');
+        Route::get('/index', 'App\Http\Controllers\Teacher\TeacherController@index' )->name('index');
+
+        Route::resource('/schedule' , 'App\Http\Controllers\Teacher\ScheduleController');
+        Route::resource('/lesson' , 'App\Http\Controllers\Teacher\LessonController');
+        Route::resource('/my/students' , 'App\Http\Controllers\Teacher\MyStudentController');
+        Route::get('/my_students/{grade_id}' , 'App\Http\Controllers\Teacher\MyStudentController@getSubjects');
+        Route::post('/my_students' , 'App\Http\Controllers\Teacher\MyStudentController@getStudents');
+        Route::resource('/exam' , 'App\Http\Controllers\Teacher\ExamController');
+        Route::resource('/mark' , 'App\Http\Controllers\Teacher\MarkController');
+        Route::resource('/assignment' , 'App\Http\Controllers\Teacher\AssignmentController');
+        Route::resource('/attendance' , 'App\Http\Controllers\Teacher\AttendanceController');
+        Route::resource('/news' , 'App\Http\Controllers\Teacher\NewsController');
+
+        Route::post('/logout',[TeacherLoginController::class,'logout'])->name('logout');
     });
 
 });

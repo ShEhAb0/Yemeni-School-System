@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
     <title>
         Yemeni School E-learning | Login
+
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -68,25 +69,25 @@
                         <div class="card card-plain mt-8">
                             <div class="card-header pb-0 text-left bg-transparent">
                                 <h3 class="font-weight-bolder text-dark text-gradient">Welcome</h3>
+                                <h5 class="mb-0">Choose User to Get Started</h5>
 
-                                <p class="mb-0">Enter your Username and Password to login</p>
+                                <p class="mb-0">Enter your ID and password to login</p>
                             </div>
                             <div class="card-body">
-                                <form id="formData" method="POST" action="" role="form">
-                                    {{csrf_field()}}
+                                <form role="form"  action="{{route('teacher.login')}}" method="POST">
+                                    @csrf
 
                                     <label>Choose User Type</label>
                                     <div class="mb-3">
-                                        <select class="form-select" aria-label="Default select example" id="menu1" name="menu1" onchange="changeForm(this.selectedIndex);">
-                                            <option hidden selected>Choose User Type</option>
-                                            <option>Teacher</option>
-                                            <option>Student</option>
-                                            <option>Parent</option>
+                                        <select class="form-select" aria-label="Default select example" id="menu1" name="menu1" onchange="window.open(this.options[this.selectedIndex].value);">
+                                            <option value="{{route('teacher.login')}}">Teacher</option>
+                                            <option value="">Student</option>
+                                            <option value="http://treasury.dor.alaska.gov/">Parent</option>
                                         </select>
                                     </div>
-                                    <label>Username</label>
+                                    <label>ID</label>
                                     <div class="mb-3">
-                                        <input type="username" class="form-control" placeholder="Username" aria-label="Enter ID number" name="username"  >
+                                        <input type="username" class="form-control" placeholder="Enter ID number" aria-label="Enter ID number" name="username"  >
                                     </div>
                                     <label>Password</label>
                                     <div class="mb-3" style="position: relative;">
@@ -151,22 +152,18 @@
             $("#switch").append(`<i class="fas fa-eye-slash" style="font-size: 18px;"></i>`)
         }
     });
-
-    function changeForm(id){
-        if (id==1){
-            id = '/teacher/login';
-        }else{
-            id = '/student/login';
-        }
-        $('#formData').attr('action',id);
-    }
 </script>
 <!-- -------- END FOOTER 3 w/ SCHOOL DESCRIPTION COPYRIGHT ------- -->
 <!--   Core JS Files   -->
 <script src="{{asset('/js/popper.min.js')}}"></script>
 <script src="{{asset('/js/bootstrap.min.js')}}"></script>
 
-
+<script type="text/javascript">
+    var urlmenu = document.getElementById( 'menu1' );
+    urlmenu.onchange = function() {
+        window.open( this.options[ this.selectedIndex ].value, '_self');
+    };
+</script>
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
