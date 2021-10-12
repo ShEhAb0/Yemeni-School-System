@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminLog;
-use App\Models\Grade;
-use App\Models\Schedule;
+use App\Models\Teacher;
+use App\Models\TeacherSchedule;
 use App\Models\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ScheduleController extends Controller
+class TeacherScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +20,11 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Schedule::with(['grade','term'])->paginate(10);
+        //
+        $schedules = TeacherSchedule::with(['teacher','term'])->paginate(10);
         $terms = Term::all();
-        $grades = Grade::all();
-        return view('pages.admin.schedule-menu.schedule-index',compact('schedules','terms','grades'));
-
+        $teachers = Teacher::all();
+        return view('pages.admin.schedule-teacher-menu.schedule-teacher-index',compact('schedules','terms','teachers'));
     }
 
     /**
@@ -47,31 +47,31 @@ class ScheduleController extends Controller
     {
         //
         $request->validate([
-           'level' => 'required',
-           'term' => 'required',
-           'schedule' => 'required',
-           'status' => 'required',
+            'teacher' => 'required',
+            'term' => 'required',
+            'schedule' => 'required',
+            'status' => 'required',
         ]);
 
-        $schedule = new Schedule();
-        $schedule->level_id = $request->input('level');
+        $schedule = new TeacherSchedule();
+        $schedule->teacher_id = $request->input('teacher');
         $schedule->term_id = $request->input('term');
         $scheduleFile = $request->file('schedule');
         $filename = time().'.'.$scheduleFile->getClientOriginalName();
-        $request->schedule->move(public_path('images/grade_schedule') , $filename);
+        $request->schedule->move(public_path('images/teacher_schedule') , $filename);
         $schedule->file_name=$filename;
         $schedule->status = $request->input('status');
         $schedule->save();
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
-        $log->action = "Add_Grade_Schedule";
-        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new grade schedule ($filename).";
+        $log->action = "Add_Teacher_Schedule";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") add new teacher schedule ($filename).";
         $log->action_name = $filename;
         $log->created_at = now();
         $log->save();
 
-        return redirect('/admin/schedules')->withSuccess('New grade schedule has been added successfully..');
+        return redirect('/admin/teacher_schedules')->withSuccess('New teacher schedule has been added successfully..');
     }
 
     /**
@@ -94,7 +94,7 @@ class ScheduleController extends Controller
     public function edit($id)
     {
         //
-        $schedule = Schedule::find($id);
+        $schedule = TeacherSchedule::find($id);
         return response($schedule,200);
     }
 
@@ -109,33 +109,34 @@ class ScheduleController extends Controller
     {
         //
         $request->validate([
-            'level' => 'required',
+            'teacher' => 'required',
             'term' => 'required',
             'status' => 'required',
         ]);
 
-        $schedule = Schedule::find($id);
-        $schedule->level_id = $request->input('level');
+        $schedule = TeacherSchedule::find($id);
+        $schedule->teacher_id = $request->input('teacher');
         $schedule->term_id = $request->input('term');
 
         if ($request->file('schedule') != null) {
             $scheduleFile = $request->file('schedule');
             $filename = time() . '.' . $scheduleFile->getClientOriginalName();
-            $request->schedule->move(public_path('images/grade_schedule'), $filename);
+            $request->schedule->move(public_path('images/teacher_schedule') , $filename);
             $schedule->file_name = $filename;
         }
+
         $schedule->status = $request->input('status');
         $schedule->save();
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
-        $log->action = "Update_Grade_Schedule";
-        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update grade schedule ($schedule->file_name).";
+        $log->action = "Update_Teacher_Schedule";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") update teacher schedule ($schedule->file_name).";
         $log->action_name = $schedule->file_name;
         $log->created_at = now();
         $log->save();
 
-        return redirect('/admin/schedules')->withSuccess('Grade schedule has been updated successfully..');
+        return redirect('/admin/teacher_schedules')->withSuccess('Teacher schedule has been updated successfully..');
     }
 
     /**
@@ -147,18 +148,18 @@ class ScheduleController extends Controller
     public function destroy($id)
     {
         //
-        $schedule = Schedule::find($id);
+        $schedule = TeacherSchedule::find($id);
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
-        $log->action = "Delete_Grade_Schedule";
-        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete grade schedule ($schedule->file_name).";
+        $log->action = "Delete_Teacher_Schedule";
+        $log->detils = "Admin (". Auth::guard('admin')->user()->admin_name.") delete teacher schedule ($schedule->file_name).";
         $log->action_name = $schedule->file_name;
         $log->created_at = now();
         $log->save();
 
         $schedule->delete();
 
-        return redirect('/admin/schedules')->withSuccess('Grade schedule has been deleted successfully..');
+        return redirect('/admin/teacher_schedules')->withSuccess('Teacher schedule has been deleted successfully..');
     }
 }

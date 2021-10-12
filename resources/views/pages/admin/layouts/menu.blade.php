@@ -122,7 +122,16 @@
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
-                <span class="nav-link-text ms-1">Schedules</span>
+                <span class="nav-link-text ms-1">Grade Schedules</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link   {{ request()->is('admin/teacher_schedules') ? 'active' : '' }}" href="{{url('admin/teacher_schedules')}} ">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-calendar-alt blue-color-icon" style="font-size: 12px;"></i>
+                </div>
+                <span class="nav-link-text ms-1">Teacher Schedules</span>
             </a>
         </li>
 

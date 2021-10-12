@@ -77,6 +77,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/students' , 'App\Http\Controllers\Admin\StudentController');
         Route::resource('/teachers' , 'App\Http\Controllers\Admin\TeacherController');
         Route::resource('/schedules' , 'App\Http\Controllers\Admin\ScheduleController');
+        Route::resource('/teacher_schedules' , 'App\Http\Controllers\Admin\TeacherScheduleController');
         Route::resource('/news' , 'App\Http\Controllers\Admin\NewsController');
         Route::resource('/admins' , 'App\Http\Controllers\Admin\AdminsController');
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');

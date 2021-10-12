@@ -1,7 +1,7 @@
 @extends('pages.admin.layouts.admin-dashboard')
 @section('navbar')
     <div >
-        <h6 class="font-weight-bolder mb-0">Grade Schedule</h6>
+        <h6 class="font-weight-bolder mb-0">Teacher Schedule</h6>
     </div>
 @endsection
 @section('content')
@@ -38,21 +38,21 @@
 
 
                 <div class="col-4 text-end">
-                    <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">New Grade Schedule </button>
+                    <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">New Teacher Schedule </button>
                 </div>
             </div>
         </div>
 
 
 
-        <!-------------------------Start Grade Schedule Table------------------------------->
+        <!-------------------------Start Teacher Schedule Table------------------------------->
 
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
-                            <h6>Grade Schedule Table</h6>
+                            <h6>Teacher Schedule Table</h6>
                         </div>
 
                         <div class="card-body px-0 pt-0 pb-2">
@@ -62,8 +62,8 @@
                                         <thead>
                                         <tr>
                                             <th class="text-secondary opacity-9 purplel-color text-center">#</th>
-                                            <th class="text-secondary opacity-9 purplel-color text-center">level</th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center">term</th>
+                                            <th class="text-secondary opacity-9 purplel-color text-center">Teacher</th>
+                                            <th class="text-secondary purplel-color opacity-9 text-center">Term</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Schedule</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Created Date</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
@@ -77,14 +77,14 @@
                                                 </th>
 
                                                 <td class="text-center" >
-                                                    <p class="text-sm font-weight-bold mb-0">{{$schedule->grade->grade_name}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$schedule->teacher->teacher_name}}</p>
 
                                                 </td>
                                                 <td class="text-center">
                                                     <p class="text-sm font-weight-bold mb-0">{{$schedule->term->name}}</p>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    <img src="{{asset('/images/grade_schedule/'.$schedule->file_name)}}" class="avatar avatar-sm me-3" alt="user1">
+                                                    <img src="{{asset('/images/teacher_schedule/'.$schedule->file_name)}}" class="avatar avatar-sm me-3" alt="user1">
                                                 </td>
                                                 <td class="text-center">
                                                     <p class="text-sm font-weight-bold mb-0">{{$schedule->created_at}}</p>
@@ -101,7 +101,7 @@
                                                         <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a  class="text-secondary font-weight-bold text-xs" href="{{asset('/images/grade_schedule/'.$schedule->file_name)}}" role="button" target="_blank">
+                                                    <a  class="text-secondary font-weight-bold text-xs" href="{{asset('/images/teacher_schedule/'.$schedule->file_name)}}" role="button" target="_blank">
                                                         <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
                                                     </a>
                                                 </td>
@@ -115,7 +115,7 @@
                                 </div>
                             @else
                                 <div class="text-center">
-                                    <p class="h5 text-danger">There are no grades schedule yet..!</p>
+                                    <p class="h5 text-danger">There are no teacher schedule yet..!</p>
                                 </div>
                             @endif
                         </div>
@@ -123,17 +123,17 @@
                 </div>
             </div>
 
-            <!-------------------------End Grade Schedule Table------------------------------->
+            <!-------------------------End Teacher Schedule Table------------------------------->
 
 
 
-            <!-------------------------Start Edit Grade Schedule------------------------------->
+            <!-------------------------Start Edit Teacher Schedule------------------------------->
 
             <div class="modal  fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Update Grade Schedule</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Update Teacher Schedule</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -141,9 +141,9 @@
 
                                 @csrf
                                 @method('PUT')
-                                <select name="level" id="level" class="form-select my-1 mb-2" required>
-                                        @foreach($grades as $grade)
-                                            <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
+                                <select name="teacher" id="teacher" class="form-select my-1 mb-2" required>
+                                        @foreach($teachers as $teacher)
+                                            <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
                                         @endforeach
                                 </select>
 
@@ -154,7 +154,7 @@
                                 </select>
 
                                 <div class="form-group my-1 mb-2" >
-                                    <label for="schedule">Upload Grade Schedule</label>
+                                    <label for="schedule">Upload Teacher Schedule</label>
                                     <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg" name="schedule">
                                 </div>
 
@@ -176,7 +176,7 @@
                 </div>
 
             </div>
-            <!-------------------------End Edit Grade Schedule------------------------------->
+            <!-------------------------End Edit Teacher Schedule------------------------------->
 
 
 
@@ -184,25 +184,25 @@
 
 
 
-            <!-------------------------Start New Grade Schedule------------------------------->
+            <!-------------------------Start New Teacher Schedule------------------------------->
             <div class="jumbotron">
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog  modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Grade Schedule</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">New Teacher Schedule</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form class="row g-2" action="/admin/schedules" method="post" enctype="multipart/form-data">
+                                <form class="row g-2" action="/admin/teacher_schedules" method="post" enctype="multipart/form-data">
                                     @csrf
                                     @method('POST')
 
-                                    <select name="level" class="form-select my-1 mb-2" required>
-                                        @if($grades->count()>0)
-                                        <option value="" disabled selected>Choose level</option>
-                                        @foreach($grades as $grade)
-                                        <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
+                                    <select name="teacher" class="form-select my-1 mb-2" required>
+                                        @if($teachers->count()>0)
+                                        <option value="" disabled selected>Choose teacher</option>
+                                        @foreach($teachers as $teacher)
+                                        <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -217,7 +217,7 @@
                                     </select>
 
                                     <div class="form-group my-1 mb-2" >
-                                        <label for="schedule">Upload Grade Schedule</label>
+                                        <label for="schedule">Upload Teacher Schedule</label>
                                         <input class="form-control" type="file" required accept="image/png, image/gif, image/jpeg" name="schedule">
                                     </div>
 
@@ -238,19 +238,19 @@
                     </div>
                 </div>
             </div>
-            <!-------------------------End New Grade Schedule------------------------------->
+            <!-------------------------End New Teacher Schedule------------------------------->
 
 
 
 
-            <!-------------------------Start Delete Grade Schedule------------------------------->
+            <!-------------------------Start Delete Teacher Schedule------------------------------->
 
 
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Delete Grade Schedule</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Teacher Schedule</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -269,7 +269,7 @@
                     </div>
                 </div>
 
-                <!-------------------------End Delete Grade Schedule------------------------------->
+                <!-------------------------End Delete Teacher Schedule------------------------------->
 
             </div>
         </div>
@@ -280,12 +280,12 @@
                 function getSchedule(id) {
                     axios({
                         method:'get',
-                        url:'/admin/schedules/' + id + '/edit'
+                        url:'/admin/teacher_schedules/' + id + '/edit'
                     })
                         .then(response =>{
                             if(response.status === 200){
-                                $('#editForm').attr('action','/admin/schedules/'+id);
-                                $('#level').val(response.data.level_id);
+                                $('#editForm').attr('action','/admin/teacher_schedules/'+id);
+                                $('#teacher').val(response.data.teacher_id);
                                 $('#term').val(response.data.term_id);
                                 $('#status').val(response.data.status);
                                 $('#editModal').modal('show');
@@ -294,7 +294,7 @@
                 }
 
                 function deleteSchedule(id) {
-                    $('#deleteForm').attr('action','/admin/schedules/'+id);
+                    $('#deleteForm').attr('action','/admin/teacher_schedules/'+id);
                     $('#deleteModal').modal('show');
                 }
             </script>
