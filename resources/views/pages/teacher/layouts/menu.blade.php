@@ -51,15 +51,15 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link   {{ request()->is('teacher/my/students') ? 'active' : '' }} "  href="{{url('teacher/my/students')}} ">
-                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="fas fa-users blue-color-icon" style="font-size: 12px;"></i>
+{{--        <li class="nav-item">--}}
+{{--            <a class="nav-link   {{ request()->is('teacher/my/students') ? 'active' : '' }} "  href="{{url('teacher/my/students')}} ">--}}
+{{--                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">--}}
+{{--                    <i class="fas fa-users blue-color-icon" style="font-size: 12px;"></i>--}}
 
-                </div>
-                <span class="nav-link-text ms-1">My Students</span>
-            </a>
-        </li>
+{{--                </div>--}}
+{{--                <span class="nav-link-text ms-1">My Students</span>--}}
+{{--            </a>--}}
+{{--        </li>--}}
         <li class="nav-item">
             <a class="nav-link  {{ request()->is('teacher/exam') ? 'active' : '' }} "  href="{{url('teacher/exam')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">

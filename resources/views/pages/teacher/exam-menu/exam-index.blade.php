@@ -903,7 +903,6 @@
             </div>
         </div>
     </div>
-@endsection
 
 
 @section('scripts')
@@ -1067,4 +1066,5 @@
         }
     </script>
 
+@endsection
 @endsection

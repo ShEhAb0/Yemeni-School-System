@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Lesson;
+use App\Models\TeacherSubject;
+use App\Models\Term;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use File;
 
 class AssignmentController extends Controller
 {
@@ -16,8 +20,13 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $assignments = Assignment::all();
-        return view('pages.teacher.assignment-menu.assignment-index')->with('assignments' , $assignments);
+        $assignments = Assignment::where('teacher_id',Auth::id())->paginate(10);
+        $terms = Term::all();
+        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+            return $row->take(1);
+        });
+        return view('pages.teacher.assignment-menu.assignment-index',compact('assignments','terms','teacher_sub','grades'));
 
     }
 
@@ -40,6 +49,38 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+           'title' => 'required',
+           'description' => 'required',
+           'term' => 'required',
+           'subject' => 'required',
+           'grade' => 'required',
+           'file' => 'required',
+           'status' => 'required',
+        ]);
+
+        $assignmentFile = $request->file('file');
+        $filename = time() . '.' . $assignmentFile->getClientOriginalName();
+
+        $assignment = new Assignment();
+        $assignment->title = $request->input('title');
+        $assignment->description = $request->input('description');
+        $assignment->file_name = $filename;
+        $assignment->teacher_id = Auth::id();
+        $assignment->subject_id = $request->input('subject');
+        $assignment->level_id = $request->input('grade');
+        $assignment->term_id = $request->input('term');
+        $assignment->due_date = $request->input('date');
+        $assignment->status = $request->input('status');
+        $assignment->save();
+
+        $path = public_path().'/Assignments/'.$assignment->subjectsAssignments->subject_name;
+        if (!File::exists($path)){
+            File::makeDirectory($path);
+        }
+        $request->file('file')->move($path, $filename);
+
+        return redirect('/teacher/assignment')->withSuccess('New assignment has been added successfully..');
     }
 
     /**
