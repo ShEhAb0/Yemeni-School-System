@@ -18,6 +18,7 @@ class Lesson extends Model
         return $this->hasMany('App\Models\Lesson' , 'lesson_id');
 
     }
+
     public function subjectsLessons()
     {
         return $this->belongsTo('App\Models\Subject' , 'subject_id');

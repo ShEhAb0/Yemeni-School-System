@@ -81,18 +81,17 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($lessons as $lesson)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$lesson->id}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center"></p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$lesson->title}}</p>
                                             </td>
 
-
-
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold"></span>
+                                                <span class="text-secondary text-sm font-weight-bold">{{$lesson->created_at}}</span>
                                             </td>
                                             <td class="align-middle text-center">
 
@@ -111,7 +110,7 @@
 
                                             </td>
                                         </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -218,54 +217,80 @@
                             <h5 class="modal-title" id="exampleModalLabel">New Lesson</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form class="row g-2 my-1 py-1" action="" method="POST" enctype="multipart/form-data">
+                        <form class="row g-2 my-1 py-1" action="/teacher/lesson" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('POST')
                             <div class="modal-body">
-
                                 <div class="col-auto w-100">
                                     <p>Lesson Title</p>
-                                    <input class="form-control my-1 mb-2 " type="text" placeholder="add Lesson Title" aria-label="add Lesson Title" name="lesson_title" required>
+                                    <input class="form-control my-1 mb-2 " type="text" placeholder="add Lesson Title" aria-label="add Lesson Title" name="title" required>
                                 </div>
 
+                                <div class="col-auto w-100">
+                                    <P>Lesson Details</P>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required name="details"></textarea>
+                                </div>
+
+                                <div class="col-auto w_50">
+                                    <p>Select Term</p>
+                                    <select class="form-select" aria-label="Select Grade" name="term">
+                                        <option value="" disabled selected>Choose the Term</option>
+                                        @foreach($terms as $term)
+                                        <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-auto w_50">
+                                    <p>Select Subject</p>
+                                    <select class="form-select" aria-label="Select Class" name="subject" required>
+                                        <option value="" disabled selected>Choose the Subject</option>
+                                        @if($teacher_sub->count()>0)
+                                            @foreach($teacher_sub as $ts)
+                                        <option value="{{$ts->subject_id}}">{{$ts->subject->subject_name}}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
 
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" id="grade" name="grade_id">
-
-
+                                    <select class="form-select" aria-label="Select Grade" name="grade" required>
+                                        <option value="" disabled selected>Choose the Grade</option>
+                                        @if($grades->count()>0)
+                                            @foreach($grades as $grade)
+                                            @foreach($grade as $g)
+                                                <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                            @endforeach
+                                            @endforeach
+                                        @endif
                                     </select>
-                                </div>
-                                <div class="col-auto w_50">
-                                    <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Class" id="subject" name="subject_id">
-
-
-
-
-                                    </select>
-                                </div>
-                                <div class="col-auto w-100">
-                                    <P>Lesson Details</P>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required name="lesson_details"></textarea>
-
                                 </div>
 
                                 <h6>Add Attachments</h6>
                                 <div class="row g-2">
                                     <div class="col-auto w_50 my-1 mb-2" >
                                         <p>upload Video</p>
-                                        <input class="form-control " type="file" id="upload_video" name="upload_video" accept="video/mp4,video/x-m4v,video/*" >
+                                        <input class="form-control " type="file" id="upload_video" name="video" accept="video/mp4,video/x-m4v,video/*" >
                                     </div>
                                     <div class="col-auto w_50 my-1 mb-2" >
                                         <p>upload Picture</p>
-                                        <input class="form-control " type="file" id="upload_image" name="upload_image"  accept="image/png, image/gif, image/jpeg" >
+                                        <input class="form-control " type="file" id="upload_image" name="image"  accept="image/png, image/gif, image/jpeg" >
                                     </div>
                                 </div>
                                 <div class="col-auto w-100  my-1 mb-2" >
                                     <p>upload file</p>
-                                    <input class="form-control " type="file" id="upload_file" name="upload_file"  accept="application/pdf,application/msword,
+                                    <input class="form-control " type="file" id="upload_file" name="doc"  accept="application/pdf,application/msword,
   application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                                 </div>
-
+                                <div class="col-auto">
+                                    <p>Select Grade</p>
+                                    <select class="form-select" aria-label="Select Grade" name="status" required>
+                                        <option value="" disabled selected>Choose the Status</option>
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-outline-primary" >Save</button>

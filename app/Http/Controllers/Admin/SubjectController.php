@@ -108,7 +108,7 @@ class SubjectController extends Controller
     public function edit($id)
     {
         //
-        $subject = Subject::find($id);
+        $subject = TeacherSubject::with('subject')->find($id);
         return response($subject,200);
     }
 
@@ -130,8 +130,8 @@ class SubjectController extends Controller
             'teacher' => 'required',
             'status' => 'required'
         ]);
-
-        $subject = Subject::find($id);
+        $teacher_subject = TeacherSubject::find($id);
+        $subject = Subject::find($teacher_subject->subject_id);
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
@@ -148,13 +148,12 @@ class SubjectController extends Controller
         $subject->status = $request->input('status');
         $subject->save();
 
-        $ts = TeacherSubject::where('subject_id',$id)->first();
-        $ts->teacher_id = $request->teacher;
-        $ts->level_id = $subject->level_id;
-        $ts->term_id = $subject->term_id;
-        $ts->assign_date = now();
-        $ts->status = 1;
-        $ts->save();
+        $teacher_subject->teacher_id = $request->teacher;
+        $teacher_subject->level_id = $subject->level_id;
+        $teacher_subject->term_id = $subject->term_id;
+        $teacher_subject->assign_date = now();
+        $teacher_subject->status = $subject->status;
+        $teacher_subject->save();
 
         return redirect('/admin/subjects')->withSuccess('Subject has been updated successfully..');
     }
@@ -168,7 +167,8 @@ class SubjectController extends Controller
     public function destroy($id)
     {
         //
-        $subject = Subject::find($id);
+        $teacher_subject = TeacherSubject::find($id);
+        $subject = Subject::find($teacher_subject->subject_id);
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
@@ -178,6 +178,7 @@ class SubjectController extends Controller
         $log->created_at = now();
         $log->save();
 
+        $teacher_subject->delete();
         $subject->delete();
 
         return redirect('/admin/subjects')->withSuccess('Subject has been deleted successfully..');

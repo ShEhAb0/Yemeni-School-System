@@ -74,7 +74,7 @@
                                     @foreach($subjects as $subject)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->id}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->id}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->subject_name}}</p>
@@ -103,10 +103,10 @@
 
                                             <td class="align-middle text-center">
 
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  onclick="getSubject({{$subject->subject->id}});" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs  me-3 "  onclick="getSubject({{$subject->id}});" role="button" >
                                                     <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                 </a>
-                                                <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteSubject({{$subject->subject->id}});" role="button" >
+                                                <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteSubject({{$subject->id}});" role="button" >
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
 
@@ -299,10 +299,11 @@
                         .then(response =>{
                             if(response.status === 200){
                                 $('#editForm').attr('action','/admin/subjects/'+id);
-                                $('#subject_name').val(response.data.subject_name);
-                                $('#subject_code').val(response.data.subject_code);
+                                $('#subject_name').val(response.data.subject.subject_name);
+                                $('#subject_code').val(response.data.subject.subject_code);
                                 $('#term').val(response.data.term_id);
                                 $('#grade').val(response.data.level_id);
+                                $('#teacher').val(response.data.teacher_id);
                                 $('#status').val(response.data.status);
                                 $('#editModal').modal('show');
                             }

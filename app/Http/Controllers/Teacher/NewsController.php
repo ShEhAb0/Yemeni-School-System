@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends Controller
@@ -14,7 +15,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return view('pages.teacher.news-menu.news-index');
+        $newses = News::whereIn('type',[0,2])->orderBy('created_at','desc')->paginate(10);
+        return view('pages.teacher.news-menu.news-index',compact('newses'));
 
     }
 
