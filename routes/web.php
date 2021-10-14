@@ -6,6 +6,11 @@ use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Teacher\TeacherController;
 use App\Http\Controllers\Auth\TeacherLoginController;
+use App\Http\Controllers\Auth\UserLoginController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Auth\ParentLoginController;
+use App\Http\Controllers\Parent\ParentController;
+
 
 
 /*
@@ -124,4 +129,63 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
     });
 
 });
+
+
+
+
+Route::prefix('user')->name('user.')->group(function () {
+
+    Route::middleware(['guest:web'])->group(function(){
+        Route::post('/login', 'App\Http\Controllers\Auth\UserLoginController@login')->name('login');
+
+    });
+
+
+    Route::middleware(['auth:web'])->group(function(){
+        Route::get('/index', 'App\Http\Controllers\User\UserController@index' )->name('index');
+
+
+
+        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+Route::prefix('parent')->name('parent.')->group(function () {
+
+    Route::middleware(['guest:parent'])->group(function(){
+        Route::post('/login', 'App\Http\Controllers\Auth\ParentLoginController@login')->name('login');
+
+    });
+
+
+    Route::middleware(['auth:parent'])->group(function(){
+        Route::view('/index' , 'pages.parent.index')->name('index');
+
+        Route::resource('/schedule' , 'App\Http\Controllers\Parent\ScheduleController');
+        Route::resource('/today/work' , 'App\Http\Controllers\Parent\TodayWorkController');
+        Route::resource('/lesson' , 'App\Http\Controllers\Parent\LessonController');
+        Route::resource('/exam' , 'App\Http\Controllers\Parent\ExamController');
+        Route::resource('/mark' , 'App\Http\Controllers\Parent\MarkController');
+        Route::resource('/assignment' , 'App\Http\Controllers\Parent\AssignmentController');
+        Route::resource('/attendance' , 'App\Http\Controllers\Parent\AttendanceController');
+        Route::resource('/news' , 'App\Http\Controllers\Parent\NewsController');
+
+
+
+        Route::post('/logout',[ParentLoginController::class,'logout'])->name('logout');
+    });
+
+});
+
+
 

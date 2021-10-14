@@ -155,7 +155,6 @@
 
 @yield('content')
 </main>
-</body>
 
 <script src="{{asset('/FortAwesome/js/all.min.js')}}"></script>
 <script src="{{asset('/js/jquery-3.3.1.slim.min.js')}}"></script>
@@ -165,4 +164,6 @@
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
 
 @yield('scripts')
+</body>
+
 </html>

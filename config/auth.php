@@ -27,6 +27,10 @@ return [
         'model'=>App\Models\Teacher::class,
     ],
 
+    'parent'=>[
+        'driver'=>'eloquent',
+        'model'=>App\Models\Parents::class,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -66,6 +70,14 @@ return [
             'driver' => 'token',
             'provider' => 'teachers',
         ],
+        'parent'=>[
+            'driver'=>'session',
+            'provider'=>'parents',
+        ],
+        'parent-api' => [
+            'driver' => 'token',
+            'provider' => 'parents',
+        ],
     ],
 
     /*
@@ -88,7 +100,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
@@ -103,6 +115,10 @@ return [
         'teachers'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Teacher::class,
+        ],
+        'parents'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Parents::class,
         ],
     ],
 
@@ -136,6 +152,10 @@ return [
         'teachers'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Teacher::class,
+        ],
+        'parents'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Parents::class,
         ],
     ],
 

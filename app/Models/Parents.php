@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use function Symfony\Component\Translation\t;
 
-class Parents extends Model
+class Parents extends Authenticatable
 {
     use HasFactory;
 

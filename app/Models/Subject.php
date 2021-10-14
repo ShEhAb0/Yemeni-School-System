@@ -53,5 +53,10 @@ class Subject extends Model
         return $this->belongsTo('App\Models\Teacher','teacher_id');
 
     }
+    public function subjects()
+    {
+        return $this->hasMany('App\Models\Subject' , 'subject_id');
+
+    }
 
 }

@@ -155,9 +155,14 @@
     function changeForm(id){
         if (id==1){
             id = '/teacher/login';
-        }else{
-            id = '/student/login';
         }
+        if (id==2){
+            id = '/user/login';
+        }
+        if (id==3){
+            id = '/parent/login';
+        }
+
         $('#formData').attr('action',id);
     }
 </script>

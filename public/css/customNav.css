@@ -28,6 +28,17 @@
 .purpled-color{
     color: rgba(58, 65, 111, 0.95)!important;
 }
+.bg_blue{
+  background-color: rgba(58, 65, 111, 0.95)!important;
+}
+.greena-color{
+  color:#46CC8C!important;
+
+}
+.greenbg-color{
+  background-color:#46CC8C!important;
+
+}
 .purplel-color{
   color: #277553!important;
 }
@@ -42,6 +53,9 @@
 }
 .white{
     color: #FFF!important;
+}
+.black{
+  color: #222;
 }
 .select-checkbox{
     background-color: rgb(22 27 56 / 95%)!important;
@@ -309,7 +323,9 @@ nav i {
   line-height: 18px;
 }
 #main {
+  margin: 0 auto;
 margin-top: 2vh;
+
 display: flex;
 flex-direction: row;
 align-items: center;
@@ -609,7 +625,7 @@ position: relative;
   background-repeat: no-repeat;
     position: relative;
     background-size: contain;
-    height: 500px;
+    height: 524px;
 
     width: 100%;
 }
@@ -619,6 +635,7 @@ position: relative;
 .inputDnD .form-control-file {
   position: relative;
   width: 100%;
+  top: 57px;
   min-height: 6em;
   outline: none;
   visibility: hidden;
@@ -653,12 +670,12 @@ position: relative;
 }
 
 .person1{
-  position: absolute;
+
   background-image: url("../img/illustrations/person1.jpg");
-  background-size: cover;
+  background-size: contain;
   width: 100%;
   height: 436px;
-  top: 23%;
+  background-repeat: no-repeat;
   z-index: -2;
 
   }
@@ -668,7 +685,7 @@ position: relative;
     background-image: url("../img/illustrations/TeacherAssigementpic1.png");
     background-repeat: no-repeat;
     background-size: contain;
-    min-height: 318px;
+    min-height: 371px;
     width: 100%;
     
   
@@ -676,6 +693,10 @@ position: relative;
 .Te_ic{
     top: 200;
   }
+.Te_i{
+    top: 139;
+}
+
 #Answer_scroll::-webkit-scrollbar-thumb {
     -webkit-border-radius: 10px;
     border-radius: 10px;
@@ -688,6 +709,9 @@ position: relative;
     background-color: #cfcece!important;
     -webkit-border-radius: 10px;
     border-radius: 10px;
+}
+.bg_gr{
+  background-color: #cfcece!important;
 }
 .controal_bg{
 
@@ -706,3 +730,90 @@ position: relative;
 277553
 0088cc
 */
+#waves{
+  background-color: rgba(223, 221, 221, 0.75)
+}
+.card-bodya{
+  box-shadow: 0 20px 27px 0 rgba(70, 204, 140,0.5)!important;
+  
+  }
+
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:after {
+
+  content: "✔" !important;
+}
+.buttonTest{
+  display: none;
+}
+.noExam{
+  /* background-image: url(../img/illustrations/Noexa.png);
+  width: 100%;
+  height: 500px;
+  background-repeat: no-repeat;
+  background-size: contain; */
+  position: relative;
+    background-image: url(../img/illustrations/Noexa.png);
+    /* height: 500px; */
+    height: 397px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    /* left: 19%; */
+    left: 26%;
+}
+.TestSEC{
+  position: fixed;
+  width: 24%;
+  display: block;
+ }
+@media only screen and (max-width: 600px) {
+  .noExam{
+    position: relative;
+      background-image: url(../img/illustrations/Noexa.png);
+      height: 500px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      left: 1%;
+  }
+
+}
+@media only screen and (max-width: 992px) {
+  .TestSEC{
+    position: fixed;
+    width: 83%;
+    display: none;
+    z-index: 10000;
+    top: 142px;
+    right: 0;
+   }
+   .buttonTest{
+    display: block;
+    position: fixed;
+    width: 8%;
+    z-index: 1000000;
+    right: 0;
+}
+  
+ 
+}
+@media only screen and (min-width: 992px) {
+#exampleModal1{
+  display: block!important;
+}
+
+
+}
+@media only screen and (max-width: 650px) {
+  #cols{
+    width: 100%!important;
+  }
+ 
+}
+@media only screen and (max-width: 989px) {
+  #lessonmain{
+    flex-wrap: wrap!important;
+  }
+ #pics{
+    display: none!important;
+  }
+}

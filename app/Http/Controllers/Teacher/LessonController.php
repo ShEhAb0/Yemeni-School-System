@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Attachment;
 use App\Models\Lesson;
-use App\Models\TeacherSubject;
-use App\Models\Term;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Term;
+use App\Models\Attachment;
+use App\Models\TeacherSubject;
 use File;
 
 class LessonController extends Controller
@@ -24,14 +24,13 @@ class LessonController extends Controller
         $terms = Term::all();
         $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
         $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
-             return $row->take(1);
+            return $row->take(1);
         });
 //        $grades = TeacherSubject::where('teacher_id',Auth::id())->with('grades',function ($row){
 //            return $row->orderBy->take(1);
 //        })->get();
 //        dd($grades);
         return view('pages.teacher.lesson-menu.lesson-index',compact('lessons','terms','teacher_sub','grades'));
-
     }
 
     /**
@@ -52,13 +51,12 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $request->validate([
-           'title' => 'required',
-           'details' => 'required',
-           'subject' => 'required',
-           'term' => 'required',
-           'grade' => 'required',
+            'title' => 'required',
+            'details' => 'required',
+            'subject' => 'required',
+            'term' => 'required',
+            'grade' => 'required',
         ]);
 
         $lesson = new Lesson();
@@ -145,7 +143,8 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lesson = Lesson::find($id);
+        return response($lesson,200);
     }
 
     /**
