@@ -103,7 +103,8 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $assignment = Lesson::find($id);
+        return response($assignment,200);
     }
 
     /**
@@ -115,7 +116,28 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'term' => 'required',
+            'subject' => 'required',
+            'grade' => 'required',
+            'status' => 'required',
+        ]);
+
+        $assignment = Assignment::find($id);
+        $assignment->title = $request->input('title');
+        $assignment->description = $request->input('description');
+        $assignment->teacher_id = Auth::id();
+        $assignment->subject_id = $request->input('subject');
+        $assignment->level_id = $request->input('grade');
+        $assignment->term_id = $request->input('term');
+        $assignment->due_date = $request->input('date');
+        $assignment->status = $request->input('status');
+        $assignment->save();
+
+        return redirect('/teacher/assignment')->withSuccess('Assignment has been updated successfully..!');
+
     }
 
     /**
@@ -126,6 +148,10 @@ class AssignmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $assignment = Assignment::find($id);
+        $assignment->delete();
+
+        return redirect('/teacher/assignment')->withSuccess('Assignment has been deleted successfully..!');
+
     }
 }

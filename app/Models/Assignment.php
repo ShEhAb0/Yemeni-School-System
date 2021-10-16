@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Assignment extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = "assignments";
-    protected $fillable = ['id' , 'teacher_id ', 'student_id' , 'subject_id' ,'level_id' , 'term_id ' , 'due_date' , 'delivery_date' , 'mark' , 'status' ];
+    protected $fillable = ['id' , 'teacher_id ',  'subject_id' ,'level_id' , 'term_id ' , 'due_date' , 'delivery_date' , 'mark' , 'status' ];
 
     public function teachersAssignments()
     {

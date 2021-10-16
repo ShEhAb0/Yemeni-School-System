@@ -39,17 +39,24 @@
 
                     <div class="col-auto w_50">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-
+                        <select class="form-select" aria-label="Select Grade"  name="Grade">
+                            @if($grades->count()>0)
+                                @foreach($grades as $grade)
+                                    @foreach($grade as $g)
+                                        <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                    @endforeach
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="col-auto w_50">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-
-
+                        <select class="form-select" aria-label="Select Class"  name="Subject">
+                            @if($teacher_sub->count()>0)
+                                @foreach($teacher_sub as $ts)
+                                    <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -104,18 +111,18 @@
                                                 </td>
                                                 <td class="align-middle text-center">
 
-                                                    <a  class="text-secondary font-weight-bold text-xs  me-3"    role="button"   onclick="getLesson({{$lesson->id}});">
+                                                    <a  class="text-secondary font-weight-bold text-xs  me-3"    role="button"   onclick="javascript:getLesson({{$lesson->id}})">
                                                         <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a  class="text-secondary font-weight-bold text-xs me-3" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs me-3" role="button" onclick="deleteLesson({{$lesson->id}});">
                                                         <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                     </a>
                                                     <a  class="text-secondary font-weight-bold text-xs me-3"  data-bs-toggle="modal" href="#attendance" role="button">
                                                         <i class="far fa-id-card purplel-color" style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a  class="text-secondary font-weight-bold text-xs  "  data-bs-toggle="modal" href="./lesson/show" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs  "  data-bs-toggle="modal" onclick="showLesson({{$lesson->id}});" role="button">
                                                         <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
                                                     </a>
 
@@ -179,7 +186,7 @@
                                         <option value="" disabled selected>Choose the Subject</option>
                                         @if($teacher_sub->count()>0)
                                             @foreach($teacher_sub as $ts)
-                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_name}}</option>
+                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -269,7 +276,7 @@
 
 
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" name="grade" required>
+                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grade" required>
                                         <option value="" disabled selected>Choose the Grade</option>
                                         @if($grades->count()>0)
                                             @foreach($grades as $grade)
@@ -282,11 +289,11 @@
                                 </div>
                                 <div class="row">
                                     <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Class" name="subject" required>
+                                    <select class="form-select" aria-label="Select Class" name="subject" id="subject" required>
                                         <option value="" disabled selected>Choose the Subject</option>
                                         @if($teacher_sub->count()>0)
                                             @foreach($teacher_sub as $ts)
-                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_name}}</option>
+                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -294,12 +301,12 @@
 
                                 <div class="col-auto w-100">
                                     <p>Lesson Title</p>
-                                    <input class="form-control my-1 mb-2 " type="text" placeholder="add Lesson Title" aria-label="add Lesson Title" name="title" id="title">
+                                    <input class="form-control my-1 mb-2 " type="text" placeholder="add Lesson Title" aria-label="add Lesson Title" name="title" id="title" required>
                                 </div>
 
                                 <div class="col-auto w-100">
                                     <P>Lesson Details</P>
-                                    <textarea class="form-control"  rows="3" name="description" id="description"></textarea>
+                                    <textarea class="form-control"  rows="3" name="description" id="description" required ></textarea>
 
                                 </div>
 
@@ -425,7 +432,11 @@
                 .then(response =>{
                     if(response.status === 200){
                         $('#editForm').attr('action','/teacher/lesson/'+id);
-
+                        $('#term').val(response.data.term_id);
+                        $('#grade').val(response.data.level_id);
+                        $('#subject').val(response.data.subject_id);
+                        $('#title').val(response.data.title);
+                        $('#description').val(response.data.description);
                         $('#status').val(response.data.status);
                         $('#editModal').modal('show');
                     }
@@ -435,6 +446,27 @@
         function deleteLesson(id) {
             $('#deleteForm').attr('action','/teacher/lesson/'+id);
             $('#deleteModal').modal('show');
+        }
+        function showLesson(id){
+            axios({
+                method:'get',
+                url:'/teacher/lesson/' + id + '/show'
+            })
+            var newWindow = window.open('/teacher/lesson/' +id);
+                        $('#term').val(response.data.term_id);
+                        $('#grade').val(response.data.level_id);
+                        $('#subject').val(response.data.subject_id);
+                        $('#title').val(response.data.title);
+                        $('#description').val(response.data.description);
+                        $('#status').val(response.data.status);
+                        newWindow.my_childs_special_setting = $('#title').val(response.data.title);
+
+
+
+
+
+
+
         }
     </script>
 @endsection

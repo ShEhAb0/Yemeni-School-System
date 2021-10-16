@@ -39,44 +39,26 @@
                 <br/>
                 <div class="row g2">
 
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-auto w_50">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                            <option value="1">Grade 1</option>
-                            <option value="2">Grade 2</option>
-                            <option value="3">Grade 3</option>
-
-
-                            <option value="4">Grade 4</option>
-                            <option value="5">Grade 5</option>
-                            <option value="6">Grade 6</option>
-
-
-                            <option value="7">Grade 7</option>
-                            <option value="8">Grade 8</option>
-                            <option value="9">Grade 9</option>
-
-
-                            <option value="10">Grade 10</option>
-                            <option value="11">Grade 11</option>
-                            <option value="12">Grade 12</option>
-                            <option value="13">Grade 13</option>
-
+                        <select class="form-select" aria-label="Select Grade"  name="Grade">
+                            @if($grades->count()>0)
+                                @foreach($grades as $grade)
+                                    @foreach($grade as $g)
+                                        <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                    @endforeach
+                                @endforeach
+                            @endif
                         </select>
                     </div>
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-auto w_50">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                            <option value="1">Math</option>
-                            <option value="2">Arabic</option>
-                            <option value="3">Biolody</option>
-                            <option value="4">English</option>
-                            <option value="5">science</option>
-                            <option value="6">chemistry</option>
-                            <option value="7">History</option>
-
+                        <select class="form-select" aria-label="Select Class"  name="Subject">
+                            @if($teacher_sub->count()>0)
+                                @foreach($teacher_sub as $ts)
+                                    <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -107,6 +89,8 @@
                                             </th>
                                             <th class="text-secondary purplel-color opacity-9  text-center">DeadLine
                                             </th>
+                                            <th class="text-secondary purplel-color opacity-9  text-center">Status
+                                            </th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Controllers
                                             </th>
                                         </tr>
@@ -123,18 +107,23 @@
 
 
                                             <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">{{$assignment->due_date}}</span>
+                                                <span class="text-secondary text-sm font-weight-bold">{{date('Y-m-d' , strtotime($assignment->due_date))}}</span>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center {{$assignment->status == 1 ? "text-danger" : "text-info"}}">
+                                                    {{$assignment->status == 1 ? "New" : "Published"}}
+                                                </p>
                                             </td>
                                             <td class="align-middle text-center">
 
                                                 <a class="text-secondary font-weight-bold text-xs  me-3"
-                                                   data-bs-toggle="modal" href="#examplUpdate" role="button">
+                                                   onclick="javascript:getAssignment({{$assignment->id}})" role="button">
                                                     <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                 </a>
 
-                                                <a href="javascript:;"
+                                                <a
                                                    class="text-secondary font-weight-bold text-xs me-3"
-                                                   data-toggle="tooltip" data-original-title="Edit user">
+                                                   data-toggle="tooltip"onclick="deleteAssignment({{$assignment->id}}); "  role="button" >
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
                                                 <a class="text-secondary font-weight-bold text-xs"
@@ -161,8 +150,15 @@
                     </div>
                 </div>
             </div>
-            <!--modals-->
-            <div class="modal fade" id="examplUpdate" tabindex="-1" aria-labelledby="exampleModalLabelUpda"
+
+
+
+            <!-------------------------Start Edit Assignment------------------------------->
+
+
+
+
+            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabelUpda"
                  aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -171,84 +167,93 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-2 my-1 py-1">
+                            <form class="row g-2"  id="editForm" method="POST" action="">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="col-auto w-100">
+                                    <p>Assignment Title</p>
+                                    <input type="text" class="form-control" name="title" id="title" required>
+                                </div>
                                 <div class="col-auto w-100">
                                     <p>Assignment Description</p>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
+                                </div>
+                                <div class="col-auto w_50">
+                                    <p>Select Term</p>
+                                    <select class="form-select" aria-label="Select Grade" name="term" id="term">
+                                        <option value="" disabled selected>Choose the Term</option>
+                                        @foreach($terms as $term)
+                                            <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                                        <option value="1">Grade 1</option>
-                                        <option value="2">Grade 2</option>
-                                        <option value="3">Grade 3</option>
-
-
-                                        <option value="4">Grade 4</option>
-                                        <option value="5">Grade 5</option>
-                                        <option value="6">Grade 6</option>
-
-
-                                        <option value="7">Grade 7</option>
-                                        <option value="8">Grade 8</option>
-                                        <option value="9">Grade 9</option>
-
-
-                                        <option value="10">Grade 10</option>
-                                        <option value="11">Grade 11</option>
-                                        <option value="12">Grade 12</option>
-                                        <option value="13">Grade 13</option>
-
+                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grde" required>
+                                        <option value="" disabled selected>Choose the Grade</option>
+                                        @if($grades->count()>0)
+                                            @foreach($grades as $grade)
+                                                @foreach($grade as $g)
+                                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
+
+
                                 <div class="col-auto w_50">
                                     <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                                        <option value="1">Math</option>
-                                        <option value="2">Arabic</option>
-                                        <option value="3">Biolody</option>
-                                        <option value="4">English</option>
-                                        <option value="5">science</option>
-                                        <option value="6">chemistry</option>
-                                        <option value="7">History</option>
-
+                                    <select class="form-select" aria-label="Select Class" name="subject" id="subject" required>
+                                        <option value="" disabled selected>Choose Subject</option>
+                                        @if($teacher_sub->count()>0)
+                                            @foreach($teacher_sub as $ts)
+                                                <option
+                                                    value="{{$ts->subject_id}}">{{$ts->subject->subject_name}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
 
-                                <div class="col-auto w-100">
+
+
+                                <div class="col-auto w-50">
                                     <p>Choose DeadLine</p>
-                                    <input class="form-control my-1 mb-2 " type="date" placeholder="Grade Code"
-                                           aria-label="Subject Code">
+                                    <input class="form-control my-1 mb-2" type="date" name="date" id="date"
+                                           aria-label="Choose DeadLine" required>
                                 </div>
-                                <h6>Add Attachments</h6>
-                                <div class="row g-2">
-                                    <div class="col-auto w_50 my-1 mb-2">
-                                        <p>upload Vedio</p>
-                                        <input class="form-control " type="file" id="formFile2" name="formFile2">
-                                    </div>
-                                    <div class="col-auto w_50 my-1 mb-2">
-                                        <p>upload Picture</p>
-                                        <input class="form-control " type="file" id="formFile2" name="formFile2">
-                                    </div>
+                                <div class="col-auto w_50">
+                                    <p>Upload File</p>
+                                    <input class="form-control" type="file" name="file" id="file" >
                                 </div>
-                                <div class="col-auto w-100  my-1 mb-2">
-                                    <p>upload file</p>
-                                    <input class="form-control " type="file" id="formFile2" name="formFile2">
+                                <div class="col-auto w-100">
+                                    <p>Select Status</p>
+                                    <select class="form-select" aria-label="Select Status" name="status" id="status" required>
+                                        <option value="" disabled selected>Choose Status</option>
+                                        <option value="1">Enabled</option>
+                                        <option value="0">Disabled</option>
+                                    </select>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                    <button type="submit" class="btn btn-outline-primary">Save Changes</button>
                                 </div>
                             </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
-                            </button>
-                            <button type="button" class="btn btn-outline-primary">Save changes</button>
                         </div>
                     </div>
                 </div>
 
             </div>
+
+            <!-------------------------End Edit Assignment------------------------------->
+
+
+
+
+            <!-------------------------Start New Assignment------------------------------->
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
@@ -258,10 +263,12 @@
                             <h5 class="modal-title" id="exampleModalLabel">New Assignment</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <div class="modal-body">
                         <form class="row g-2 my-1 py-1" method="POST" action="/teacher/assignment" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
-                            <div class="modal-body">
+
+
                                 <div class="col-auto w-100">
                                     <p>Assignment Title</p>
                                     <input type="text" class="form-control" name="title" required>
@@ -272,15 +279,27 @@
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
-                                    <select class="form-select" aria-label="Select Term" name="term" required>
-                                        <option value="" disabled selected>Choose the term</option>
-                                        @if($terms->count()>0)
-                                            @foreach($terms as $term)
-                                                <option value="{{$term->id}}">{{$term->name}}</option>
+                                    <select class="form-select" aria-label="Select Grade" name="term">
+                                        <option value="" disabled selected>Choose the Term</option>
+                                        @foreach($terms as $term)
+                                            <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-auto w_50">
+                                    <p>Select Grade</p>
+                                    <select class="form-select" aria-label="Select Grade" name="grade" required>
+                                        <option value="" disabled selected>Choose the Grade</option>
+                                        @if($grades->count()>0)
+                                            @foreach($grades as $grade)
+                                                @foreach($grade as $g)
+                                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                                @endforeach
                                             @endforeach
                                         @endif
                                     </select>
                                 </div>
+
 
                                 <div class="col-auto w_50">
                                     <p>Select Subject</p>
@@ -295,22 +314,9 @@
                                     </select>
                                 </div>
 
-                                <div class="col-auto w_50">
-                                    <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" name="grade" required>
-                                        <option value="" disabled selected>Choose the grade</option>
-                                        @if($grades->count()>0)
-                                            @foreach($grades as $grade)
-                                                @foreach($grade as $g)
-                                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
-                                                @endforeach
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
 
 
-                                <div class="col-auto w-100">
+                                <div class="col-auto w-50">
                                     <p>Choose DeadLine</p>
                                     <input class="form-control my-1 mb-2" type="date" name="date"
                                            aria-label="Choose DeadLine" required>
@@ -319,7 +325,7 @@
                                     <p>Upload File</p>
                                     <input class="form-control" type="file" name="file" required>
                                 </div>
-                                <div class="col-auto">
+                                <div class="col-auto w-100">
                                     <p>Select Status</p>
                                     <select class="form-select" aria-label="Select Status" name="status" required>
                                         <option value="" disabled selected>Choose Status</option>
@@ -327,19 +333,92 @@
                                         <option value="0">Disabled</option>
                                     </select>
                                 </div>
-                            </div>
+
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
                                 </button>
                                 <button type="submit" class="btn btn-outline-primary">Save</button>
                             </div>
                         </form>
+                        </div>
                     </div>
                 </div>
 
             </div>
 
+            <!-------------------------End New Assignment------------------------------->
+
+
+
+            <!-------------------------Start Delete Assignment------------------------------->
+
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Assignment</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="my-1 py-1" action="" method="POST" id="deleteForm">
+                                {{csrf_field()}}
+                                {{ method_field('DELETE') }}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="id" id="id" value="">
+
+
+                                <p>Are you sure you want to delete this assignment?</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-------------------------End Delete Lesson------------------------------->
+
+
+
 
         </div>
     </div>
 @endsection
+
+
+@section('scripts')
+
+    <script src="{{asset('js/axios.min.js')}}"></script>
+    <script>
+        function getAssignment(id) {
+            axios({
+                method:'get',
+                url:'/teacher/assignment/' + id + '/edit'
+            })
+                .then(response =>{
+                    if(response.status === 200){
+                        $('#editForm').attr('action','/teacher/assignment/'+id);
+                        $('#term').val(response.data.term_id);
+                        $('#grade').val(response.data.level_id);
+                        $('#subject').val(response.data.subject_id);
+                        $('#title').val(response.data.title);
+                        $('#description').val(response.data.description);
+                        $('#date').val(response.data.due_date);
+                        $('#status').val(response.data.status);
+                        $('#editModal').modal('show');
+                    }
+                })
+        }
+
+        function deleteAssignment(id) {
+            $('#deleteForm').attr('action','/teacher/assignment/'+id);
+            $('#deleteModal').modal('show');
+        }
+
+    </script>
+@endsection
+

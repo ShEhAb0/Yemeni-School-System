@@ -131,7 +131,20 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        return view('pages.teacher.lesson-menu.lesson-show');
+        $lessons = Lesson::where('teacher_id',Auth::id())->paginate(10);
+        $terms = Term::all();
+        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+            return $row->take(1);
+        });
+//        $grades = TeacherSubject::where('teacher_id',Auth::id())->with('grades',function ($row){
+//            return $row->orderBy->take(1);
+//        })->get();
+//        dd($grades);
+        return view('pages.teacher.lesson-menu.lesson-show',compact('lessons','terms','teacher_sub','grades'));
+
+       // $lessons = Lesson::find($id);
+        //return view('pages.teacher.lesson-menu.lesson-show' , compact($lessons) );
 
     }
 
@@ -143,6 +156,7 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
+
         $lesson = Lesson::find($id);
         return response($lesson,200);
     }
@@ -156,7 +170,27 @@ class LessonController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'subject' => 'required',
+            'term' => 'required',
+            'grade' => 'required',
+        ]);
+
+        $lesson = Lesson::find($id);
+        $lesson->teacher_id = Auth::id();
+        $lesson->title = $request->input('title');
+        $lesson->description = $request->input('description');
+        $lesson->subject_id = $request->input('subject');
+        $lesson->term_id = $request->input('term');
+        $lesson->level_id = $request->input('grade');
+        $lesson->status = $request->input('status');
+
+        $lesson->save();
+
+        return redirect('/teacher/lesson')->withSuccess('Lesson has been updated successfully..!');
+
     }
 
     /**
@@ -167,6 +201,10 @@ class LessonController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $lesson = Lesson::find($id);
+        $lesson->delete();
+
+        return redirect('/teacher/lesson')->withSuccess('Lesson has been deleted successfully..!');
+
     }
 }

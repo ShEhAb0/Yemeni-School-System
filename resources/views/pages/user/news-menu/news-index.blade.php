@@ -1,35 +1,41 @@
-@extends('pages.parent.layouts.parent-dashboard')
+@extends('pages.user.layouts.user-dashboard')
 @section('navbar')
     <h6 class="font-weight-bolder mb-0">News</h6>
 @endsection
 @section('content')
 
     <div class="container-fluid">
+
         <br/>
 
         <br/>
         <h3 class="purplel-color">News Of Today</h3>
         <div class="row mt-4">
-            @if($newses->count() > 0)
-
+            @foreach($newses as $news)
             <div class="card">
+                @if($newses->count() > 0)
+
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h6>News tit</h6>
-                        <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">22/04/18</span></span>
+                        <h6>{{$news->title}}</h6>
+                        <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">{{$news->created_at}}</span></span>
                     </div>
                 </div>
                 <div class="card-body  pb-0">
-                    <p class="text-body">The concept of the text is not a stable one. It is always changing as the technologies for publishing and disseminating texts evolve. In the past, texts were usually presented as printed matter in bound volumes such as pamphlets or books. <span class="text-body content">Today, however, people are more likely to encounter texts in digital space, where the materials are becoming "more fluid," according to linguists David Barton and Carmen Lee</span><a role="button" class="purplel-color text-bold show_hide" >View More..</a></p>
+                    <p class="text-body"class="text-body content">{{$news->description}}
+                            <a role="button" class="purplel-color text-bold show_hide" >View More..</a></p>
 
                 </div>
             </div>
-
-            @else
-                <div class="text-center">
-                    <p class="h5 text-danger">There are no news yet..!</p>
-                </div>
-            @endif
+                @else
+                    <div class="text-center">
+                        <p class="h5 text-danger">There are no news yet..!</p>
+                    </div>
+                @endif
+            @endforeach
+        </div>
+        <div class="text-center">
+            {{$newses->render()}}
 
 
         </div>

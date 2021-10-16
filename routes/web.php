@@ -144,6 +144,15 @@ Route::prefix('user')->name('user.')->group(function () {
     Route::middleware(['auth:web'])->group(function(){
         Route::get('/index', 'App\Http\Controllers\User\UserController@index' )->name('index');
 
+        Route::resource('/schedule' , 'App\Http\Controllers\User\ScheduleController');
+        Route::resource('/today/work' , 'App\Http\Controllers\User\TodayWorkController');
+        Route::resource('/lesson' , 'App\Http\Controllers\User\LessonController');
+        Route::resource('/exam' , 'App\Http\Controllers\User\ExamController');
+        Route::resource('/mark' , 'App\Http\Controllers\User\MarkController');
+        Route::resource('/assignment' , 'App\Http\Controllers\User\AssignmentController');
+        Route::resource('/attendance' , 'App\Http\Controllers\User\AttendanceController');
+        Route::resource('/news' , 'App\Http\Controllers\User\NewsController');
+
 
 
         Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');

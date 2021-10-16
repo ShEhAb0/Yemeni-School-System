@@ -2,7 +2,7 @@
 <div class="collapse navbar-collapse  w-auto  max-height-vh-80 h-100 overflowfix" id="sidenav-collapse-main">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link  active" href="./dashboard.html">
+            <a class="nav-link {{ request()->is('user/index') ? 'active' : '' }} "  href="{{route('user.index')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>shop </title>
@@ -22,7 +22,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="./Sechdule.html">
+            <a class="nav-link  {{ request()->is('user/schedule') ? 'active' : '' }} "  href="{{url('user/schedule')}}"   >
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -30,7 +30,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="./Todaywork.html">
+            <a class="nav-link {{ request()->is('user/today/work') ? 'active' : '' }} "  href="{{url('user/today/work')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>document</title>
@@ -51,7 +51,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link  " href="./lessones.html">
+            <a class="nav-link  {{ request()->is('user/lesson') ? 'active' : '' }} "  href="{{url('user/lesson')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>box-3d-50</title>
@@ -72,7 +72,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="./Exames.html">
+            <a class="nav-link   {{ request()->is('user/exam') ? 'active' : '' }} "  href="{{url('user/exam')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 
                     <i class="fas fa-keyboard blue-color-icon" style="font-size: 12px;"></i>
@@ -82,7 +82,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link " href="./grade.html">
+            <a class="nav-link {{ request()->is('user/mark') ? 'active' : '' }} "  href="{{url('user/mark')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>box-3d-50</title>
@@ -106,7 +106,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link  " href="./Assignments.html">
+            <a class="nav-link  {{ request()->is('user/assignment') ? 'active' : '' }} "  href="{{url('user/assignment')}}" >
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book-reader blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -115,7 +115,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link  " href="./Attandace.html">
+            <a class="nav-link    {{ request()->is('user/attendance') ? 'active' : '' }} " href="{{url('user/attendance')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-id-card-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -123,7 +123,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  " href="./news.html">
+            <a class="nav-link   {{ request()->is('user/news') ? 'active' : '' }} "  href="{{url('user/news')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
 

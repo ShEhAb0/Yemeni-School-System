@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Parent;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class AssignmentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $newses = News::whereIn('type',[0,4])->orderBy('created_at','desc')->paginate(10);
-
-        return view('pages.parent.news-menu.news-index' ,compact('newses'));
+        return view('pages.user.assignment-menu.assignment-index');
 
     }
 
@@ -50,7 +47,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('pages.user.assignment-menu.assignment-show');
+
     }
 
     /**

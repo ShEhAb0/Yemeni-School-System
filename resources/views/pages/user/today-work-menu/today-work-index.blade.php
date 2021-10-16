@@ -1,5 +1,5 @@
 
-@extends('pages.parent.layouts.parent-dashboard')
+@extends('pages.user.layouts.user-dashboard')
 @section('navbar')
     <h6 class="font-weight-bolder mb-0">Today Works</h6>
 @endsection
@@ -25,12 +25,11 @@
                             <h6 class="card-subtitle mb-2 text-muted">Teacher Name</h6>
                             <p  class="text-sm">Upload Date:2021/9/10 12:00 AM</p>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a class="btn btn-outline-primary w-100 btn-sm mb-0" href="/parent/lesson/show">Go To Lesson</a>
+                            <a class="btn btn-outline-primary w-100 btn-sm mb-0" href="/user/lesson/show">Go To Lesson</a>
 
 
                         </div>
                     </div>
-
 
 
                 </div>
@@ -59,10 +58,11 @@
 
                                 </div>
                             </div>
-                            <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/parent/assignment/show">View</a>
+                            <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/user/assignment/show">View</a>
                         </div>
 
                     </div>
+
 
 
 

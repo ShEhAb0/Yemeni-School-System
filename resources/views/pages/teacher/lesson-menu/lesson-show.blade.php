@@ -190,10 +190,11 @@
                     </g>
                 </svg>
             </div>
+
             <div class="page_shape4"></div>
 
             <div class="d-flex justify-content-between w-100 mt-1 mb-1">
-                <h3 class="white">Lesson Title</h3>
+                <h3 class="white"></h3>
                 <span class="white me-9"><i class="fas fa-clock me-2 grey" style="font-size: 15px;"></i><span class="white">Publishing Date: </span><span class="ms-2 text-sm">2020/2/12 12:00 PM</span></span>
             </div>
             <div>
@@ -210,7 +211,6 @@
                 </div>
 
             </div>
-
         </div>
         <!--vedio Section-->
         <div class="me-5 mt-5 mb-3">
