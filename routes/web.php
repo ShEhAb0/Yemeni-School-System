@@ -133,12 +133,12 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
 
 
 
-Route::prefix('user')->name('user.')->group(function () {
+//Route::prefix('user')->name('user.')->group(function () {
 
-    Route::middleware(['guest:web'])->group(function(){
-        Route::post('/login', 'App\Http\Controllers\Auth\UserLoginController@login')->name('login');
-
-    });
+//    Route::middleware(['guest:web'])->group(function(){
+//        Route::post('/login', 'App\Http\Controllers\Auth\UserLoginController@login')->name('login');
+//
+//    });
 
 
     Route::middleware(['auth:web'])->group(function(){
@@ -155,10 +155,10 @@ Route::prefix('user')->name('user.')->group(function () {
 
 
 
-        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
+//        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
     });
 
-});
+//});
 
 
 

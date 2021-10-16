@@ -15,7 +15,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $newses = News::whereIn('type',[0,2])->orderBy('created_at','desc')->paginate(10);
+        $newses = News::whereIn('type',[0,2])->where('status',1)->orderBy('created_at','desc')->paginate(10);
         return view('pages.teacher.news-menu.news-index',compact('newses'));
 
     }

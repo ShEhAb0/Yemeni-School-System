@@ -8,25 +8,33 @@
 
         <br/>
         <h3 class="purplel-color">News Of Today</h3>
-        <div class="row mb-3">
-            @foreach($newses as $news)
-                <div class="card mb-3">
-                    <div class="card-header pb-0">
-                        <div class="d-flex justify-content-between">
-                            <h6>{{$news->title}}</h6>
-                            <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">{{$news->created_at}}</span></span>
+        @if($newses->count()>0)
+            <div class="row mb-3">
+                @foreach($newses as $news)
+                    <div class="card mb-3">
+                        <div class="card-header pb-0">
+                            <div class="d-flex justify-content-between">
+                                <h6>{{$news->title}}</h6>
+                                <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">{{$news->created_at}}</span></span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-body text-truncate content">{{$news->description}}</p>
+                            <a role="button" class="purplel-color text-bold show_hide" >Read More..</a>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <p class="text-body text-truncate content">{{$news->description}}</p>
-                        <a role="button" class="purplel-color text-bold show_hide" >Read More..</a>
-                    </div>
+                @endforeach
+            </div>
+            <div class="text-center">
+                {{$newses->render()}}
+            </div>
+        @else
+            <div class="card my-3">
+                <div class="card-body text-center">
+                    <p class="h5 text-danger">There are no news yet..!</p>
                 </div>
-            @endforeach
-        </div>
-        <div class="text-center">
-            {{$newses->render()}}
-        </div>
+            </div>
+        @endif
     </div>
 
 @endsection

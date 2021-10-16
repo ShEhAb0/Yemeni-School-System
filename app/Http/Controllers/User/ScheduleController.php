@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
@@ -14,7 +16,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return view('pages.user.schedule-menu.schedule-index');
+        $schedules = Schedule::where('level_id',Auth::user()->level_id)->where('status',1)->with('term')->get();
+        return view('pages.user.schedule-menu.schedule-index',compact('schedules'));
 
     }
 

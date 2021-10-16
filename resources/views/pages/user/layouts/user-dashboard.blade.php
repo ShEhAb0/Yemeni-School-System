@@ -141,13 +141,13 @@
                 </li>
                 <li class="nav-item px-3 d-flex align-items-center">
 
-                    <a href="{{ route('user.logout') }}"
+                    <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                       document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt text-dark me-sm-1"></i>
                     </a>
 
-                    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
                 </li>

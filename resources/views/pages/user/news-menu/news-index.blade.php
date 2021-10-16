@@ -5,64 +5,54 @@
 @section('content')
 
     <div class="container-fluid">
-
         <br/>
 
         <br/>
         <h3 class="purplel-color">News Of Today</h3>
-        @if($newses->count() > 0)
-        <div class="row mt-4">
+        @if($newses->count()>0)
+        <div class="row mb-3">
             @foreach($newses as $news)
-            <div class="card">
-
-
-                <div class="card-header pb-0">
-                    <div class="d-flex justify-content-between">
-                        <h6>{{$news->title}}</h6>
-                        <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">{{$news->created_at}}</span></span>
+                <div class="card mb-3">
+                    <div class="card-header pb-0">
+                        <div class="d-flex justify-content-between">
+                            <h6>{{$news->title}}</h6>
+                            <span><i class="fas fa-clock me-1 blue-color" style="font-size: 12px;"></i><span  style="font-size: 12px;" class="text-bold">{{$news->created_at}}</span></span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-body text-truncate content">{{$news->description}}</p>
+                        <a role="button" class="purplel-color text-bold show_hide" >Read More..</a>
                     </div>
                 </div>
-                <div class="card-body  pb-0">
-                    <p class="text-body"class="text-body content">{{$news->description}}
-                            <a role="button" class="purplel-color text-bold show_hide" >View More..</a></p>
-
-                </div>
-            </div>
-
             @endforeach
         </div>
-        @else
-            <div class="text-center">
-                <p class="h5 text-danger">There are no news yet..!</p>
-            </div>
-        @endif
-
         <div class="text-center">
             {{$newses->render()}}
-
-
         </div>
-
+        @else
+            <div class="card my-3">
+                <div class="card-body text-center">
+                    <p class="h5 text-danger">There are no news yet..!</p>
+                </div>
+            </div>
+        @endif
     </div>
 
 @endsection
-
 @section('scripts')
-
-
     <script>
         $(document).ready(function () {
-            $(".content").hide();
             $(".show_hide").click(function(){
-                if($( this).prev( ".content" ).is(':visible')==false){
-                    var txt =$( this).prev( ".content" ).is(':visible') ? ' View More..' : ' View Less ..';
-                    $(this).text(txt);
-                    $( this).prev( ".content" ).show(200);
+                if($( this).prev( ".content" ).hasClass('text-truncate')){
+                    $(this).html(' Read Less');
+                    $( this).prev( ".content" ).removeClass('text-truncate');
                 }else{
-                    $( this).prev( ".content" ).hide(200);
+                    $(this).html(' Read More..');
+                    $( this).prev( ".content" ).addClass('text-truncate');
                 }
             });
 
         });
     </script>
+
 @endsection

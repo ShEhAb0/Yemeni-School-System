@@ -157,7 +157,7 @@
             id = '/teacher/login';
         }
         if (id==2){
-            id = '/user/login';
+            id = '/login';
         }
         if (id==3){
             id = '/parent/login';
