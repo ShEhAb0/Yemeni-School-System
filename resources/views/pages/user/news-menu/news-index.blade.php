@@ -10,10 +10,11 @@
 
         <br/>
         <h3 class="purplel-color">News Of Today</h3>
+        @if($newses->count() > 0)
         <div class="row mt-4">
             @foreach($newses as $news)
             <div class="card">
-                @if($newses->count() > 0)
+
 
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
@@ -27,13 +28,15 @@
 
                 </div>
             </div>
-                @else
-                    <div class="text-center">
-                        <p class="h5 text-danger">There are no news yet..!</p>
-                    </div>
-                @endif
+
             @endforeach
         </div>
+        @else
+            <div class="text-center">
+                <p class="h5 text-danger">There are no news yet..!</p>
+            </div>
+        @endif
+
         <div class="text-center">
             {{$newses->render()}}
 
