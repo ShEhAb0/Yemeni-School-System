@@ -103,7 +103,7 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
-        $assignment = Lesson::find($id);
+        $assignment = Assignment::find($id);
         return response($assignment,200);
     }
 
@@ -128,6 +128,13 @@ class AssignmentController extends Controller
         $assignment = Assignment::find($id);
         $assignment->title = $request->input('title');
         $assignment->description = $request->input('description');
+        if ($request->file('file') != null){
+            $path = public_path().'/Assignments/'.$assignment->subjectsAssignments->subject_name;
+            $assignmentFile = $request->file('file');
+            $filename = time() . '.' . $assignmentFile->getClientOriginalName();
+            $request->file('file')->move($path, $filename);
+            $assignment->file_name = $filename;
+        }
         $assignment->teacher_id = Auth::id();
         $assignment->subject_id = $request->input('subject');
         $assignment->level_id = $request->input('grade');

@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grde" required>
+                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grade" required>
                                         <option value="" disabled selected>Choose the Grade</option>
                                         @if($grades->count()>0)
                                             @foreach($grades as $grade)
