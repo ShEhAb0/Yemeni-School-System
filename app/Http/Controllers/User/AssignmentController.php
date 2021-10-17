@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
@@ -14,7 +17,10 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        return view('pages.user.assignment-menu.assignment-index');
+
+        $subjects = Subject::where('level_id',Auth::user()->level_id)->get();
+        $assignments = Assignment::where('id',0)->paginate(3);
+        return view('pages.user.assignment-menu.assignment-index',compact('subjects','assignments'));
 
     }
 
@@ -47,8 +53,8 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        return view('pages.user.assignment-menu.assignment-show');
-
+        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+        return view('pages.user.assignment-menu.assignment-show' ,compact('assignment'));
     }
 
     /**
@@ -59,7 +65,9 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $assignments = Assignment::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->with('teacher')->paginate(3);
+        return view('pages.user.assignment-menu.assignment-data',compact('assignments'));
+
     }
 
     /**

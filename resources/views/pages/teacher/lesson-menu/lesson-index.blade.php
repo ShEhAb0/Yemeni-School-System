@@ -199,7 +199,7 @@
 
                                 <div class="col-auto w-100">
                                     <P>Lesson Details</P>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description" required></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="details" required></textarea>
 
                                 </div>
 

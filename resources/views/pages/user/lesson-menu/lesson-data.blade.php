@@ -1,8 +1,7 @@
 @if($lessons->count() > 0)
-    <div class="p-3 d-flex justify-content-around max-height-vh-100 mb-5"
-         style="flex-wrap: wrap;overflow-y: auto; background-color: #f4f5f6;">
+    <div class="p-3 d-flex justify-content-around max-height-vh-100 mb-5"  style="flex-wrap: wrap;overflow-y: auto; background-color: #f4f5f6;">
         @foreach($lessons as $lesson)
-            <div class="card card-body m-1" style="width:31.33333%;" id="cols">
+            <div class="card card-body m-2" style="width:31.33333%;" id="cols">
                 <div class="p-2">
                     <h5 class="card-title">{{$lesson->title}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{$lesson->teacher->teacher_name}}</h6>
@@ -29,3 +28,4 @@
         There are no lessons for this subject yet ..!
     </div>
 @endif
+

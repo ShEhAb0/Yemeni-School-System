@@ -14,6 +14,7 @@
                                     <h5 class="font-weight-bolder mb-0">
 
 
+                                        {{$students}}
 
                                     </h5>
                                 </div>
@@ -35,6 +36,8 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Teachers Number</p>
                                     <h5 class="font-weight-bolder mb-0">
+                                        {{$teachers}}
+
                                     </h5>
                                 </div>
                             </div>
@@ -55,7 +58,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Grades Number</p>
                                     <h5 class="font-weight-bolder mb-0">
-
+                                        {{$grades}}
                                     </h5>
                                 </div>
                             </div>

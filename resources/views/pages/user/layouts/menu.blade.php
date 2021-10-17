@@ -22,7 +22,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  {{ request()->is('/schedule') ? 'active' : '' }} "  href="{{url('/schedule')}}"   >
+            <a class="nav-link  {{ request()->is('schedule') ? 'active' : '' }} "  href="{{url('/schedule')}}" >
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-calendar-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -30,7 +30,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('/today/work') ? 'active' : '' }} "  href="{{url('/today/work')}}">
+            <a class="nav-link {{ request()->is('today/work') ? 'active' : '' }} "  href="{{url('/today/work')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>document</title>
@@ -51,7 +51,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link  {{ request()->is('/lesson') ? 'active' : '' }} "  href="{{url('/lesson')}}">
+            <a class="nav-link  {{ request()->is('lesson') ? 'active' : '' }} "  href="{{url('/lesson')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>box-3d-50</title>
@@ -72,7 +72,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link   {{ request()->is('/exam') ? 'active' : '' }} "  href="{{url('/exam')}}">
+            <a class="nav-link   {{ request()->is('exam') ? 'active' : '' }} "  href="{{url('/exam')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 
                     <i class="fas fa-keyboard blue-color-icon" style="font-size: 12px;"></i>
@@ -82,7 +82,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->is('/mark') ? 'active' : '' }} "  href="{{url('/mark')}}">
+            <a class="nav-link {{ request()->is('mark') ? 'active' : '' }} "  href="{{url('/mark')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>box-3d-50</title>
@@ -106,7 +106,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link  {{ request()->is('/assignment') ? 'active' : '' }} "  href="{{url('/assignment')}}" >
+            <a class="nav-link  {{ request()->is('assignment') ? 'active' : '' }} "  href="{{url('/assignment')}}" >
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book-reader blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -115,7 +115,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link    {{ request()->is('/attendance') ? 'active' : '' }} " href="{{url('/attendance')}}">
+            <a class="nav-link    {{ request()->is('attendance') ? 'active' : '' }} " href="{{url('/attendance')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-id-card-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -123,7 +123,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link   {{ request()->is('/news') ? 'active' : '' }} "  href="{{url('/news')}}">
+            <a class="nav-link   {{ request()->is('news') ? 'active' : '' }} "  href="{{url('/news')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
 

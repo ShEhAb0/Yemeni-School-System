@@ -1,4 +1,3 @@
-
 @extends('pages.user.layouts.user-dashboard')
 @section('navbar')
     <h6 class="font-weight-bolder mb-0">Today Works</h6>
@@ -18,62 +17,71 @@
                         </div>
                     </div>
                 </div>
+                @if($lessons->count() > 0)
+
                 <div class="p-3 d-flex justify-content-around max-height-vh-100 mb-2" id="lessonmain"  style="flex-wrap: wrap;overflow-y: auto;background-color: #f4f5f6;">
+                    @foreach($lessons as $lesson)
                     <div class="card card-body m-2" style="width:45%;" id="cols" >
                         <div class="p-2">
-                            <h5 class="card-title">Lesson Title</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Teacher Name</h6>
-                            <p  class="text-sm">Upload Date:2021/9/10 12:00 AM</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a class="btn btn-outline-primary w-100 btn-sm mb-0" href="/user/lesson/show">Go To Lesson</a>
 
-
+                            <h5 class="card-title">{{$lesson->title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{$lesson->teacher->teacher_name}}</h6>
+                            <p class="text-sm">Upload Date: {{$lesson->created_at}}</p>
+                            <p class="card-text">{{$lesson->description}}</p>
+                            <a class="btn btn-primary w-100 btn-sm mb-0" href="/user/lesson/{{$lesson->id}}">Go To Lesson</a>
                         </div>
                     </div>
 
-
+                    @endforeach
                 </div>
                 <br/>
+                @else
+                    <div class="text-center text-danger py-3">
+                        There are no lessons for today ..!
+                    </div>
+                @endif
             </div>
-
-
 
             <div class="card col-12  col-sm-12  col-md-12 col-lg-4 col-xl-4 col-xxl-4  ms-2 mb-2">
                 <div class="card-header pb-0 p-3">
                     <h6 class="purplel-color mb-1">Assignments DeadLine</h6>
                 </div>
+                @if($assignments->count() > 0)
+
+                @foreach($assignments as $a)
                 <div class="max-height-vh-100 p-3" style="overflow-y: auto;background-color: #f4f5f6;">
 
                     <div class="list-group mb-2">
-                        <div href="" class="list-group-item">
+                        <div href="/user/assignment/{{$a->id}}" class="list-group-item">
                             <div class="block py-1">
-                                <div class="text-bold mb-1 text-dark ">Assignments Title</div>
-                                <span class="text-dark text-sm">DeadLine: 2021/12/9 12:00 PM</span>
+                                <div class="text-bold mb-1 text-dark ">{{$a->title}}</div>
+                                <span class="text-dark text-sm">DeadLine: {{date('Y-m-d' , strtotime($a->due_date))}}</span>
 
 
                             </div>
                             <div class="d-flex justify-content-between py-1">
-                                <span class="text-bold ">Subject</span>
-                                <div ><span class="text-dark text-sm">Teacher Name</span>
+                                <span class="text-bold ">{{$a->subjects->subject_name }} </span>
+
+                                <div >
+                                    <span class="text-dark text-sm">{{$a->teacher->teacher_name}}</span>
 
                                 </div>
                             </div>
-                            <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/user/assignment/show">View</a>
+                            <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/user/assignment/{{$a->id}}">View</a>
                         </div>
 
                     </div>
 
-
-
-
-
                 </div>
+                @endforeach
             </div>
+            @else
+                <div class="text-sm-center text-danger py-3">
+                    There are no assignments for today ..!
+                </div>
+            @endif
 
         </div>
-
-
-
 
     </div>
 

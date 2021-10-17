@@ -10,6 +10,10 @@ use App\Http\Controllers\Auth\UserLoginController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Auth\ParentLoginController;
 use App\Http\Controllers\Parent\ParentController;
+use App\Models\Grade;
+use App\Models\User;
+use App\Models\Teacher;
+use App\Models\News;
 
 
 
@@ -73,7 +77,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
     Route::middleware(['auth:admin'])->group(function(){
-        Route::view('/index' , 'pages.admin.index')->name('index');
+        $students = User::all()->count();
+        $teachers = Teacher::all()->count();
+        $grades = Grade::all()->count();
+        //$news = News::all()->count();
+        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' ))->name('index');
 
         Route::resource('/terms' , 'App\Http\Controllers\Admin\TermController');
         Route::resource('/parents' , 'App\Http\Controllers\Admin\ParentController');
