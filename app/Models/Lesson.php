@@ -18,15 +18,19 @@ class Lesson extends Model
 
     public function terms()
     {
-        return $this->belongsTo('App/Models/Term' , 'term_id');
+        return $this->belongsTo('App\Models\Term' , 'term_id');
     }
     public function grades()
     {
-        return $this->belongsTo('App/Models/Grade' , 'grade_id');
+        return $this->belongsTo('App\Models\Grade' , 'grade_id');
     }
     public function subjects()
     {
-        return $this->belongsTo('App/Models/Subject' , 'subject_id');
+        return $this->belongsTo('App\Models\Subject' , 'subject_id');
+    }
+    public function teacher()
+    {
+        return $this->belongsTo('App\Models\Teacher' , 'teacher_id');
     }
 
 

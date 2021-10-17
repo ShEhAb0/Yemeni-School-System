@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lesson;
+use App\Models\Subject;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -14,8 +17,9 @@ class LessonController extends Controller
      */
     public function index()
     {
-        return view('pages.user.lesson-menu.lesson-index');
-
+        $subjects = Subject::where('level_id',Auth::user()->level_id)->get();
+        $lessons = Lesson::where('id',0)->paginate(3);
+        return view('pages.user.lesson-menu.lesson-index',compact('subjects','lessons'));
     }
 
     /**
@@ -60,6 +64,8 @@ class LessonController extends Controller
     public function edit($id)
     {
         //
+        $lessons = Lesson::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->with('teacher')->paginate(3);
+        return view('pages.user.lesson-menu.lesson-data',compact('lessons'));
     }
 
     /**

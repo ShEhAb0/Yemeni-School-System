@@ -160,7 +160,7 @@
 
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
-                                    <select class="form-select" aria-label="Select Grade" name="term">
+                                    <select class="form-select" aria-label="Select Term" name="term">
                                         <option value="" disabled selected>Choose the Term</option>
                                         @foreach($terms as $term)
                                             <option value="{{$term->id}}">{{$term->name}}</option>
