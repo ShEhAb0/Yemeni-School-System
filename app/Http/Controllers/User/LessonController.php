@@ -51,8 +51,8 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        return view('pages.user.lesson-menu.lesson-show');
-
+        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+        return view('pages.user.lesson-menu.lesson-show',compact('lesson'));
     }
 
     /**

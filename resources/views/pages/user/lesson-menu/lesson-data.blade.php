@@ -8,7 +8,15 @@
                     <h6 class="card-subtitle mb-2 text-muted">{{$lesson->teacher->teacher_name}}</h6>
                     <p class="text-sm">Upload Date: {{$lesson->created_at}}</p>
                     <p class="card-text">{{$lesson->description}}</p>
-                    <a class="btn btn-primary w-100 btn-sm mb-0" href="/user/lesson/{{$lesson->id}}">Go To Lesson</a>
+                    <form id="lesson-form" method="POST" action="/attendance" target="_blank">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="lesson" value="{{$lesson->id}}">
+                        <input type="hidden" name="subject" value="{{$lesson->subject_id}}">
+                        <input type="hidden" name="term" value="{{$lesson->term_id}}">
+                        <input type="hidden" name="date" value="{{$lesson->created_at}}">
+                        <button type="submit" class="btn btn-primary w-100 btn-sm mb-0">Go To Lesson</button>
+                    </form>
                 </div>
             </div>
         @endforeach

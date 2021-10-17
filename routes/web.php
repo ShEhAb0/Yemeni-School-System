@@ -151,6 +151,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/mark' , 'App\Http\Controllers\User\MarkController');
         Route::resource('/assignment' , 'App\Http\Controllers\User\AssignmentController');
         Route::resource('/attendance' , 'App\Http\Controllers\User\AttendanceController');
+        Route::get('/get_attendance/{term}/{subject}' , 'App\Http\Controllers\User\AttendanceController@showAttendance');
         Route::resource('/news' , 'App\Http\Controllers\User\NewsController');
 
 
