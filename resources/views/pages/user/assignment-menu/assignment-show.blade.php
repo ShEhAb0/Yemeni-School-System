@@ -313,17 +313,17 @@
             <div class=" p-2 pt-4 w-100"  style="height: 100%;">
                 <div class="d-flex justify-content-between w-100 mt-1 mb-1">
 
-                    <h3 >Assignment Title</h3>
-                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">2020/2/12 12:00 PM</span></span>
+                    <h3 >{{$assignment->title}}</h3>
+                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">{{$assignment->due_date}}</span></span>
                 </div>
                 <div>
-                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>Manal</span></p>
-                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>Math (grade 1)</span></p>
+                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>{{$assignment->teacher->teacher_name}}</span></p>
+                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>{{$assignment->subject_subject_name}} (grade {{$assignment->level_id}})</span></p>
                     <div class="d-flex justify-content-between w_70">
                         <h4 class="">Assignment Description</h4>
                     </div>
 
-                    <p class="p-2 black" style="text-align: justify;" >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions.</p>
+                    <p class="p-2 black" style="text-align: justify;" >{{$assignment->description}}</p>
 
 
                     <div class="d-flex p-2">

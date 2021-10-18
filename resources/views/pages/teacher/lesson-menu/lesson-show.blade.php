@@ -194,17 +194,17 @@
             <div class="page_shape4"></div>
 
             <div class="d-flex justify-content-between w-100 mt-1 mb-1">
-                <h3 class="white"></h3>
-                <span class="white me-9"><i class="fas fa-clock me-2 grey" style="font-size: 15px;"></i><span class="white">Publishing Date: </span><span class="ms-2 text-sm">2020/2/12 12:00 PM</span></span>
+                <h3 class="white">{{$lesson->title}}</h3>
+                <span class="white me-9"><i class="fas fa-clock me-2 grey" style="font-size: 15px;"></i><span class="white">Publishing Date: </span><span class="ms-2 text-sm">{{$lesson->created_at}}</span></span>
             </div>
             <div>
-                <p class="white"><i class="fas fa-chalkboard-teacher me-2 grey" style="font-size: 15px;"></i>Teacher Name: <span>Manal</span></p>
-                <p class="white"><i class="fas fa-book-open me-2 grey" style="font-size: 15px;"></i>Subject Related: <span>Math (grade 1)</span></p>
+                <p class="white"><i class="fas fa-chalkboard-teacher me-2 grey" style="font-size: 15px;"></i>Teacher Name: <span>{{Auth::user()->teacher_name}}</span></p>
+                <p class="white"><i class="fas fa-book-open me-2 grey" style="font-size: 15px;"></i>Subject Related: <span>(grade {{$lesson->level_id}})</span></p>
                 <div class="d-flex justify-content-between w_70">
                     <h4 class="white"></h4>
                 </div>
                 <div class="col-10">
-                    <p class="white " style="text-align: justify;" >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions.</p>
+                    <p class="white " style="text-align: justify;" >{{$lesson->description}}</p>
 
 
 

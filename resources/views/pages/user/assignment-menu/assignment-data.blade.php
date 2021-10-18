@@ -34,14 +34,14 @@
                                         </td>
 
                                         <td class="align-middle text-center">
-                                                <form id="lesson-form" method="POST" action="/" target="_blank">
+                                                <form id="lesson-form" method="POST" action="/assignment/show" target="_blank">
                                                     @csrf
                                                     @method('POST')
                                                     <input type="hidden" name="lesson" value="{{$a->id}}">
                                                     <input type="hidden" name="subject" value="{{$a->subject_id}}">
                                                     <input type="hidden" name="term" value="{{$a->term_id}}">
                                                     <input type="hidden" name="date" value="{{$a->created_at}}">
-                                                    <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs"   href="/assignment/{{$a->id}}" role="button">
                                                         <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
                                                     </a>
                                                 </form>

@@ -127,7 +127,7 @@
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
                                                 <a class="text-secondary font-weight-bold text-xs"
-                                                   data-bs-toggle="modal" href="/assignment/show" role="button">
+                                                    href="/teacher/assignment/{{$assignment->id}}" role="button">
                                                     <i class="fas fa-external-link-alt purplel-color"
                                                        style="font-size: 20px;"></i>
                                                 </a>

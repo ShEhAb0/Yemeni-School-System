@@ -91,7 +91,8 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        return view('pages.teacher.assignment-menu.assignment-show');
+        $assignment = Assignment::where('id' , $id)->first();
+        return view('pages.teacher.assignment-menu.assignment-show' , compact('assignment'));
 
     }
 

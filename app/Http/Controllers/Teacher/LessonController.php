@@ -131,17 +131,19 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $lessons = Lesson::where('teacher_id',Auth::id())->paginate(10);
-        $terms = Term::all();
-        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
-        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
-            return $row->take(1);
-        });
-//        $grades = TeacherSubject::where('teacher_id',Auth::id())->with('grades',function ($row){
-//            return $row->orderBy->take(1);
-//        })->get();
-//        dd($grades);
-        return view('pages.teacher.lesson-menu.lesson-show',compact('lessons','terms','teacher_sub','grades'));
+//        $lessons = Lesson::where('teacher_id',Auth::id())->paginate(10);
+//        $terms = Term::all();
+//        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+//        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+//            return $row->take(1);
+//        });
+////        $grades = TeacherSubject::where('teacher_id',Auth::id())->with('grades',function ($row){
+////            return $row->orderBy->take(1);
+////        })->get();
+////        dd($grades);
+///
+        $lesson = Lesson::where('id' , $id)->first();
+        return view('pages.teacher.lesson-menu.lesson-show',compact('lesson'));
 
        // $lessons = Lesson::find($id);
         //return view('pages.teacher.lesson-menu.lesson-show' , compact($lessons) );
