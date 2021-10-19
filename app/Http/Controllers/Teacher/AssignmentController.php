@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Lesson;
+use App\Models\StudentAssignment;
 use App\Models\TeacherSubject;
 use App\Models\Term;
 use Illuminate\Http\Request;
@@ -92,7 +93,8 @@ class AssignmentController extends Controller
     public function show($id)
     {
         $assignment = Assignment::where('id' , $id)->first();
-        return view('pages.teacher.assignment-menu.assignment-show' , compact('assignment'));
+        $answers = StudentAssignment::where('assignment_id',$id)->where('status',0)->with('student')->get();
+        return view('pages.teacher.assignment-menu.assignment-show' , compact('assignment','answers'));
 
     }
 
@@ -117,35 +119,46 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'term' => 'required',
-            'subject' => 'required',
-            'grade' => 'required',
-            'status' => 'required',
-        ]);
-
-        $assignment = Assignment::find($id);
-        $assignment->title = $request->input('title');
-        $assignment->description = $request->input('description');
-        if ($request->file('file') != null){
-            $path = public_path().'/Assignments/'.$assignment->subjectsAssignments->subject_name;
-            $assignmentFile = $request->file('file');
-            $filename = time() . '.' . $assignmentFile->getClientOriginalName();
-            $request->file('file')->move($path, $filename);
-            $assignment->file_name = $filename;
+        if ($request->has('marks')){
+            $request->validate([
+                'mark' => 'required',
+            ]);
+            $answer = StudentAssignment::find($id);
+            $answer->mark = $request->mark;
+            $answer->status = 1;
+            $answer->save();
+            return redirect('/teacher/assignment/'.$answer->assignment_id);
         }
-        $assignment->teacher_id = Auth::id();
-        $assignment->subject_id = $request->input('subject');
-        $assignment->level_id = $request->input('grade');
-        $assignment->term_id = $request->input('term');
-        $assignment->due_date = $request->input('date');
-        $assignment->status = $request->input('status');
-        $assignment->save();
+        else {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+                'term' => 'required',
+                'subject' => 'required',
+                'grade' => 'required',
+                'status' => 'required',
+            ]);
 
-        return redirect('/teacher/assignment')->withSuccess('Assignment has been updated successfully..!');
+            $assignment = Assignment::find($id);
+            $assignment->title = $request->input('title');
+            $assignment->description = $request->input('description');
+            if ($request->file('file') != null) {
+                $path = public_path() . '/Assignments/' . $assignment->subjectsAssignments->subject_name;
+                $assignmentFile = $request->file('file');
+                $filename = time() . '.' . $assignmentFile->getClientOriginalName();
+                $request->file('file')->move($path, $filename);
+                $assignment->file_name = $filename;
+            }
+            $assignment->teacher_id = Auth::id();
+            $assignment->subject_id = $request->input('subject');
+            $assignment->level_id = $request->input('grade');
+            $assignment->term_id = $request->input('term');
+            $assignment->due_date = $request->input('date');
+            $assignment->status = $request->input('status');
+            $assignment->save();
 
+            return redirect('/teacher/assignment')->withSuccess('Assignment has been updated successfully..!');
+        }
     }
 
     /**

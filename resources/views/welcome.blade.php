@@ -15,11 +15,10 @@
     <link href="{{asset('/css/nucleo-icons.css')}}" rel="stylesheet" />
     <link href="{{asset('/css/nucleo-svg.css')}}" rel="stylesheet" />
     <link href="{{asset('/css/NormalPage.css')}}" rel="stylesheet" />
-    <script src="{{asset('/js/jquery-3.3.1.js')}}"></script>
+
 
     <!-- Font Awesome Icons -->
     <link href="{{asset('/FortAwesome/css/all.min.css')}}"/>
-    <script src="{{asset('/FortAwesome/js/all.min.js')}}"></script>
     <link href="{{asset('/css/nucleo-svg.css')}}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{asset('/css/soft-ui-dashboard.css')}}" rel="stylesheet" />
@@ -168,8 +167,10 @@
 </script>
 <!-- -------- END FOOTER 3 w/ SCHOOL DESCRIPTION COPYRIGHT ------- -->
 <!--   Core JS Files   -->
+<script src="{{asset('/js/jquery-3.3.1.js')}}"></script>
 <script src="{{asset('/js/popper.min.js')}}"></script>
 <script src="{{asset('/js/bootstrap.min.js')}}"></script>
+<script src="{{asset('/FortAwesome/js/all.min.js')}}"></script>
 
 
 <!-- Github buttons -->

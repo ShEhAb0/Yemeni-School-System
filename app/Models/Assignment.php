@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Assignment extends Model
 {
@@ -50,18 +51,9 @@ class Assignment extends Model
     {
         return $this->belongsTo('App\Models\Teacher' , 'teacher_id');
     }
-    public function video()
-    {
-        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',1);
-    }
 
-    public function photo()
+    public function answer()
     {
-        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',2);
-    }
-
-    public function doc()
-    {
-        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',3);
+        return $this->hasOne('App\Models\StudentAssignment','assignment_id')->where('student_id',Auth::id());
     }
 }

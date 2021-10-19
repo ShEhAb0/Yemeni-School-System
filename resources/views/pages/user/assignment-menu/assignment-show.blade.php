@@ -16,12 +16,9 @@
     <link href="{{asset('/css/nucleo-svg.css')}}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <link href="{{asset('/FortAwesome/css/all.min.css')}}"/>
-    <script src="{{asset('/FortAwesome/js/all.min.js')}}"></script>
     <!-- CSS Files -->
     <link id="pagestyle" href="{{asset('/css/soft-ui-dashboard.css?v=1.0.3')}}" rel="stylesheet" />
     <link href="{{asset('/css/customNav.css')}}" rel="stylesheet" />
-
-    <script src="/css/customNav.css{{asset('/css/customNav.css')}}"></script>
     <link href="{{asset('/css/vedio.css')}}" rel="stylesheet" />
     <link href="{{asset('/vedio/video-js.css')}}" rel="stylesheet" />
     <style>
@@ -297,16 +294,25 @@
 </div>
 <!--body-->
 <div class="container-fluid ">
-    <br/>
-
 
     <br/>
     <br/>
-
+    <br/>
+        @if($message = Session::get('success'))
+    <div class="alert alert-success alert-dismissible text-white fade show mt-4" role="alert">
+                    {{$message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+    </div>
+        @endif
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible text-white fade show mt-4" role="alert">
+            {{$error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+@endforeach
     <!--first row-->
     <div class="d-flex align-content-between w-100 mt-5" style="flex-wrap: wrap;margin: 0 auto;box-shadow: 0px -1px 6px 1px rgb(0 0 0 / 41%);border-radius: 18px;">
         <!--Lesson Title Section-->
-
         <div class="col-12 col-sm-12 col-lg-8 col-xl-8">
 
 
@@ -318,7 +324,7 @@
                 </div>
                 <div>
                     <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>{{$assignment->teacher->teacher_name}}</span></p>
-                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>{{$assignment->subject_subject_name}} (grade {{$assignment->level_id}})</span></p>
+                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>{{$assignment->subjects->subject_name}} (grade {{$assignment->level_id}})</span></p>
                     <div class="d-flex justify-content-between w_70">
                         <h4 class="">Assignment Description</h4>
                     </div>
@@ -327,26 +333,26 @@
 
 
                     <div class="d-flex p-2">
-                        <div class="pe-5">
-                            <h4 class="mt-3 pb-2" >Photos </h4>
-                            <div class="d-flex justify-content-around">
+{{--                        <div class="pe-5">--}}
+{{--                            <h4 class="mt-3 pb-2" >Photos </h4>--}}
+{{--                            <div class="d-flex justify-content-around">--}}
 
-                                <div>
-                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                                </div>
-                            </div>
+{{--                                <div>--}}
+{{--                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="d-flex justify-content-around mt-2">
-                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
-                            </div>
-                        </div>
+{{--                            <div class="d-flex justify-content-around mt-2">--}}
+{{--                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <!--File section-->
                         <div class="ps-5">
                             <h4 class="mt-3 pb-2">Files </h4>
                             <div class="d-flex justify-content-around ">
 
                                 <div>
-                                    <a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">File name</span></a>
+                                    <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$assignment->file_name}}</span></a>
                                 </div>
                             </div>
                         </div>
@@ -372,12 +378,12 @@
 
                     data-setup="{}"
                 >
-                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
-                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+{{--                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />--}}
+{{--                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a
                         web browser that
-                        <a href="https://videojs.com/html5-video-support/" target="_blank"
+{{--                        <a href="https://videojs.com/html5-video-support/" target="_blank"--}}
                         >supports HTML5 video</a
                         >
                     </p>
@@ -407,25 +413,30 @@
     <div class="po_re col-12 col-sm-12 col-lg-6 col-xl-6">
         <h2 >Enter Your Answer</h2>
         <div class="page_shape2">
-
+            @if(!$assignment->answer)
+            <form class="form" method="POST" action="/assignment" enctype="multipart/form-data">
+                @csrf
+                @method('POST')
             <div  class="mov" >
                 <div class="form-group inputDnD w_30 me-7">
-                    <input type="file" class="form-control-file grey font-weight-bold" id="inputFile" onchange="readUrl(this)" data-title="Drag and drop a file">
+                    <input type="file" name="answer" class="form-control-file grey font-weight-bold" id="inputFile" onchange="readUrl(this)" data-title="Drag and drop a file" required>
                 </div>
-
             </div>
             <div class="text-center mart">
-
                 <div class="container__item">
-                    <form class="form">
-                        <textarea class="form__field" placeholder="Enter Your Answer (optional) .." ></textarea>
-                        <button type="button" class="btn btn--primary btn--inside uppercase">Submit</button>
-                    </form>
+{{--                        <textarea class="form__field" placeholder="Enter Your Answer (optional) .." ></textarea>--}}
+                    <input type="hidden" name="subject_id" value="{{$assignment->subject_id}}">
+                    <input type="hidden" name="as_id" value="{{$assignment->id}}">
+                    <input type="hidden" name="due" value="{{$assignment->due_date}}">
+                        <button type="submit" class="btn btn--primary btn--inside uppercase">Submit</button>
                 </div>
-
-
-
             </div>
+            </form>
+            @else
+                    <div class="text-center pt-12">
+                    <p class="h4 text-white">you already sent your answer.</p>
+                </div>
+            @endif
         </div>
     </div>
     <div class="po_re col-12 col-sm-12 col-lg-5 col-xl-5 Te_i" id="pics">
@@ -531,7 +542,7 @@
 <script src="{{asset('/vedio/video-js.css')}}"></script>
 <script src="{{asset('/js/popper.min.js')}}"></script>
 <script src="{{asset('/js/bootstrap.min.js')}}"></script>
-
+<script src="{{asset('/FortAwesome/js/all.min.js')}}"></script>
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
 
 <script>

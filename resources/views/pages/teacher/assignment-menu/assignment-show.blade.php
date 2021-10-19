@@ -249,41 +249,41 @@
                         </g>
                     </svg>
                 </div>
-                <div>
-                    <h4 class="white" >Photos </h4>
-                    <div class="d-flex justify-content-around">
-                        <div>
-                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                        </div>
-                        <div>
-                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                        </div>
-                        <div>
-                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                        </div>
-                    </div>
+                <div mt->
+{{--                    <h4 class="white" >Photos </h4>--}}
+{{--                    <div class="d-flex justify-content-around">--}}
+{{--                        <div>--}}
+{{--                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
+{{--                        </div>--}}
+{{--                        <div>--}}
+{{--                            <a href="{{asset('/img/team-2.jpg')}}" download="filename"><img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
-                    <div class="d-flex justify-content-around mt-2">
-                        <div><a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>
-                        <div> <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>         </div>
-                        <div>
-                            <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>
+{{--                    <div class="d-flex justify-content-around mt-2">--}}
+{{--                        <div><a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>--}}
+{{--                        <div> <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>         </div>--}}
+{{--                        <div>--}}
+{{--                            <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>--}}
 
-                    </div>
+{{--                    </div>--}}
                     <br/>
                     <!--File section-->
                     <div>
                         <h4 class="white">Files </h4>
                         <div class="d-flex justify-content-around ">
                             <div>
-                                <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
+                                <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">{{$assignment->file_name}}</span></a>
                             </div>
-                            <div>
-                                <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
-                            </div>
-                            <div>
-                                <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
-                            </div>
+{{--                            <div>--}}
+{{--                                <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <a href="{{asset('/js/soft-ui-dashboard.js')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -294,20 +294,22 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mt-10">
         <div class="po_re w_60">
             <h2 >Student Assignments</h2>
             <div class="page_bg_2">
 
                 <div class="py-5 mt-5">
                     <div class="Answer_body col-8 mt-3"  style="margin: 0 auto;" id="Answer_scroll">
+                        @if($answers->count() > 0)
+                            @foreach($answers as $answer)
                         <div class="list-group mb-2">
                             <div href="" class="list-group-item">
                                 <div class="d-flex  py-1">
                                     <img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">Student Name</span>
+                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">{{$answer->student->student_name}}</span>
                                         <br/>
-                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> 2021/2/1 12:00 PM</span>
+                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> {{$answer->delivery_date}}</span>
                                     </div>
 
                                     <div class="form-check align-middle text-center me-4" style="float: none;">
@@ -316,7 +318,9 @@
 
 
                                     <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment()"  class="text-secondary font-weight-bold text-xs me-3" >
+          <span onclick="Assigment()" data-id="{{$answer->id}}" data-name="{{$answer->student->student_name}}"
+                data-date="{{$answer->delivery_date}}" data-attch="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/Answers'.$answer->file_name)}}"
+                data-fname="{{$answer->file_name}}" class="text-secondary font-weight-bold text-xs me-3" id="stData">
             <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
           </span>
                                     </div>
@@ -324,111 +328,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="list-group mb-2">
-                            <div href="" class="list-group-item">
-                                <div class="d-flex  py-1">
-                                    <img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">Student Name</span>
-                                        <br/>
-                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> 2021/2/1 12:00 PM</span>
-                                    </div>
-
-                                    <div class="form-check align-middle text-center me-4" style="float: none;">
-                                        <input class="form-check-input"  style="float: none;" type="radio" value="" id="flexCheckChecked" >
-                                    </div>
-
-
-                                    <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment()"  class="text-secondary font-weight-bold text-xs me-3" >
-            <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
-          </span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="list-group mb-2">
-                            <div href="" class="list-group-item">
-                                <div class="d-flex  py-1">
-                                    <img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">Student Name</span>
-                                        <br/>
-                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> 2021/2/1 12:00 PM</span>
-                                    </div>
-
-                                    <div class="form-check align-middle text-center me-4" style="float: none;">
-                                        <input class="form-check-input"  style="float: none;" type="radio" value="" id="flexCheckChecked" >
-                                    </div>
-
-
-                                    <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment()"  class="text-secondary font-weight-bold text-xs me-3" >
-            <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
-          </span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="list-group mb-2">
-                            <div href="" class="list-group-item">
-                                <div class="d-flex  py-1">
-                                    <img src="{{asset('/img/team-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">Student Name</span>
-                                        <br/>
-                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> 2021/2/1 12:00 PM</span>
-                                    </div>
-
-                                    <div class="form-check align-middle text-center me-4" style="float: none;">
-                                        <input class="form-check-input"  style="float: none;" type="radio" value="" id="flexCheckChecked" >
-                                    </div>
-
-
-                                    <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment()"  class="text-secondary font-weight-bold text-xs me-3" >
-            <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
-          </span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="list-group mb-2">
-                            <div class="list-group-item">
-                                <div class="d-flex  py-1">
-                                    <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                    <div style="margin: auto 10px;" class="w_70" ><span class="text-dark text-bold">Student Name</span>
-                                        <br/>
-                                        <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> 2021/2/1 12:00 PM</span>
-                                    </div>
-
-                                    <div class="form-check align-middle text-center me-4" style="float: none;">
-                                        <input class="form-check-input"  style="float: none;" type="radio" value="" id="flexCheckChecked" >
-                                    </div>
-
-
-                                    <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment()"  class="text-secondary font-weight-bold text-xs me-3" >
-            <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
-          </span>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
+                            @endforeach
+                        @else
+                            <p class="text-center h5">No answers for this assignment yet..</p>
+                            @endif
                     </div>
 
                 </div>
@@ -583,24 +486,24 @@
                     <h5 class="modal-title" id="Assigments">Student Answer</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <form method="POST" action="" id="formData">
+                    @csrf
+                    @method('PUT')
                 <div class="modal-body max-height-vh-80" style="overflow-y:auto">
                     <div class="d-flex justify-content-between">
-                        <span class="text-bold">Student Name</span><span class="text-bold">Recive Date:  2021/2/1 12:00 PM </span>
+                        <span class="text-bold" id="studentName"></span><span class="text-bold">Recive Date: <span class="text-bold" id="recDate"></span></span>
 
                     </div>
-                    <form>
-                        <div class="my-1 mb-2"><button class="btn btn-block btn-secondary bg-dark text-white w-100 py-1 pb-3 pt-3 mt-3" onclick="Files()"> <i class="fas fa-arrow-circle-up white me-2" style="font-size: 18px;"></i>Student Attachments</button></div>
-                        <textarea class="form-control my-1 mb-2"  placeholder="Answer Description" rows="5"></textarea>
-                        <input class="form-control my-1 mb-2 " type="number" placeholder="Enter Student Marks" >
-
-
-                    </form>
+                        <div class="my-1 mb-2">
+                            <a href="" id="attch" class="btn btn-block btn-secondary bg-dark text-white w-100 py-1 pb-3 pt-3 mt-3" download="">
+                            <i class="fas fa-arrow-circle-up white me-2" style="font-size: 18px;"></i>Student Attachments</a></div>
+                        <input class="form-control my-1 mb-2" name="mark" type="number" placeholder="Enter Student Marks" required>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" >Save changes</button>
-
+                    <button type="submit" name="marks" class="btn btn-outline-primary" >Save changes</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -629,6 +532,16 @@
 
     });
     function Assigment(){
+        var id = $('#stData').data('id');
+        var name = $('#stData').data('name');
+        var date = $('#stData').data('date');
+        var attch = $('#stData').data('attch');
+        var fname = $('#stData').data('fname');
+        $('#formData').attr('action','/teacher/assignment/'+id);
+        $('#studentName').html(name);
+        $('#recDate').html(date);
+        $('#attch').attr('href',attch);
+        $('#attch').attr('download',fname);
         $('#Assigment').modal('toggle');
     }
     function Files(){

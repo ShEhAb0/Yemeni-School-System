@@ -4,10 +4,12 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
+use App\Models\StudentAssignment;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use File;
 class AssignmentController extends Controller
 {
     /**
@@ -17,7 +19,6 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-
         $subjects = Subject::where('level_id',Auth::user()->level_id)->get();
         $assignments = Assignment::where('id',0)->paginate(3);
         return view('pages.user.assignment-menu.assignment-index',compact('subjects','assignments'));
@@ -43,6 +44,26 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         //
+        $subject = Subject::where('id',$request->subject_id)->first();
+        $path = public_path().'/Assignments/'.$subject->subject_name.'/Answers';
+        if (!File::exists($path)){
+            File::makeDirectory($path);
+        }
+        $answerFile = $request->file('answer');
+        $filename = time() . '.' . $answerFile->getClientOriginalName();
+        $request->file('answer')->move($path, $filename);
+
+        $answer = new StudentAssignment();
+        $answer->subject_id = $request->subject_id;
+        $answer->assignment_id = $request->as_id;
+        $answer->student_id = Auth::id();
+        $answer->file_name = $filename;
+        $answer->delivery_date = Carbon::now('Asia/Riyadh');
+        $answer->mark = 0;
+        $answer->status = 0;//($request->due >= Carbon::today('Asia/Riyadh')->format('Y-m-d') ? 1 : 0);
+        $answer->save();
+
+        return redirect('/assignment/'.$answer->assignment_id)->withSuccess('Your answer has been uploaded successfully..');
     }
 
     /**
@@ -53,7 +74,7 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','answer'])->first();
         return view('pages.user.assignment-menu.assignment-show' ,compact('assignment'));
     }
 
