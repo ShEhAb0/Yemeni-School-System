@@ -6,6 +6,27 @@
             <span class="ms-1 font-weight-bold">Parent Dashboard</span>
         </a>
     </div>
+    <div class="modal-body max-height-vh-30 " >
+        <div class="list-group mb-1">
+            <div href="" class="list-group-item">
+                <div class="d-flex ">
+                    <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                    <div style="margin: auto 10;">
+            <span >
+              <span class="text-dark text-bold text-sm">Student Name</span><br/>
+              <span class="text-xs">Student ID</span>
+
+            </span>
+                        <br/>
+                    </div>
+                    <div class="col-1 text-end mt-2">
+                        <a  class="text-secondary font-weight-bold text-xs"
+                            data-bs-toggle="modal" href="#exampleModal" role="button">
+                            <i class="fas fa-external-link-alt purplel-color" style="font-size: 18px;"></i></a></div>
+                </div>
+            </div>
+        </div>
+    </div>
     @include('pages.parent.layouts.menu')
 
 </aside>

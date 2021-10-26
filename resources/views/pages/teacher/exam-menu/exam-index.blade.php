@@ -422,6 +422,90 @@
                 </div>
 
             </div>
+
+
+            <!--new question modal for New exam-->
+            <div class="modal fade" id="addQuestion" tabindex="-1" aria-labelledby="exampleModalLabelUpda" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <div class="modal-body">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">add Question</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="row g-2 my-1 py-1" id="formaddQuestion1">
+                                    <button type="button" class="btn btn-outline-primary" onclick="AddQues(1)" >add Another Question</button>
+                                    <div class="col-auto w_50">
+                                        <p>Write Question</p>
+                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title" >
+                                    </div>
+                                    <div class="col-auto w_50">
+                                        <p>Enter Question Marks</p>
+                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks" >
+                                    </div>
+                                    <div class="col-auto w-100 my-1 mb-2" >
+                                        <p>upload Image for Question</p>
+                                        <input class="form-control " type="file" id="formFile2" name="formFile2">
+                                    </div>
+                                    <div class="col-auto w-100 my-1 mb-2" >
+                                        <p>Choose Question Type</p>
+                                        <div class="row g-2">
+                                            <div class="form-check w_50">
+                                                <input class="form-check-input" type="radio" name="choiced" id="radio1" value="1">
+                                                <label class="form-check-label" for="radio1">
+                                                    multiple-choice
+                                                </label>
+                                            </div>
+                                            <div class="form-check w_50">
+                                                <input class="form-check-input" type="radio" name="choiced" id="radio2"  value="2">
+                                                <label class="form-check-label" for="radio2">
+                                                    True or False
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100 my-1 mb-2" id="Multied">
+                                        <button type="button" class="btn btn-outline-primary" onclick="ADDAnswered()" >add Choice</button>
+
+                                        <div class="row g-2" id="Answered">
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="col-auto w-100 my-1 mb-2" id="booled" >
+                                        <p>Select right Answer</p>
+                                        <select class="form-select"  id="Boolean" name="Boolean">
+
+                                            <option value="1">True</option>
+                                            <option value="2">False</option>
+
+                                        </select>
+                                    </div>
+
+
+
+
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="addQuestion(1)">Close</button>
+                            <button type="button" class="btn btn-outline-primary" >Save</button>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
             <!--edit question modal for New exam-->
             <div class="modal fade" id="EditQuestion2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -906,10 +990,6 @@
 
 
 @section('scripts')
-    <script src="../assets/js/popper.min.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-
-    <script src="../assets/js/soft-ui-dashboard.js"></script>
 
     <script>
         $("#bool,#Multi").hide()
@@ -1063,6 +1143,156 @@
             }else if(val==2){
                 $("#examplUpdate").modal('show');
             }
+        }
+
+
+
+
+        function ADDAnswer(){
+            $('#Answer').append(`
+  <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
+  <div class="form-check w_20">
+    <input class="form-check-input" type="radio" name="answer" onclick='checkAnswer(${count});' id="i_${count}"  value="${count}">
+  </div>
+`)
+            count++;
+        }
+        function ADDAnswer2(){
+            $('#Answer2').append(`
+  <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
+  <div class="form-check w_20">
+    <input class="form-check-input" type="radio" name="answer" onclick='checkAnswer(${count});' id="i_${count}"  value="${count}">
+  </div>
+`)
+            count2++;
+        }
+        function ADDAnswered(id=""){
+            $(`#Answered${id}`).append(`
+  <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
+  <div class="form-check w_20">
+    <input class="form-check-input" type="radio" name="answer" onclick='checkAnswer(${counted});' id="i_${counted}"  value="${counted}">
+  </div>
+`)
+            counted++;
+        }
+        function ADDAnswered2(){
+            $('#Answered2').append(`
+  <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
+  <div class="form-check w_20">
+    <input class="form-check-input" type="radio" name="answer" onclick='checkAnswer(${counted});' id="i_${counted}"  value="${counted}">
+  </div>
+`)
+            counted2++;
+        }
+
+        function checkAnswer(id){
+            alert($("#i_"+id).parent().prev().val())
+        }
+        function editQuestion(val){
+            if(val==1){
+                $("#examplUpdate").modal('show');
+
+            }else if(val==2){
+                $("#exampleModal").modal('show');
+            }
+        }
+        function addQuestion(val){
+            if(val==1){
+                $("#exampleModal").modal('show');
+
+            }else if(val==2){
+                $("#examplUpdate").modal('show');
+            }
+        }
+        var data=[]
+        var coun_qu=0
+
+        function AddQues(val){
+            data.push({id:0,answerCount:0})
+            data[coun_qu].id=coun_qu+val
+            coun_qu+=val
+
+            $(`<hr/>
+  <div class="col-auto w_50">
+                <p>Write Question ${coun_qu+1}</p>
+                <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title ${coun_qu+1}" >
+              </div>
+              <div class="col-auto w_50">
+                <p>Enter Question Marks</p>
+                <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks ${coun_qu+1}" >
+              </div>
+              <div class="col-auto w-100 my-1 mb-2" >
+                <p>upload Image for Question</p>
+                <input class="form-control " type="file" id="formFile2" name="formFile${coun_qu+1}">
+              </div>
+              <div class="col-auto w-100 my-1 mb-2" >
+                <p>Choose Question Type</p>
+                <div class="row g-2">
+                  <div class="form-check w_50">
+                    <input class="form-check-input choiced" type="radio" name="${coun_qu}" id="radio1" value="1">
+                    <label class="form-check-label" for="radio1">
+                     Muli-choice
+                    </label>
+                  </div>
+                  <div class="form-check w_50">
+                    <input class="form-check-input choiced" type="radio" name="${coun_qu}" id="radio2"  value="2">
+                    <label class="form-check-label" for="radio2">
+                      True or False
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="w-100 my-1 mb-2 Multied">
+                <button type="button" class="btn btn-outline-primary" onclick="ADDAnswereds(${coun_qu-1})" >add choice</button>
+
+                <div class="row g-2 " id="Answered${coun_qu}">
+
+                </div>
+
+
+
+                </div>
+
+                <div class="col-auto w-100 my-1 mb-2 booled" >
+                  <p>Select right Answer</p>
+                  <select class="form-select"  id="Boolean" name="Boolean">
+
+                    <option value="1">True</option>
+                    <option value="2">False</option>
+
+                  </select>
+                </div>
+   `).appendTo("#formaddQuestion1")
+            $(".booled,.Multied").hide()
+
+            $(".choiced").click(function(){
+                if($(this).val()==1){
+
+                    $(this).parent().parent().parent().next().show()
+                    $(this).parent().parent().parent().next().next().hide()
+
+                }else{
+
+                    $(this).parent().parent().parent().next().next().show()
+                    $(this).parent().parent().parent().next().hide()
+                }
+
+            });
+
+
+        }
+        function ADDAnswereds(num){
+
+            data[num].answerCount++
+            $(`#Answered${data[num].id}`).append(`
+  <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${data[num].answerCount}">
+  <div class="form-check w_20">
+    <input class="form-check-input" type="radio" name="answer${data.id}" onclick='checkAnswer(${counted});' id="i_${counted}"  value="${counted}">
+  </div>
+`);
+            counted++
         }
     </script>
 

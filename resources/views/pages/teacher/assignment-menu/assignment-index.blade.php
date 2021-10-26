@@ -41,8 +41,10 @@
 
                     <div class="col-auto w_50">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade"  name="Grade">
-                            @if($grades->count()>0)
+                        <select class="form-select" aria-label="Select Grade"  name="Grade" onchange="getAssignments(this.value);">
+                            <option disabled="disabled" selected="selected">Select Grade</option>
+
+                        @if($grades->count()>0)
                                 @foreach($grades as $grade)
                                     @foreach($grade as $g)
                                         <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
@@ -53,12 +55,8 @@
                     </div>
                     <div class="col-auto w_50">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class"  name="Subject">
-                            @if($teacher_sub->count()>0)
-                                @foreach($teacher_sub as $ts)
-                                    <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
-                                @endforeach
-                            @endif
+                        <select class="form-select" aria-label="Select Class" id="subject" name="subject" disabled>
+                            <option value="" disabled selected>Select the Grade First</option>
                         </select>
                     </div>
 
@@ -69,89 +67,26 @@
             </div>
         </div>
 
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Assignments table</h6>
+
+
+            <div class="container-fluid py-1" id="messages">
+                <div class="card my-2">
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="text-center py-3" id="choose">
+                            <p class="h4 text-info">Choose Grade and Subject</p>
                         </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            @if($assignments->count() > 0)
-
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center ">Assignment
-                                                title
-                                            </th>
-                                            <th class="text-secondary purplel-color opacity-9  text-center">DeadLine
-                                            </th>
-                                            <th class="text-secondary purplel-color opacity-9  text-center">Status
-                                            </th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center">Controllers
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($assignments as $assignment)
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$assignment->id}}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$assignment->title}}</p>
-                                            </td>
-
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">{{date('Y-m-d' , strtotime($assignment->due_date))}}</span>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center {{$assignment->status == 1 ? "text-danger" : "text-info"}}">
-                                                    {{$assignment->status == 1 ? "New" : "Published"}}
-                                                </p>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-                                                <a class="text-secondary font-weight-bold text-xs  me-3"
-                                                   onclick="javascript:getAssignment({{$assignment->id}})" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a
-                                                   class="text-secondary font-weight-bold text-xs me-3"
-                                                   data-toggle="tooltip"onclick="deleteAssignment({{$assignment->id}}); "  role="button" >
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-                                                <a class="text-secondary font-weight-bold text-xs"
-                                                    href="/teacher/assignment/{{$assignment->id}}" role="button">
-                                                    <i class="fas fa-external-link-alt purplel-color"
-                                                       style="font-size: 20px;"></i>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="text-center">
-                                    {{$assignments->render()}}
-                                </div>
-                            @else
-                                <div class="text-center">
-                                    <p class="h5 text-danger">There are no assignments yet..!</p>
-                                </div>
-                            @endif
+                        <div class="text-center py-3 hidden" id="loader">
+                            <i class="fa fa-spinner fa-3x fa-spin"></i>
+                        </div>
+                        <div class="text-center py-3 hidden" id="error">
+                            <p class="h4 text-danger">There are no subjects in this grade.</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-
+            <div id="content" class="hidden">
+                @include('pages.teacher.assignment-menu.assignment-table')
+            </div>
 
             <!-------------------------Start Edit Assignment------------------------------->
 

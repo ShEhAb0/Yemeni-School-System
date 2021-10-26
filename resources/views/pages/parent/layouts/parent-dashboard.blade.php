@@ -176,7 +176,12 @@
 
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
 
-
+<script>
+$(document).ready(function(){
+$("#exampleModal").modal('show');
+//alert("oj")
+})
+</script>
 @yield('scripts')
 
 </body>

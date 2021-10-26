@@ -42,8 +42,16 @@
         <div class="container-fluid py-1 px-3">
             <nav aria-label="breadcrumb">
 
-
-                @yield('navbar')
+             @yield('navbar')
+            <!--this is Navbar section 2-->
+                <div class="d-xl-none pe-1 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link blue-color p-0" id="iconNavbarSidenav">
+                        <i class="fas fa-bars" style="font-size: 22px;"></i>
+                        <div class="sidenav-toggler-inner text-dark">
+                        </div>
+                    </a>
+                </div>
+                <!--this is Navbar section 2-->
             </nav>
 
             <ul class="navbar-nav  justify-content-end">
@@ -53,7 +61,7 @@
                         <span class="d-sm-inline d-none text-dark">{{ Auth::user()->username}}</span>
                     </a>
                 </li>
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
+              <!---  <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
@@ -61,7 +69,7 @@
                             <i class="sidenav-toggler-line"></i>
                         </div>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item px-3 d-flex align-items-center">
 
                 </li>

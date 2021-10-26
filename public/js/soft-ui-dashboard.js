@@ -283,3 +283,16 @@ function sidenavTypeOnResize() {
     });
   }
 }
+
+//message sidebar
+$("#btn_Message").click(function(){
+$(this).parent().parent().parent().parent().prev().toggle()
+//console.log($(this).parent().parent().parent().parent().prev().toggle())
+});
+
+
+//message sidebar close
+$("#btn_Message_close").click(function(){
+  $(this).parent().parent().hide()
+  //console.log($(this).parent().parent().parent().parent().prev().toggle())
+  });

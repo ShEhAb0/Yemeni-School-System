@@ -122,7 +122,7 @@
                                                         <i class="far fa-id-card purplel-color" style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a  class="text-secondary font-weight-bold text-xs  "  href="/teacher/lesson/{{$lessons->id}}" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs  "  href="/teacher/lesson/{{$lesson->id}}" role="button">
                                                         <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
                                                     </a>
 
