@@ -144,8 +144,6 @@
             <!--end-->
 
             <!-------------------------Start New Lesson------------------------------->
-
-
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -239,13 +237,6 @@
                 </div>
             </div>
             <!-------------------------End New Lesson------------------------------->
-
-
-
-
-
-
-
 
             <!-------------------------Start Edit Lesson------------------------------->
             <div class="modal  fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -347,15 +338,7 @@
             </div>
             <!-------------------------End Edit Lesson------------------------------->
 
-
-
-
-
-
-
             <!-------------------------Start Delete Lesson------------------------------->
-
-
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -382,11 +365,7 @@
                     </div>
                 </div>
             </div>
-
             <!-------------------------End Delete Lesson------------------------------->
-
-
-
 
 
             <div class="modal fade" id="attendance" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">

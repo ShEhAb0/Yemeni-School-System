@@ -41,7 +41,7 @@
 
                     <div class="col-auto w_50">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade"  name="Grade" onchange="getAssignments(this.value);">
+                        <select class="form-select" aria-label="Select Grade"  id="grades" name="grade" onchange="getSubjects(this.value);">
                             <option disabled="disabled" selected="selected">Select Grade</option>
 
                         @if($grades->count()>0)
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-auto w_50">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class" id="subject" name="subject" disabled>
+                        <select class="form-select" aria-label="Select Class" id="subjects" name="subjects" disabled>
                             <option value="" disabled selected>Select the Grade First</option>
                         </select>
                     </div>
@@ -185,9 +185,6 @@
 
             <!-------------------------End Edit Assignment------------------------------->
 
-
-
-
             <!-------------------------Start New Assignment------------------------------->
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -283,10 +280,7 @@
 
             <!-------------------------End New Assignment------------------------------->
 
-
-
             <!-------------------------Start Delete Assignment------------------------------->
-
 
             <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
                 <div class="modal-dialog">
@@ -316,10 +310,6 @@
             </div>
 
             <!-------------------------End Delete Lesson------------------------------->
-
-
-
-
         </div>
     </div>
 @endsection
@@ -329,6 +319,73 @@
 
     <script src="{{asset('js/axios.min.js')}}"></script>
     <script>
+        function getSubjects(id) {
+            $('#choose').addClass('hidden');
+            $('#error').addClass('hidden');
+            $('#loader').removeClass('hidden');
+            axios({
+                method: 'get',
+                url: '/teacher/get_assignment_subjects/'+id
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#choose').removeClass('hidden');
+                        $('#subjects').attr('onchange','getAssingments(this.value);');
+                        $('#subjects').html(response.data);
+                        $('#subjects').attr('disabled',false);
+                    }else {
+                        $('#loader').addClass('hidden');
+                        $('#error').removeClass('hidden');
+                    }
+                })
+        }
+
+        function getAssingments() {
+            $('#content').addClass('hidden');
+            $('#choose').addClass('hidden');
+            $('#error').addClass('hidden');
+            $('#messages').removeClass('hidden');
+            $('#loader').removeClass('hidden');
+            var grade = $('#grades').val();
+            var subject = $('#subjects').val();
+            axios({
+                method: 'get',
+                url: '/teacher/get_assignments/'+grade+'/'+subject
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#messages').addClass('hidden');
+                        $('#content').removeClass('hidden');
+                        $('#content').html(response.data);
+                    }
+                })
+        }
+
+        $(document).on('click', '.pagination a', function(event){
+            event.preventDefault();
+            $('#content').addClass('hidden');
+            $('#messages').removeClass('hidden');
+            $('#loader').removeClass('hidden');
+            var page = $(this).attr('href').split('page=')[1];
+            var grade = $('#grades').val();
+            var subject = $('#subjects').val();
+
+            axios({
+                method: 'get',
+                url: '/teacher/get_assignments/'+grade+'/'+subject+'?page='+page
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#messages').addClass('hidden');
+                        $('#content').html(response.data);
+                        $('#content').removeClass('hidden');
+                    }
+                })
+        });
+
         function getAssignment(id) {
             axios({
                 method:'get',

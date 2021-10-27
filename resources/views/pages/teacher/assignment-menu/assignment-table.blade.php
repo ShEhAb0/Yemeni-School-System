@@ -67,7 +67,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="text-center">
+                        <div class="pagination justify-content-center my-3">
                             {{$assignments->render()}}
                         </div>
                     @else

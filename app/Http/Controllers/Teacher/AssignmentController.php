@@ -31,6 +31,28 @@ class AssignmentController extends Controller
 
     }
 
+    public function getSubjects($id)
+    {
+        $subjects = TeacherSubject::where('teacher_id',Auth::id())->where('level_id',$id)->where('status',1)->with('subject')->get();
+//        $subjects = Subject::where('level_id',Auth::user()->level_id)->where('status',1)->get();
+        if ($subjects->count() > 0) {
+            $data = '<option value="" disabled selected>Select the subject</option>';
+            foreach ($subjects as $subject) {
+                $data .= '
+            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_name . '</option>
+            ';
+            }
+            return response($data,200);
+        }
+        return response('',201);
+    }
+
+    public function getAssignments($grade,$subject)
+    {
+        $assignments = Assignment::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->paginate(10);
+        return view('pages.teacher.assignment-menu.assignment-table',compact('assignments'))->render();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

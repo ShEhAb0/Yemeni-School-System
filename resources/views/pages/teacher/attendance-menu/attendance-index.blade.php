@@ -115,11 +115,11 @@
         $('#error').addClass('hidden');
         $('#messages').removeClass('hidden');
         $('#loader').removeClass('hidden');
-        var grade = $('#grade').val();
+        var grade = $('#Grade').val();
         var subject = $('#subject').val();
         axios({
             method: 'get',
-            url: '/get_teacher_attendance/'+grade+'/'+subject
+            url: '/teacher/get_teacher_attendance/'+grade+'/'+subject
         })
             .then(response => {
                 if (response.status === 200) {
@@ -130,6 +130,29 @@
                 }
             })
     }
+
+    $(document).on('click', '.pagination a', function(event){
+        event.preventDefault();
+        $('#content').addClass('hidden');
+        $('#messages').removeClass('hidden');
+        $('#loader').removeClass('hidden');
+        var page = $(this).attr('href').split('page=')[1];
+        var grade = $('#Grade').val();
+        var subject = $('#subject').val();
+
+        axios({
+            method: 'get',
+            url: '/teacher/get_teacher_attendance/'+grade+'/'+subject+'?page='+page
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    $('#loader').addClass('hidden');
+                    $('#messages').addClass('hidden');
+                    $('#content').html(response.data);
+                    $('#content').removeClass('hidden');
+                }
+            })
+    });
 </script>
 @endsection
 @endsection

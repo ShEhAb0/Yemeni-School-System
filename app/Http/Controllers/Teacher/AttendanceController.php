@@ -20,17 +20,17 @@ class AttendanceController extends Controller
     public function index()
     {
 
-        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+//        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
 
         $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
             return $row->take(1);
         });
-        $attendances = Attendance::where('subject_id',0)->get();
-        $total = $attendances->count();
-        $absence = Attendance::where('subject_id',0)->count();
-        $presence = Attendance::where('subject_id',0)->count();
+        $attendances = Attendance::where('subject_id',0)->paginate(10);
+//        $total = $attendances->count();
+//        $absence = Attendance::where('subject_id',0)->count();
+//        $presence = Attendance::where('subject_id',0)->count();
 
-        return view('pages.teacher.attendance-menu.attendance-index' , compact('grades' ,'teacher_sub' , 'attendances','total','absence','presence'));
+        return view('pages.teacher.attendance-menu.attendance-index' , compact('grades','attendances'));
 
     }
 
@@ -63,13 +63,13 @@ class AttendanceController extends Controller
      */
     public function show($id)
     {
-       // $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
-        $subjects = Subject::where('level_id',Auth::user()->level_id)->where('status',1)->get();
+        $subjects = TeacherSubject::where('teacher_id',Auth::id())->where('level_id',$id)->where('status',1)->with('subject')->get();
+//        $subjects = Subject::where('level_id',Auth::user()->level_id)->where('status',1)->get();
         if ($subjects->count() > 0) {
             $data = '<option value="" disabled selected>Select the subject</option>';
             foreach ($subjects as $subject) {
                 $data .= '
-            <option value="' . $subject->id . '">' . $subject->subject_name . '</option>
+            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_name . '</option>
             ';
             }
             return response($data,200);
@@ -78,14 +78,14 @@ class AttendanceController extends Controller
     }
 
     public function showAttendance($grade, $subject){
-        $attendances = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
-            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->with('lessonsAttendances')->get();
-        $total = $attendances->count();
-        $absence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
-            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->where('status',0)->count();
-        $presence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
-            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->where('status',1)->count();
-        return view('pages.teacher.attendance-menu.attendance-table',compact('attendances','total','absence','presence'));
+        $attendances = Attendance::where('level_id',$grade)->where('subject_id',$subject)
+            ->with(['lessonsAttendances','student'])->orderBy('lesson_id','asc')->paginate(10);
+//        $total = $attendances->count();
+//        $absence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
+//            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->where('status',0)->count();
+//        $presence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
+//            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->where('status',1)->count();
+        return view('pages.teacher.attendance-menu.attendance-table',compact('attendances'))->render();
 
     }
 
