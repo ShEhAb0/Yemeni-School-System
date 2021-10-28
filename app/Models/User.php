@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\App;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -48,6 +49,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\Term' , 'term_id');
 
+    }
+    public function parents()
+    {
+        return $this->belongsTo('App\Models\Parents');
     }
     /**
      * The attributes that should be hidden for serialization.

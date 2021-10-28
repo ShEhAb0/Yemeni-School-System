@@ -1,5 +1,10 @@
 @extends('pages.admin.layouts.admin-dashboard')
+@section('navbar')
+    <div >
+        <h6 class="font-weight-bolder mb-0">Dashboard</h6>
 
+    </div>
+@endsection
 @section('content')
 
     <div class="container-fluid py-4">
@@ -232,3 +237,4 @@
             },
         });
     </script>
+@endsection

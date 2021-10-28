@@ -190,7 +190,7 @@ Route::prefix('parent')->name('parent.')->group(function () {
 
 
     Route::middleware(['auth:parent'])->group(function(){
-        Route::view('/index' , 'pages.parent.index')->name('index');
+        Route::resource('/index' , 'App\Http\Controllers\Parent\ParentController');
 
         Route::resource('/schedule' , 'App\Http\Controllers\Parent\ScheduleController');
         Route::resource('/today/work' , 'App\Http\Controllers\Parent\TodayWorkController');

@@ -33,7 +33,15 @@
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
         <div class="container-fluid py-1 px-3">
             <nav aria-label="breadcrumb">
-
+                <!--this is Navbar section 2-->
+                <div class="d-xl-none pe-1 d-flex align-items-center">
+                    <a href="javascript:;" class="nav-link blue-color p-0" id="iconNavbarSidenav">
+                        <i class="fas fa-bars" style="font-size: 22px;"></i>
+                        <div class="sidenav-toggler-inner text-dark">
+                        </div>
+                    </a>
+                </div>
+                <!--this is Navbar section 2-->
                 @yield('navbar')
             </nav>
 
@@ -43,11 +51,11 @@
                     <a class="d-flex  py-1 cursor-pointer"  href="./TeacherProfile.html">
                         <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
                         <div style="margin: auto 10px;">
-                            <span class="d-sm-inline d-none text-dark text-bold">{{ Auth::user()->username}}</span>
+                            <span class="d-sm-inline text-dark text-bold">{{ Auth::user()->username}}</span>
                         </div>
                     </a>
                 </li>
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
+               <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
@@ -55,7 +63,7 @@
                             <i class="sidenav-toggler-line"></i>
                         </div>
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item px-3 d-flex align-items-center">
                     <a href="./Message.html" class="nav-link text-body p-0">
                         <i class="fas fa-envelope cursor-pointer text-dark" ></i>
