@@ -205,14 +205,17 @@
                                 @if($users->count() > 0)
                                 <div class="row w_50 hidden" id="parentexsits2" >
                                     <p>Choose Student </p>
-                                    <select class="form-select my-1 mb-2" name="user" required>
+                                    <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
+                                        <optgroup >
                                             <option value="" disabled selected>Select the student</option>
                                             @foreach($users as $user)
                                                 <option value="{{$user->id}}">{{$user->student_name}}</option>
                                             @endforeach
+                                        </optgroup>
                                     </select>
                                 </div>
                                 @endif
+
 
                                 <p>Choose Parent Status</p>
 
@@ -357,22 +360,25 @@
                                 <div class="row ">
                                     <div class="row w_50 col-auto my-1 mb-2 w_50" >
                                         <p>upload parent ID or Passport</p>
-                                        <input class="form-control" type="file" id="parent_id_or_passport" required name="parent_id_or_passport">
+                                        <input class="form-control" type="file" id="parent_id_or_passport"  name="parent_id_or_passport">
                                     </div>
                                 </div>
 
-                                <div class="row w_50 hidden" id="parentexsits" >
-                                    <p>Choose Student</p>
-                                    <select class="form-select my-1 mb-2" name="user" id="user" required>
 
-                                        @if($users->count() > 0)
-                                            <option value="" disabled selected>Select the student</option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}">{{$user->student_name}}</option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                </div>
+                                @if($users->count() > 0)
+                                    <div class="row w_50 hidden" id="parentexsits" >
+                                        <p>Choose Student </p>
+                                        <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
+                                            <optgroup >
+                                                <option value="" disabled selected>Select the student</option>
+                                                @foreach($users as $user)
+                                                    <option value="{{$user->id}}">{{$user->student_name}}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                @endif
+
 
                                 <p>Choose Parent Status</p>
 

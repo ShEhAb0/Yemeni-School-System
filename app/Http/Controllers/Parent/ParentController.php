@@ -16,9 +16,16 @@ class ParentController extends Controller
         //$parents_us = UserParent::where('parent_id',Auth::id())->with('user')->get();
        // $parents_us = UserParent::with('user');
         $parents_us = UserParent::where('parent_id',Auth::id())->with('user')->get();
-        $user = User::all();
+        //$user = User::all();
 
 
-        return view('pages.parent.index' , compact('parents_us' , 'user'));
+        return view('pages.parent.index' , compact('parents_us'));
+    }
+
+    public function show($id)
+    {
+        $parents_us = UserParent::where('id' , $id)->first();
+        return view('pages.parent.show' , compact('parents_us'));
+
     }
 }

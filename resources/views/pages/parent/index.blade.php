@@ -30,12 +30,13 @@
                     <span >
                       <span class="text-dark text-bold">{{$p->user->student_name}}</span><br/>
                       <span>{{$p->user->username}}</span>
-                      <span>class</span>
+                      <span>{{$p->user->level_id}}</span>
                     </span>
 
                                             <br/>
                                         </div>
-                                        <div class="col-5 text-end mt-2">                <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#Schedule" role="button">
+                                        <div class="col-5 text-end mt-2">
+                                            <a  class="text-secondary font-weight-bold text-xs"  href="/parent/index/{{$p->id}}" role="button">
                                                 <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i></a></div>
                                     </div>
                                 </div>
@@ -48,4 +49,19 @@
                 </div>
             </div>
         </div>
+@endsection
+
+@section('scripts')
+    <script>
+        function showUser(id){
+            axios({
+                method:'get',
+                url:'/parent/index/' + id + '/show'
+            })
+            var newWindow = window.open('/parent/index/' +id);
+            newWindow.my_childs_special_setting = $('#title').val(response.data.title);
+
+        }
+    </script>
+
 @endsection

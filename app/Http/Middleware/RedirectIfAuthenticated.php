@@ -34,7 +34,7 @@ class RedirectIfAuthenticated
                     return redirect()->route('user.index');
                 }
                 if($guard === 'parent'){
-                    return redirect()->route('parent.index');
+                    return redirect()->route('parent.index.index');
                 }
                 return redirect()->route('admin.index');
                 // return redirect(RouteServiceProvider::HOME);

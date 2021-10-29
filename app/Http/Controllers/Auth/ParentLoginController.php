@@ -28,7 +28,7 @@ class ParentLoginController extends Controller
         // Attempt to log the user in
         if (Auth::guard('parent')->attempt(['username' => $request->username, 'password' => $request->password])) {
             // if successful, then redirect to their intended location
-            return redirect()->intended(route('parent.index'));
+            return redirect()->intended(route('parent.index.index'));
         }
         // if unsuccessful, then redirect back to the login with the form data
         return redirect()->back()->withInput($request->only('username', 'remember'));

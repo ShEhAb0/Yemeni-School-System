@@ -13,6 +13,10 @@ class UserParent extends Model
 
     public function user()
     {
-        return $this->belongsToMany('App\Models\User');
+        return $this->belongsTo('App\Models\User');
+    }
+    public function grade()
+    {
+        return $this->belongsTo('App\Models\Grade' , 'level_id');
     }
 }
