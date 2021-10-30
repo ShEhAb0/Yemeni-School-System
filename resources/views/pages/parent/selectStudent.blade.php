@@ -27,8 +27,6 @@
 
 </head>
 <body class="g-sidenav-show  bg-gray-100">
-@include('pages.parent.layouts.sidebar')
-
 <main class="main-content position-relative max-height-vh-100 h-100 mt-1 border-radius-lg ">
 
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -44,7 +42,7 @@
                     </a>
                 </div>
                 <!--this is Navbar section 2-->
-                @yield('navbar')
+                <h5>Choose Student</h5>
             </nav>
 
             <ul class="navbar-nav  justify-content-end">
@@ -56,15 +54,15 @@
                         </div>
                     </a>
                 </li>
-               <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
-                    <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                        <div class="sidenav-toggler-inner">
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                            <i class="sidenav-toggler-line"></i>
-                        </div>
-                    </a>
-                </li> -->
+                <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center ">
+                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                         <div class="sidenav-toggler-inner">
+                             <i class="sidenav-toggler-line"></i>
+                             <i class="sidenav-toggler-line"></i>
+                             <i class="sidenav-toggler-line"></i>
+                         </div>
+                     </a>
+                 </li> -->
                 <li class="nav-item px-3 d-flex align-items-center">
                     <a href="./Message.html" class="nav-link text-body p-0">
                         <i class="fas fa-envelope cursor-pointer text-dark" ></i>
@@ -163,20 +161,94 @@
     </nav>
     <!--body for DB-->
 
-    @yield('content')
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Student Managment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div>
+                        <p class="text-left">Choose Student</p>
+
+                        <div class="modal-body max-height-vh-60" style="overflow-y:auto">
+                            @foreach($parents_us as $p)
+                                <div class="list-group mb-1">
+                                    <div href="" class="list-group-item">
+                                        <div class="d-flex  py-1">
+                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                            <div style="margin: auto 10px;">
+                    <span >
+                      <span class="text-dark text-bold">{{$p->user->student_name}}</span><br/>
+                      <span>{{$p->user->username}}</span>
+                      <span>{{$p->user->level_id}}</span>
+                    </span>
+
+                                                <br/>
+                                            </div>
+                                            <div class="col-5 text-end mt-2">
+                                                <a  class="text-secondary font-weight-bold text-xs"  href="/parent/index/{{$p->id}}" role="button">
+                                                    <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i></a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid py-4">
+        <div class="text-center mx-auto" style="max-width: 500px">
+            <form method="POST" action="/parent/choose">
+                @csrf
+                @method('POST')
+            @foreach($parents_us as $p)
+                <div class="list-group mb-1">
+                    <div href="" class="list-group-item">
+                        <div class="d-flex  py-1">
+                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                            <div style="margin: auto 10px;">
+                    <span >
+                      <span class="text-dark text-bold">{{$p->user->student_name}}</span><br/>
+                      <span>{{$p->user->username}}</span><span> - Grade: {{$p->user->level_id}}</span>
+                    </span>
 
+                                <br/>
+                            </div>
+                            <div class="mt-2 ms-auto">
 
-
-
-
+                                    <div class="form-check">
+                                <input type="radio" name="student" class="form-check-input" value="{{$p->user->id}}">
+                                    </div>
+{{--                                <a  class="text-secondary font-weight-bold text-xs"  href="/parent/choose-student" role="button">--}}
+{{--                                    <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i></a>--}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary mt-2">Continue</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 
 
 
 </main>
+
 <script src="{{asset('/js/popper.min.js')}}"></script>
 
 <script src="{{asset('/js/bootstrap.min.js')}}"></script>
@@ -184,14 +256,17 @@
 
 
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
+    <script>
 
-<script>
-// $(document).ready(function(){
-// $("#exampleModal").modal('show');
-// //alert("oj")
-// })
-</script>
-@yield('scripts')
+        function showUser(id){
+            axios({
+                method:'get',
+                url:'/parent/index/' + id + '/show'
+            })
+            var newWindow = window.open('/parent/index/' +id);
+            newWindow.my_childs_special_setting = $('#title').val(response.data.title);
 
+        }
+    </script>
 </body>
 </html>

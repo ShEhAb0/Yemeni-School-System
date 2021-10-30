@@ -190,6 +190,8 @@ Route::prefix('parent')->name('parent.')->group(function () {
 
 
     Route::middleware(['auth:parent'])->group(function(){
+        Route::post('/choose', 'App\Http\Controllers\Parent\ParentController@chooseStudent');
+        Route::get('/choose-student', 'App\Http\Controllers\Parent\ParentController@create');
         Route::resource('/index' , 'App\Http\Controllers\Parent\ParentController');
 
         Route::resource('/schedule' , 'App\Http\Controllers\Parent\ScheduleController');

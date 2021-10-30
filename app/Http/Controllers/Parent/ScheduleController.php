@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -14,8 +15,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.schedule-menu.schedule-index');
-
+        $schedule = Schedule::where('level_id',session('student_level'))
+            ->where('term_id',session('student_term'))->where('status',1)->with('term')->first();
+        return view('pages.parent.schedule-menu.schedule-index',compact('schedule'));
     }
 
     /**

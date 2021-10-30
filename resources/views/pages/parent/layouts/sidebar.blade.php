@@ -14,18 +14,17 @@
         <div class="list-group mb-1">
             <div href="" class="list-group-item">
                 <div class="d-flex ">
-                    <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                    <img src="{{asset('/img/'.session('student_image'))}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                     <div style="margin: auto 10px;">
             <span >
-              <span class="text-dark text-bold text-sm">Student Name</span><br/>
-              <span class="text-xs">Student ID</span>
+              <span class="text-dark text-bold text-sm">{{session('student_name')}}</span><br/>
+              <span class="text-xs">{{session('student_username')}} - Grade: {{session('student_level')}}</span>
 
             </span>
                         <br/>
                     </div>
                     <div class="col-1 text-end mt-2">
-                        <a  class="text-secondary font-weight-bold text-xs"
-                            data-bs-toggle="modal" href="#exampleModal" role="button">
+                        <a  class="text-secondary font-weight-bold text-xs" href="/parent/choose-student">
                             <i class="fas fa-external-link-alt purplel-color" style="font-size: 18px;"></i></a></div>
                 </div>
             </div>

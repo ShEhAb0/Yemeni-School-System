@@ -37,6 +37,12 @@ class ParentLoginController extends Controller
     public function logout()
     {
         Auth::guard('parent')->logout();
+        session()->remove('student_id');
+        session()->remove('student_name');
+        session()->remove('student_username');
+        session()->remove('student_image');
+        session()->remove('student_level');
+        session()->remove('student_term');
         return redirect('/');
     }
 }
