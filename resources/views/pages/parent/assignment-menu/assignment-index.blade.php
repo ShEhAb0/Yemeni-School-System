@@ -4,6 +4,7 @@
 @endsection
 @section('content')
     <div class="container-fluid">
+
         <br/>
         <br/>
         <br/>
@@ -23,83 +24,77 @@
                 <div class="col-sm-12 col-md-5 col-xl-5">
                     <div class="w-100 my-1">
 
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
+                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject" onchange="getAssignments(this.value);">
                             <option disabled="disabled" selected="selected">Select Subject</option>
-                            <option value="1">Math</option>
-                            <option value="2">Arabic</option>
-                            <option value="3">Biolody</option>
-                            <option value="4">English</option>
-                            <option value="5">science</option>
-                            <option value="6">chemistry</option>
-                            <option value="7">History</option>
-
+                            @foreach($subjects as $subject)
+                                <option value="{{$subject->id}}">{{$subject->subject_name}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <br/>
                 <br/>
 
-
-
             </div>
         </div>
-
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Assignments table</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">Assignment title</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">DeadLine</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Controller</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math Algobra</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-
-                                        <td class="align-middle text-center">
-                                            <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="/parent/assignment/show" role="button">
-                                                <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
-                                            </a>
-                                        </td>
-
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--modals-->
-
-
-
-
-
-
-
-
+        <div class="text-center py-3" id="chooseSubject">
+            <p class="text-info">You have to choose the Subject</p>
         </div>
-
+        <div class="text-center py-3 hidden" id="loader">
+            <i class="fa fa-spinner fa-3x fa-spin"></i>
+        </div>
+        <div id="lessonData" class="hidden">
+            @include('pages.parent.assignment-menu.assignment-data')
+            <div class="text-center my-3">
+                {{ $assignments->render() }}
+            </div>
+        </div>
 
     </div>
+
+    </div>
+
+
+
+@section('scripts')
+    <script src="{{ asset('js/axios.min.js')}}"></script>
+    <script>
+        function getAssignments(id) {
+            $('#lessonData').addClass('hidden');
+            $('#chooseSubject').addClass('hidden');
+            $('#loader').removeClass('hidden');
+            axios({
+                method: 'get',
+                url: '/parent/assignment/'+id+'/edit'
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#lessonData').html(response.data);
+                        $('#lessonData').removeClass('hidden');
+                    }
+                })
+        }
+        $(document).on('click', '.pagination a', function(event){
+            event.preventDefault();
+            $('#lessonData').addClass('hidden');
+            $('#loader').removeClass('hidden');
+            var page = $(this).attr('href').split('page=')[1];
+            var sub = $('#Subject').val();
+
+            axios({
+                method: 'get',
+                url: '/parent/assignment/'+sub+'/edit?page='+page
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#lessonData').html(response.data);
+                        $('#lessonData').removeClass('hidden');
+                    }
+                })
+        });
+    </script>
+@endsection
+
 @endsection

@@ -5,6 +5,7 @@
 @section('content')
 
     <div class="container-fluid">
+
         <br/>
         <br/>
         <br/>
@@ -24,284 +25,89 @@
                 <br/>
                 <div class="row g2">
                     <div class="col-auto w_50">
-                        <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                            <option value="1">Math</option>
-                            <option value="2">Arabic</option>
-                            <option value="3">Biolody</option>
-                            <option value="4">English</option>
-                            <option value="5">science</option>
-                            <option value="6">chemistry</option>
-                            <option value="7">History</option>
-
-                        </select>
-                    </div>
-
-                    <div class="col-auto w_50">
                         <p>Select Term</p>
-                        <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                            <option value="1">Term 1</option>
-                            <option value="2">Term 2</option>
-
+                        <select class="form-select" aria-label="Select Term" id="term" name="term" onchange="getSubjects(this.value)">
+                            <option value="" disabled selected>Select the Term</option>
+                            @foreach($terms as $term)
+                                <option value="{{$term->id}}">{{$term->name}}</option>
+                            @endforeach
                         </select>
                     </div>
-
-
+                    <div class="col-auto w_50">
+                        <p>Select Subject</p>
+                        <select class="form-select" aria-label="Select Class" id="subject" name="subject" disabled>
+                            <option value="" disabled selected>Select the Term First</option>
+                        </select>
+                    </div>
                 </div>
 
 
             </div>
         </div>
-
-
-        <div class="container-fluid py-4">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Attandace table</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Lesson Title </th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">Date </th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Attendance</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">2</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" checked value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">3</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">4</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" checked value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">5</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm  font-weight-bold mb-0 text-center">6</p>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <div class="form-check align-middle text-center me-3" style="float: none;">
-                                                <input class="form-check-input"  style="float: none;" type="checkbox" checked value="" id="flexCheckChecked" >
-                                            </div>
-
-
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+        <div class="container-fluid py-1" id="messages">
+            <div class="card my-2">
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="text-center py-3" id="choose">
+                        <p class="h4 text-info">Choose Term and Subject</p>
+                    </div>
+                    <div class="text-center py-3 hidden" id="loader">
+                        <i class="fa fa-spinner fa-3x fa-spin"></i>
+                    </div>
+                    <div class="text-center py-3 hidden" id="error">
+                        <p class="h4 text-danger">There are no subjects in this term.</p>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
         </div>
-
-
-
-        <div class="container-fluid py-1">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header pb-0">
-                            <h6>Total Subject's Attandace</h6>
-                        </div>
-                        <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center text-sm">Start Date  </th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center text-sm">End Date  </th>
-
-                                        <th class="text-secondary purplel-color opacity-9  text-center text-sm">Total Lessons  </th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center text-sm">Total absence  </th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center text-sm">Total presence  </th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-
-
-
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/9/1 12:00 PM</span>
-                                        </td>
-
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">20</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">2</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">18</p>
-                                        </td>
-
-                                    </tr>
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-
-
-
-
+        <div id="content" class="hidden">
+            @include('pages.parent.attendance-menu.attendance-table')
         </div>
-
-
-
-
-
     </div>
-@endsection
 @section('scripts')
+    <script src="{{ asset('js/axios.min.js')}}"></script>
     <script>
-        //ParentInfo
-        //Choose
-        $(function () {
-
-            $('#Choose').click(function (e) {
-
-                $('#ParentInfo').toggle();
-                $('#parentexsits').toggle();
-
-
-            });
-            $('#Choose2').click(function (e) {
-
-                $('#ParentInfo2').toggle();
-                $('#parentexsits2').toggle();
-
-
-            });
-        });
+        function getSubjects(id) {
+            $('#choose').addClass('hidden');
+            $('#error').addClass('hidden');
+            $('#loader').removeClass('hidden');
+            axios({
+                method: 'get',
+                url: '/parent/attendance/'+id
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#choose').removeClass('hidden');
+                        $('#subject').attr('onchange','getAttendance(this.value);');
+                        $('#subject').html(response.data);
+                        $('#subject').attr('disabled',false);
+                    }else {
+                        $('#loader').addClass('hidden');
+                        $('#error').removeClass('hidden');
+                    }
+                })
+        }
+        function getAttendance() {
+            $('#content').addClass('hidden');
+            $('#choose').addClass('hidden');
+            $('#error').addClass('hidden');
+            $('#messages').removeClass('hidden');
+            $('#loader').removeClass('hidden');
+            var term = $('#term').val();
+            var subject = $('#subject').val();
+            axios({
+                method: 'get',
+                url: '/get_attendance/'+term+'/'+subject
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#loader').addClass('hidden');
+                        $('#messages').addClass('hidden');
+                        $('#content').removeClass('hidden');
+                        $('#content').html(response.data);
+                    }
+                })
+        }
     </script>
-
+@endsection
 @endsection

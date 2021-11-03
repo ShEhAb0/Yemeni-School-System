@@ -259,7 +259,6 @@
 
 
 
-
             </div>
 
         </div>
@@ -345,6 +344,11 @@
 
             </div>
         </div>
+        <div class="input-msg">
+            <input type="text" id="send-input" placeholder="type something" onfocus="this.value=''"/>
+            <i onclick="send()" class='far fa-paper-plane'></i>
+        </div>
+
         <hr/>
     </div>
 

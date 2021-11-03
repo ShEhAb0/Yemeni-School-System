@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Lesson;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class LessonController extends Controller
@@ -14,7 +16,9 @@ class LessonController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.lesson-menu.lesson-index');
+        $subjects = Subject::where('level_id',session('student_level'))->get();
+        $lessons = Lesson::where('id',0)->paginate(3);
+        return view('pages.parent.lesson-menu.lesson-index' ,compact('subjects','lessons'));
 
     }
 
@@ -47,7 +51,9 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        return view('pages.parent.lesson-menu.lesson-show');
+        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+
+        return view('pages.parent.lesson-menu.lesson-show' , compact('lesson'));
 
     }
 
@@ -59,7 +65,8 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lessons = Lesson::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->paginate(3);
+        return view('pages.parent.lesson-menu.lesson-data',compact('lessons'));
     }
 
     /**

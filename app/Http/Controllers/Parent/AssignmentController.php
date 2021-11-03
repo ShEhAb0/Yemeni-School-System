@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class AssignmentController extends Controller
@@ -14,7 +16,9 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.assignment-menu.assignment-index');
+        $subjects = Subject::where('level_id',session('student_level'))->get();
+        $assignments = Assignment::where('id',0)->paginate(3);
+        return view('pages.parent.assignment-menu.assignment-index' , compact('subjects','assignments'));
 
     }
 
@@ -47,7 +51,9 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        return view('pages.parent.assignment-menu.assignment-show');
+        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','answer'])->first();
+
+        return view('pages.parent.assignment-menu.assignment-show' ,compact('assignment'));
 
     }
 

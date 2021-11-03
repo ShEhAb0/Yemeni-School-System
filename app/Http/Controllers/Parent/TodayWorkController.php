@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
+use App\Models\Lesson;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TodayWorkController extends Controller
@@ -14,7 +17,11 @@ class TodayWorkController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.today-work-menu.today-work-index');
+        $today = Carbon::today('Asia/Riyadh');
+        $lessons = Lesson::whereDate('created_at' , $today)->where('level_id',session('student_level'))->with('teacher')->paginate(10);
+        $assignments = Assignment::whereDate('created_at' , $today)->where('level_id' , session('student_level'))->with('teacher' , 'subjects' )->paginate(3);
+
+        return view('pages.parent.today-work-menu.today-work-index' ,compact('lessons' , 'assignments'));
 
     }
 
