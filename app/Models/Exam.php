@@ -9,6 +9,7 @@ class Exam extends Model
 {
     use HasFactory;
     protected $table = "exams";
+    public $timestamps = false;
     protected $fillable = ['id' , 'teacher_id ', 'exam_title' , 'level_id' ,'term_id' , 'subject_id ' , 'exam_time' , 'duration_m' , 'status' , 'total_ques' ];
 
     public function teachersExams()

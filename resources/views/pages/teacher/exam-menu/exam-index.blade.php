@@ -102,34 +102,43 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                     <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Exam title</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Timer</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Exam Starts</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Duration</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Status</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($exams as $exam)
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$exam->exam_title}}</p>
                                         </td>
 
 
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">60 mins</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
                                         </td>
 
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2021/2/1 12:00 PM</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->duration_m}} Minutes</span>
+                                        </td>
+
+                                        <td class="align-middle text-center">
+                                            <span class="text-sm font-weight-bold {{$exam->status == 1 ? 'text-info' : 'text-danger'}}">
+                                                {{$exam->status == 1 ? "Show" : " Hidden"}}
+                                            </span>
                                         </td>
 
                                         <td class="align-middle text-center">
 
-                                            <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal" href="#examplUpdate" role="button">
+                                            <a  class="text-secondary font-weight-bold text-xs  me-3"
+                                                data-id="{{$exam->id}}" data-teacher="{{$exam->teacher_id}}"
+                                                data-title="{{$exam->exam_title}}" data-term="{{$exam->term_id}}"
+                                                data-grade="{{$exam->level_id}}" data-subject="{{$exam->subject_id}}"
+                                                data-date="{{$exam->exam_time}}" data-duration="{{$exam->duration_m}}"
+                                                data-status="{{$exam->status}}"  onclick="javascript: updateExam();" id="update_exam" role="button">
                                                 <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                             </a>
 
@@ -146,7 +155,7 @@
 
                                         </td>
                                     </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -171,75 +180,70 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
 
-                            <form class="row g-2 my-1 py-1">
+                            <form class="row g-2 my-1 py-1" method="POST" action="" id="editExamFrom">
+                                @csrf
+                                @method('PUT')
                                 <div class="col-auto w-100">
                                     <p>Exam Title</p>
-                                    <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" >
+                                    <input name="title" id="title" class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" required>
+                                </div>
+                                <div class="col-auto w-100">
+                                    <p>Select Term</p>
+                                    <select class="form-select" aria-label="Select Term" name="term" id="term" required>
+                                        <option value="" disabled selected>Choose Term</option>
+                                        @foreach($terms as $term)
+                                            <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                                        <option value="1">Grade 1</option>
-                                        <option value="2">Grade 2</option>
-                                        <option value="3">Grade 3</option>
-
-
-                                        <option value="4">Grade 4</option>
-                                        <option value="5">Grade 5</option>
-                                        <option value="6">Grade 6</option>
-
-
-                                        <option value="7">Grade 7</option>
-                                        <option value="8">Grade 8</option>
-                                        <option value="9">Grade 9</option>
-
-
-                                        <option value="10">Grade 10</option>
-                                        <option value="11">Grade 11</option>
-                                        <option value="12">Grade 12</option>
-                                        <option value="13">Grade 13</option>
-
+                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grade" required>
+                                        <option value="" disabled selected>Choose the Grade</option>
+                                        @if($grades->count()>0)
+                                            @foreach($grades as $grade)
+                                                @foreach($grade as $g)
+                                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                                        <option value="1">Math</option>
-                                        <option value="2">Arabic</option>
-                                        <option value="3">Biolody</option>
-                                        <option value="4">English</option>
-                                        <option value="5">science</option>
-                                        <option value="6">chemistry</option>
-                                        <option value="7">History</option>
-
+                                    <select class="form-select" aria-label="Select Subject" name="subject" id="subject" required>
+                                        <option value="" disabled selected>Choose the Subject</option>
+                                        @if($teacher_sub->count()>0)
+                                            @foreach($teacher_sub as $ts)
+                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
 
-                                <div class="col-auto w_50">
-                                    <p>Exam Starts</p>
-                                    <input class="form-control my-1 mb-2 " type="time" placeholder="Exam Starts" >
-                                </div>
-                                <div class="col-auto w_50">
+                                <div class="col-auto w-100">
                                     <p>Exam Date</p>
-                                    <input class="form-control my-1 mb-2 " type="date" placeholder="Date">
+                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date" name="date" id="date" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Duration</p>
-                                    <input class="form-control my-1 mb-2 " type="number" placeholder="Duration">
+                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration" name="duration" id="duration" required>
+                                </div>
+                                <div class="col-auto w-100">
+                                    <p>Exam Status</p>
+                                    <select class="form-select" aria-label="Exam Status" name="status" id="status" required>
+                                        <option value="" disabled selected>Choose the Status</option>
+                                        <option value="1">Show</option>
+                                        <option value="0">Hide</option>
+                                    </select>
                                 </div>
 
-
-                            </form>
-
-
                             <div class="modal-footer">
+                                <input type="hidden" name="teacher_id" id="teacher_id" value="">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-outline-primary" >Save</button>
+                                <button type="submit" name="update_exam" class="btn btn-outline-primary" >Save</button>
                             </div>
-
-
+                            </form>
 
 
                         </div>
@@ -467,8 +471,6 @@
                 </div>
             </div>
 
-
-
             <!--edit question-->
             <div class="modal fade" id="EditQuestion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -663,90 +665,81 @@
 
             </div>
 
-
-
-
-
             <!-- New Exam model -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
-                        <div class="modal-body">
 
+                        <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">New Exam </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-
-                            <form class="row g-2 my-1 py-1">
+                            <form class="row g-2 my-1 py-1" method="POST" action="/teacher/exam">
+                                @csrf
+                                @method('POST')
                                 <div class="col-auto w-100">
                                     <p>Exam Title</p>
-                                    <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" >
+                                    <input name="title" class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" required>
+                                </div>
+                                <div class="col-auto w-100">
+                                    <p>Select Term</p>
+                                    <select class="form-select" aria-label="Select Term" name="term" required>
+                                        <option value="" disabled selected>Choose Term</option>
+                                        @foreach($terms as $term)
+                                            <option value="{{$term->id}}">{{$term->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                                        <option value="1">Grade 1</option>
-                                        <option value="2">Grade 2</option>
-                                        <option value="3">Grade 3</option>
-
-
-                                        <option value="4">Grade 4</option>
-                                        <option value="5">Grade 5</option>
-                                        <option value="6">Grade 6</option>
-
-
-                                        <option value="7">Grade 7</option>
-                                        <option value="8">Grade 8</option>
-                                        <option value="9">Grade 9</option>
-
-
-                                        <option value="10">Grade 10</option>
-                                        <option value="11">Grade 11</option>
-                                        <option value="12">Grade 12</option>
-                                        <option value="13">Grade 13</option>
-
+                                    <select class="form-select" aria-label="Select Grade" name="grade" required>
+                                        <option value="" disabled selected>Choose the Grade</option>
+                                        @if($grades->count()>0)
+                                            @foreach($grades as $grade)
+                                                @foreach($grade as $g)
+                                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                                @endforeach
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                                        <option value="1">Math</option>
-                                        <option value="2">Arabic</option>
-                                        <option value="3">Biolody</option>
-                                        <option value="4">English</option>
-                                        <option value="5">science</option>
-                                        <option value="6">chemistry</option>
-                                        <option value="7">History</option>
-
+                                    <select class="form-select" aria-label="Select Subject" name="subject" required>
+                                        <option value="" disabled selected>Choose the Subject</option>
+                                        @if($teacher_sub->count()>0)
+                                            @foreach($teacher_sub as $ts)
+                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                 </div>
 
-                                <div class="col-auto w_50">
-                                    <p>Exam Starts</p>
-                                    <input class="form-control my-1 mb-2 " type="time" placeholder="Exam Starts" >
-                                </div>
-                                <div class="col-auto w_50">
+                                <div class="col-auto w-100">
                                     <p>Exam Date</p>
-                                    <input class="form-control my-1 mb-2 " type="date" placeholder="Date">
+                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date" name="date" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Duration</p>
-                                    <input class="form-control my-1 mb-2 " type="number" placeholder="Duration">
+                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration" name="duration" required>
                                 </div>
-
-
-                            </form>
+                                <div class="col-auto w-100">
+                                    <p>Exam Status</p>
+                                    <select class="form-select" aria-label="Exam Status" name="status" required>
+                                        <option value="" disabled selected>Choose the Status</option>
+                                        <option value="1">Show</option>
+                                        <option value="0">Hide</option>
+                                    </select>
+                                </div>
 
 
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-outline-primary" >Save</button>
+                                <button type="submit" name="add_exam" class="btn btn-outline-primary" >Save</button>
                             </div>
-
+                        </form>
                         </div>
                     </div>
 
@@ -1241,6 +1234,18 @@
     counted2++
     }
 
+    function updateExam(){
+        $('#editExamFrom').attr('action','/teacher/exam/'+$('#update_exam').data('id'));
+        $('#teacher_id').val($('#update_exam').data('teacher'));
+        $('#title').val($('#update_exam').data('title'));
+        $('#term').val($('#update_exam').data('term'));
+        $('#grade').val($('#update_exam').data('grade'));
+        $('#subject').val($('#update_exam').data('subject'));
+        $('#date').value = $('#update_exam').data('date');
+        $('#duration').val($('#update_exam').data('duration'));
+        $('#status').val($('#update_exam').data('status'));
+        $('#examplUpdate').modal('show');
+    }
     </script>
 @endsection
 @endsection
