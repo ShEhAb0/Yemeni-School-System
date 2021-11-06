@@ -123,12 +123,22 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link  {{ request()->is('parent/student/news') ? 'active' : '' }} "  href="{{url('parent/news')}}">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
+
+                </div>
+                <span class="nav-link-text ms-1">Student News</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
             <a class="nav-link  {{ request()->is('parent/news') ? 'active' : '' }} "  href="{{url('parent/news')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
 
                 </div>
-                <span class="nav-link-text ms-1">News</span>
+                <span class="nav-link-text ms-1">Parent News</span>
             </a>
         </li>
     </ul>

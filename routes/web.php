@@ -202,6 +202,7 @@ Route::prefix('parent')->name('parent.')->group(function () {
         Route::resource('/assignment' , 'App\Http\Controllers\Parent\AssignmentController');
         Route::resource('/attendance' , 'App\Http\Controllers\Parent\AttendanceController');
         Route::resource('/news' , 'App\Http\Controllers\Parent\NewsController');
+        Route::resource('/student/news' , 'App\Http\Controllers\Parent\StudentNewsController');
 
 
 
