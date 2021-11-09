@@ -113,3 +113,50 @@ min-height: 800px;
   right: -163px;
 
 }
+
+.coursera{
+  font-size: 30px;
+}
+.coursera2{
+  font-size: 36px;
+}
+@media only screen and (max-width: 1331px) {
+
+  .person_bg {
+    background-image: url(../img/illustrations/personlogin.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 365px;
+    top: 257px;
+    position: relative;
+    right: -180px;
+}
+
+}
+@media only screen and (max-width: 1211px) {
+
+  .person_bg {
+display: none;
+  }
+  .Login_bg {
+    background-image: url(../img/illustrations/Asset4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+}
+}
+
+
+@media only screen and (max-width: 650px) {
+
+
+  .coursera{
+    font-size:24px;
+  }
+  .coursera2{
+    font-size:30px;
+  }
+
+
+}

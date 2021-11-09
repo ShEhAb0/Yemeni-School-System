@@ -774,6 +774,7 @@ position: relative;
   width: 24%;
   display: block;
  }
+ 
 @media only screen and (max-width: 600px) {
   .noExam{
     position: relative;
@@ -823,3 +824,26 @@ position: relative;
     display: none!important;
   }
 }
+@media only screen and (max-width: 640px) {
+
+  .font_dash1{
+    font-size: 15px!important; 
+  }
+  .font_dash{
+    font-size: 13px!important;
+  }
+  .font_dash2{
+    font-size: 25px!important;
+  }
+
+}
+
+.icon-shape .cola {
+  top: 14px;
+}
+ .icon-shape .cola {
+  color: #fff;
+  opacity: 0.8;
+  top: 11px;
+  position: relative;
+} 
