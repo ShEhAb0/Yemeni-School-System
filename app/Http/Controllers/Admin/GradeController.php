@@ -19,7 +19,8 @@ class GradeController extends Controller
      */
     public function index()
     {
-        $grades = Grade::paginate(10);
+
+        $grades = Grade::with('students')->paginate(10);
         return view('pages.admin.grade-menu.grade-index' )->with('grades' , $grades);
 
     }

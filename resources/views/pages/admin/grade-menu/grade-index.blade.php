@@ -63,6 +63,7 @@
                                         <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Grade Name</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Grade Code</th>
+                                        <th class="text-secondary purplel-color opacity-9 text-center">Students Number</th>
                                         <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
                                         <th></th>
                                     </tr>
@@ -78,6 +79,10 @@
                                             </td>
                                             <td class="text-sm font-weight-bold mb-0 text-center">
                                                 {{$grade->grade_code}}
+                                            </td>
+                                            <td class="text-center">
+                                                <p class="text-sm font-weight-bold mb-0">{{count($grade->students)}}</p>
+
                                             </td>
                                             <td class="text-sm font-weight-bold mb-0 text-center {{$grade->status == 0 ? 'text-danger' : 'text-info'}}">
                                                 {{$grade->status == 1 ? 'Enabled' : 'Disabled'}}

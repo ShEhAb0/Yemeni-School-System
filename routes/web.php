@@ -80,8 +80,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         $students = User::all()->count();
         $teachers = Teacher::all()->count();
         $grades = Grade::all()->count();
-        //$news = News::all()->count();
-        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' ))->name('index');
+        $news = News::all();
+        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' , 'news' ))->name('index');
 
         Route::resource('/terms' , 'App\Http\Controllers\Admin\TermController');
         Route::resource('/parents' , 'App\Http\Controllers\Admin\ParentController');
@@ -135,6 +135,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/attendance' , 'App\Http\Controllers\Teacher\AttendanceController');
         Route::get('/get_teacher_attendance/{grade}/{subject}' , 'App\Http\Controllers\Teacher\AttendanceController@showAttendance');
         Route::resource('/news' , 'App\Http\Controllers\Teacher\NewsController');
+        Route::resource('/profile' , 'App\Http\Controllers\Teacher\ProfileController');
 
         Route::post('/logout',[TeacherLoginController::class,'logout'])->name('logout');
     });

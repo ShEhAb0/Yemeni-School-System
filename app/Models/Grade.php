@@ -69,5 +69,9 @@ class Grade extends Model
         return $this->hasMany('App\Models\Grade' , 'level_id');
 
     }
+    public function students()
+    {
+        return $this->hasMany('App\Models\User' , 'level_id');
+    }
 
 }
