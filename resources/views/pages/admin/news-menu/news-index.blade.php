@@ -25,17 +25,17 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-8">
+                    <form action="news/search" method="get">
                     <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="search...">
+                        <input type="search" class="form-control" placeholder="search..." name="search">
                     </div>
+                    </form>
                 </div>
 
                 <div class="col-3 text-end">
                     <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">New  News  </button>
                 </div>
-
-
 
             </div>
         </div>

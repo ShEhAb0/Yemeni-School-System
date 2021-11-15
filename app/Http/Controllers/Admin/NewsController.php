@@ -8,6 +8,7 @@ use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
@@ -18,11 +19,21 @@ class NewsController extends Controller
      */
     public function index()
     {
+
         if (Auth::guard('admin')->user()->type == 0){
             $news = News::paginate(10);
         }else{
             $news = News::where('type','!=',1)->paginate(10);
         }
+        return view('pages.admin.news-menu.news-index',compact('news'));
+
+    }
+
+    public function search(Request $request)
+    {
+
+       $search = $request->get('search');
+        $news = DB::table('news')->where('title' , 'like' , '%'.$search.'%')->paginate(10);
         return view('pages.admin.news-menu.news-index',compact('news'));
 
     }

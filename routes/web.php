@@ -96,7 +96,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
 
-
+        Route::get('/news/search' , 'App\Http\Controllers\Admin\NewsController@search');
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });
 
@@ -165,6 +165,8 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/attendance' , 'App\Http\Controllers\User\AttendanceController');
         Route::get('/get_attendance/{term}/{subject}' , 'App\Http\Controllers\User\AttendanceController@showAttendance');
         Route::resource('/news' , 'App\Http\Controllers\User\NewsController');
+        Route::resource('/profile' , 'App\Http\Controllers\User\ProfileController');
+
 
 
 
@@ -204,6 +206,7 @@ Route::prefix('parent')->name('parent.')->group(function () {
         Route::resource('/attendance' , 'App\Http\Controllers\Parent\AttendanceController');
         Route::resource('/news' , 'App\Http\Controllers\Parent\NewsController');
         Route::resource('/student/news' , 'App\Http\Controllers\Parent\StudentNewsController');
+        Route::resource('/profile' , 'App\Http\Controllers\Parent\ProfileController');
 
 
 
