@@ -28,7 +28,7 @@
                                     <h6 class="card-subtitle mb-2 text-muted">{{$lesson->teacher->teacher_name}}</h6>
                                     <p class="text-sm">Upload Date: {{$lesson->created_at}}</p>
                                     <p class="card-text">{{$lesson->description}}</p>
-                                    <a class="btn btn-primary w-100 btn-sm mb-0" href="/user/lesson/{{$lesson->id}}">Go To Lesson</a>
+                                    <a class="btn btn-primary w-100 btn-sm mb-0" href="/parent/lesson/{{$lesson->id}}">Go To Lesson</a>
                                 </div>
                             </div>
 
@@ -67,7 +67,7 @@
 
                                         </div>
                                     </div>
-                                    <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/user/assignment/{{$a->id}}">View</a>
+                                    <a class="btn btn-primary w-100 btn-sm mb-0 mt-2" href="/parent/assignment/{{$a->id}}">View</a>
                                 </div>
 
                             </div>

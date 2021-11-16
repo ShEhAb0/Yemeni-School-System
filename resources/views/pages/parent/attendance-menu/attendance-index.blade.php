@@ -97,7 +97,7 @@
             var subject = $('#subject').val();
             axios({
                 method: 'get',
-                url: '/get_attendance/'+term+'/'+subject
+                url: '/parent/get_attendance/'+term+'/'+subject
             })
                 .then(response => {
                     if (response.status === 200) {

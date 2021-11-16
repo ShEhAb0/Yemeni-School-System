@@ -64,7 +64,7 @@
             $('#loader').removeClass('hidden');
             axios({
                 method: 'get',
-                url: '/lesson/'+id+'/edit'
+                url: '/parent/lesson/'+id+'/edit'
             })
                 .then(response => {
                     if (response.status === 200) {
@@ -83,7 +83,7 @@
 
             axios({
                 method: 'get',
-                url: '/lesson/'+sub+'/edit?page='+page
+                url: '/parent/lesson/'+sub+'/edit?page='+page
             })
                 .then(response => {
                     if (response.status === 200) {

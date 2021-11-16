@@ -188,7 +188,7 @@
 
                                 <a class="d-flex d-flex align-items-center  py-1 cursor-pointer"  href="./ParentProfile.html">
                                     <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
-                                    <div style="margin: auto 10px;">    <span class="d-sm-inline d-none text-dark text-bold">Username</span>
+                                    <div style="margin: auto 10px;">    <span class="d-sm-inline d-none text-dark text-bold">{{Auth::user()->username}}</span>
                                     </div>
                                 </a>
                             </li>
@@ -320,7 +320,7 @@
                 <div class="d-flex justify-content-between w-100 mt-1 mb-1">
 
                     <h3 >{{$assignment->title}}</h3>
-                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">{{$assignment->due_date}}</span></span>
+                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">{{$assignment->created_at}}</span></span>
                 </div>
                 <div>
                     <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>{{$assignment->teacher->teacher_name}}</span></p>

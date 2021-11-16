@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\StudentNews;
 use Illuminate\Http\Request;
 
 class StudentNewsController extends Controller
@@ -16,7 +16,7 @@ class StudentNewsController extends Controller
     public function index()
     {
         //show news
-        $newses = News::whereIn('type',[0,3])->orderBy('created_at','desc')->paginate(10);
+        $newses = StudentNews::where('level_id',session('student_level'))->orderBy('created_at','desc')->paginate(10);
 
         return view('pages.parent.student-news-menu.student-news-index' ,compact('newses'));
 

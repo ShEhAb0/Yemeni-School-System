@@ -53,7 +53,7 @@
 
                                 <a class="d-flex d-flex align-items-center  py-1 cursor-pointer"  href="./ParentProfile.html">
                                     <img src=".{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
-                                    <div style="margin: auto 10;">    <span class="d-sm-inline d-none text-dark text-bold">Username</span>
+                                    <div style="margin: auto 10;">    <span class="d-sm-inline d-none text-dark text-bold">{{session('student_name')}}</span>
                                     </div>
                                 </a>
                             </li>
@@ -174,17 +174,17 @@
             <div class=" p-2 pt-4 w-100"  style="height: 100%;">
                 <div class="d-flex justify-content-between w-100 mt-1 mb-1">
 
-                    <h3 >Lesson Title</h3>
-                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">2020/2/12 12:00 PM</span></span>
+                    <h3 >{{$lesson->title}}</h3>
+                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">{{$lesson->created_at}}</span></span>
                 </div>
                 <div>
-                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>Manal</span></p>
-                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>Math (grade 1)</span></p>
+                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>{{$lesson->teacher->teacher_name}}</span></p>
+                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>{{$lesson->subjects->subject_name}} (grade {{$lesson->level_id}})</span></p>
                     <div class="d-flex justify-content-between w_70">
                         <h4 class="">Lesson Description</h4>
                     </div>
 
-                    <p class="p-2 black" style="text-align: justify;" >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions.</p>
+                    <p class="p-2 black" style="text-align: justify;" >{{$lesson->description}}</p>
 
 
                     <div class="d-flex p-2">
@@ -192,13 +192,17 @@
                             <h4 class="mt-3 pb-2" >Photos </h4>
                             <div class="d-flex justify-content-around">
 
-                                <div>
-                                    <a href="../assets/img/kal-visuals-square.jpg" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                                </div>
+                                @if($lesson->photo)
+                                    <div>
+                                        <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" download="filename"><img src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="d-flex justify-content-around mt-2">
-                                <div><a href="../assets/js/soft-ui-dashboard.js" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
+                                @if($lesson->photo)
+                                    <div><a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="files" download="{{$lesson->photo->url}}"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
+                                @endif
                             </div>
                         </div>
                         <!--File section-->
@@ -207,7 +211,9 @@
                             <div class="d-flex justify-content-around ">
 
                                 <div>
-                                    <a href="../assets/js/soft-ui-dashboard.js" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">File name</span></a>
+                                    @if($lesson->doc)
+                                        <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->doc->url)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$lesson->doc->url}}</span></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -233,8 +239,9 @@
 
                     data-setup="{}"
                 >
-                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
-                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+                    @if($lesson->video)
+                        <source src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->video->url)}}" type="video/mp4" />
+                    @endif
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a
                         web browser that

@@ -191,7 +191,7 @@
 
                                 <a class="d-flex d-flex align-items-center  py-1 cursor-pointer"  href="./ParentProfile.html">
                                     <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
-                                    <div style="margin: auto 10px;">    <span class="d-sm-inline d-none text-dark text-bold">Username</span>
+                                    <div style="margin: auto 10px;">    <span class="d-sm-inline d-none text-dark text-bold">{{session('student_name')}}</span>
                                     </div>
                                 </a>
                             </li>
@@ -313,40 +313,40 @@
             <div class=" p-2 pt-4 w-100"  style="height: 100%;">
                 <div class="d-flex justify-content-between w-100 mt-1 mb-1">
 
-                    <h3 >Assignment Title</h3>
-                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">2020/2/12 12:00 PM</span></span>
+                    <h3 >{{$assignment->title}}</h3>
+                    <span ><i class="fas fa-clock me-2 purplel-color" style="font-size: 15px;"></i><span class="text-sm">Publishing Date: </span><span class="ms-2 text-sm">{{$assignment->created_at}}</span></span>
                 </div>
                 <div>
-                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>Manal</span></p>
-                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>Math (grade 1)</span></p>
+                    <p class="black"><i class="fas fa-chalkboard-teacher me-2 purplel-color" style="font-size: 15px;"></i>Teacher Name: <span>{{$assignment->teacher->teacher_name}}</span></p>
+                    <p class="black"><i class="fas fa-book-open me-2 purplel-color" style="font-size: 15px;"></i>Subject Related: <span>{{$assignment->subjects->subject_name}} (grade {{$assignment->level_id}})</span></p>
                     <div class="d-flex justify-content-between w_70">
                         <h4 class="">Assignment Description</h4>
                     </div>
 
-                    <p class="p-2 black" style="text-align: justify;" >Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions.</p>
+                    <p class="p-2 black" style="text-align: justify;" >{{$assignment->description}}</p>
 
 
                     <div class="d-flex p-2">
-                        <div class="pe-5">
-                            <h4 class="mt-3 pb-2" >Photos </h4>
-                            <div class="d-flex justify-content-around">
+{{--                        <div class="pe-5">--}}
+{{--                            <h4 class="mt-3 pb-2" >Photos </h4>--}}
+{{--                            <div class="d-flex justify-content-around">--}}
 
-                                <div>
-                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                                </div>
-                            </div>
+{{--                                <div>--}}
+{{--                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
 
-                            <div class="d-flex justify-content-around mt-2">
-                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
-                            </div>
-                        </div>
+{{--                            <div class="d-flex justify-content-around mt-2">--}}
+{{--                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <!--File section-->
                         <div class="ps-5">
                             <h4 class="mt-3 pb-2">Files </h4>
                             <div class="d-flex justify-content-around ">
 
                                 <div>
-                                    <a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">File name</span></a>
+                                    <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$assignment->file_name}}</span></a>
                                 </div>
                             </div>
                         </div>
@@ -372,12 +372,12 @@
 
                     data-setup="{}"
                 >
-                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
-                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+{{--                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />--}}
+{{--                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a
                         web browser that
-                        <a href="https://videojs.com/html5-video-support/" target="_blank"
+{{--                        <a href="https://videojs.com/html5-video-support/" target="_blank"--}}
                         >supports HTML5 video</a
                         >
                     </p>

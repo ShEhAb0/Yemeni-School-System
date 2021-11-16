@@ -131,6 +131,15 @@
                 <span class="nav-link-text ms-1">News</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link   {{ request()->is('grade-news') ? 'active' : '' }} "  href="{{url('/grade-news')}}">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
+
+                </div>
+                <span class="nav-link-text ms-1">Grade News</span>
+            </a>
+        </li>
     </ul>
 </div>
 

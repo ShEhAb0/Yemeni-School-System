@@ -1,6 +1,6 @@
 @extends('pages.parent.layouts.parent-dashboard')
 @section('navbar')
-    <h6 class="font-weight-bolder mb-0">News</h6>
+    <h6 class="font-weight-bolder mb-0">Student News</h6>
 @endsection
 @section('content')
 

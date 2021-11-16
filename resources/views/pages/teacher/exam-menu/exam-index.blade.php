@@ -14,11 +14,11 @@
             </div>
         @endif
         @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
-                    {{$error}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
-                </div>
-            @endforeach
+            <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$error}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endforeach
         <br/>
         <br/>
         <br/>
@@ -34,7 +34,9 @@
                 </div>
 
                 <div class="col-3 text-end">
-                    <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal" data-bs-target="#exampleModal">New  Exam  </button>
+                    <button class="btn btn-outline-primary btn-sm mb-0" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">New Exam
+                    </button>
                 </div>
                 <br/>
                 <br/>
@@ -98,67 +100,85 @@
                         <div class="card-body px-0 pt-0 pb-2">
                             @if($exams->count() > 0)
 
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">Exam title</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Starts</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Duration</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Status</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($exams as $exam)
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$exam->exam_title}}</p>
-                                        </td>
+                                <div class="table-responsive p-0">
+                                    <table class="table align-items-center mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-secondary purplel-color opacity-9 text-center ">Exam title
+                                            </th>
+                                            <th class="text-secondary purplel-color opacity-9  text-center">Exam
+                                                Starts
+                                            </th>
+                                            <th class="text-secondary purplel-color opacity-9  text-center">Duration
+                                            </th>
+                                            <th class="text-secondary purplel-color opacity-9  text-center">Status</th>
+                                            <th class="text-secondary purplel-color opacity-9 text-center">Controllers
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($exams as $exam)
+                                            <tr>
+                                                <td>
+                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$exam->exam_title}}</p>
+                                                </td>
 
 
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
-                                        </td>
+                                                <td class="align-middle text-center">
+                                                    <span
+                                                        class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
+                                                </td>
 
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->duration_m}} Minutes</span>
-                                        </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-sm font-weight-bold">{{$exam->duration_m}} Minutes</span>
+                                                </td>
 
-                                        <td class="align-middle text-center">
-                                            <span class="text-sm font-weight-bold {{$exam->status == 1 ? 'text-info' : 'text-danger'}}">
+                                                <td class="align-middle text-center">
+                                            <span
+                                                class="text-sm font-weight-bold {{$exam->status == 1 ? 'text-info' : 'text-danger'}}">
                                                 {{$exam->status == 1 ? "Show" : " Hidden"}}
                                             </span>
-                                        </td>
+                                                </td>
 
-                                        <td class="align-middle text-center">
+                                                <td class="align-middle text-center">
 
-                                            <a  class="text-secondary font-weight-bold text-xs  me-3"
-                                                data-id="{{$exam->id}}" data-teacher="{{$exam->teacher_id}}"
-                                                data-title="{{$exam->exam_title}}" data-term="{{$exam->term_id}}"
-                                                data-grade="{{$exam->level_id}}" data-subject="{{$exam->subject_id}}"
-                                                data-date="{{$exam->exam_time}}" data-duration="{{$exam->duration_m}}"
-                                                data-status="{{$exam->status}}"  onclick="javascript: updateExam();" id="update_exam" role="button">
-                                                <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                            </a>
+                                                    <a class="text-secondary font-weight-bold text-xs  me-3"
+                                                       data-id="{{$exam->id}}" data-teacher="{{$exam->teacher_id}}"
+                                                       data-title="{{$exam->exam_title}}" data-term="{{$exam->term_id}}"
+                                                       data-grade="{{$exam->level_id}}"
+                                                       data-subject="{{$exam->subject_id}}"
+                                                       data-date="{{$exam->exam_time}}"
+                                                       data-duration="{{$exam->duration_m}}"
+                                                       data-status="{{$exam->status}}"
+                                                       onclick="javascript: updateExam();" id="update_exam"
+                                                       role="button">
+                                                        <i class="fas fa-edit purplel-color "
+                                                           style="font-size: 20px;"></i>
+                                                    </a>
 
-                                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                            </a>
+                                                    <a href="javascript:;"
+                                                       class="text-secondary font-weight-bold text-xs me-3"
+                                                       data-toggle="tooltip" data-original-title="Edit user">
+                                                        <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
+                                                    </a>
 
-                                            <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#attendance" role="button">
-                                                <i class="far fa-id-card blue-color" style="font-size: 20px;"></i>
-                                            </a>
-                                            <a  class="text-secondary font-weight-bold text-xs  ms-3" data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion2"  role="button">
-                                                <i class="fas fa-question purplel-color " style="font-size: 20px;"></i>
-                                            </a>
+                                                    <a class="text-secondary font-weight-bold text-xs"
+                                                       data-bs-toggle="modal" href="#attendance" role="button">
+                                                        <i class="far fa-id-card blue-color"
+                                                           style="font-size: 20px;"></i>
+                                                    </a>
+                                                    <a class="text-secondary font-weight-bold text-xs  ms-3"
+                                                       onclick="showQuestions({{$exam->id}});" role="button">
+                                                        <i class="fas fa-question purplel-color "
+                                                           style="font-size: 20px;"></i>
+                                                    </a>
 
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             @else
                                 <div class="text-center">
                                     <p class="h5 text-danger">There are no exams yet..!</p>
@@ -170,14 +190,16 @@
             </div>
             <!--modals-->
             <!--edit Exam model-->
-            <div class="modal fade" id="examplUpdate" tabindex="-1" aria-labelledby="exampleModalLabelUpda" aria-hidden="true">
+            <div class="modal fade" id="examplUpdate" tabindex="-1" aria-labelledby="exampleModalLabelUpda"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
                         <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Edit Exam </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
 
                             <form class="row g-2 my-1 py-1" method="POST" action="" id="editExamFrom">
@@ -185,7 +207,8 @@
                                 @method('PUT')
                                 <div class="col-auto w-100">
                                     <p>Exam Title</p>
-                                    <input name="title" id="title" class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" required>
+                                    <input name="title" id="title" class="form-control my-1 mb-2 " type="text"
+                                           placeholder="Enter Exam Title" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Select Term</p>
@@ -198,7 +221,8 @@
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Grade</p>
-                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grade" required>
+                                    <select class="form-select" aria-label="Select Grade" name="grade" id="grade"
+                                            required>
                                         <option value="" disabled selected>Choose the Grade</option>
                                         @if($grades->count()>0)
                                             @foreach($grades as $grade)
@@ -211,11 +235,13 @@
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Subject</p>
-                                    <select class="form-select" aria-label="Select Subject" name="subject" id="subject" required>
+                                    <select class="form-select" aria-label="Select Subject" name="subject" id="subject"
+                                            required>
                                         <option value="" disabled selected>Choose the Subject</option>
                                         @if($teacher_sub->count()>0)
                                             @foreach($teacher_sub as $ts)
-                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                                <option
+                                                    value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -223,26 +249,32 @@
 
                                 <div class="col-auto w-100">
                                     <p>Exam Date</p>
-                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date" name="date" id="date" required>
+                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date"
+                                           name="date" id="date" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Duration</p>
-                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration" name="duration" id="duration" required>
+                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration"
+                                           name="duration" id="duration" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Status</p>
-                                    <select class="form-select" aria-label="Exam Status" name="status" id="status" required>
+                                    <select class="form-select" aria-label="Exam Status" name="status" id="status"
+                                            required>
                                         <option value="" disabled selected>Choose the Status</option>
                                         <option value="1">Show</option>
                                         <option value="0">Hide</option>
                                     </select>
                                 </div>
 
-                            <div class="modal-footer">
-                                <input type="hidden" name="teacher_id" id="teacher_id" value="">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" name="update_exam" class="btn btn-outline-primary" >Save</button>
-                            </div>
+                                <div class="modal-footer">
+                                    <input type="hidden" name="teacher_id" id="teacher_id" value="">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="update_exam" class="btn btn-outline-primary">Save
+                                    </button>
+                                </div>
                             </form>
 
 
@@ -254,196 +286,38 @@
             </div>
 
             <!--Questions table-->
-            <div class="modal fade" id="EditQuestion2" tabindex="-1" aria-labelledby="exampleModalLabelUpda2" aria-hidden="true">
+            <div class="modal fade" id="EditQuestion2" tabindex="-1" aria-labelledby="exampleModalLabelUpda2"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
                         <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Add or Edit Questions</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
 
-                            <button type="button" class="btn btn-outline-primary  ms-2 mt-1" data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#addQuestion2">new Question</button>
+                            <button type="button" class="btn btn-outline-primary  ms-2 mt-1" data-bs-toggle="modal"
+                                    data-bs-dismiss="modal" data-bs-target="#addQuestion2">new Question
+                            </button>
                             <div class="card-body  pt-0 pb-2">
                                 <div class="table-responsive p-0">
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center ">question title</th>
+                                            <th class="text-secondary purplel-color opacity-9 text-center ">question
+                                                title
+                                            </th>
                                             <th class="text-secondary purplel-color opacity-9  text-center">type</th>
                                             <th class="text-secondary purplel-color opacity-9  text-center">Marks</th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
+                                            <th class="text-secondary purplel-color opacity-9 text-center">Controllers
+                                            </th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                            </td>
+                                        <tbody id="examQuestionData">
 
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">Multi-Choice</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">10</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3" data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion"  role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">2</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">Biology</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">False or True</span>
-                                            </td>
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">40</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">3</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">Arabic</p>
-                                            </td>
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">False or True</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">30</span>
-                                            <td class="align-middle text-center">
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3" data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">4</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">English</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">Multi-Choice</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">70</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">5</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">geography</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">False or True</span>
-                                            </td>
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">20</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <p class="text-sm  font-weight-bold mb-0 text-center">6</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-sm  font-weight-bold mb-0 text-center">science</p>
-                                            </td>
-
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm font-weight-bold">Multi-Choice</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-sm  font-weight-bold">20</span>
-                                            </td>
-                                            <td class="align-middle text-center">
-
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3" data-bs-toggle="modal"  data-bs-dismiss="modal" data-bs-target="#EditQuestion" role="button">
-                                                    <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                </a>
-
-
-
-                                            </td>
-                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -451,17 +325,10 @@
 
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-outline-primary" >Save</button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
+                                </button>
+                                <button type="button" class="btn btn-outline-primary">Save</button>
                             </div>
-
-
-
-
-
-
-
-
 
 
                         </div>
@@ -472,193 +339,166 @@
             </div>
 
             <!--edit question-->
-            <div class="modal fade" id="EditQuestion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="EditQuestion" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
-
+                        <form method="POST" action="" id="formaddQuestion1">
+                            @csrf
+                            @method('PUT')
                         <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Edit Question</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <form class="row g-2 my-1 py-1" id="formaddQuestion1">
+                            <div class="modal-body row g-2 my-1 py-1">
                                     <div class="col-auto w_50">
                                         <p>Write Question</p>
-                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title" >
+                                        <input class="form-control my-1 mb-2 " type="text"
+                                               placeholder="Enter question Title" name="question" id="question" required>
                                     </div>
                                     <div class="col-auto w_50">
                                         <p>Enter Question Marks</p>
-                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks" >
+                                        <input class="form-control my-1 mb-2 " type="text"
+                                               placeholder="Enter Question Marks" name="mark" id="mark" required>
                                     </div>
-                                    <div class="col-auto w-100 my-1 mb-2" >
-                                        <p>upload Image for Question</p>
-                                        <input class="form-control " type="file" id="formFile2" name="formFile2">
-                                    </div>
-                                    <div class="col-auto w-100 my-1 mb-2" >
-                                        <p>Choose Question Type</p>
+{{--                                    <div class="col-auto w-100 my-1 mb-2">--}}
+{{--                                        <p>upload Image for Question</p>--}}
+{{--                                        <input class="form-control " type="file" id="formFile2" name="formFile2">--}}
+{{--                                    </div>--}}
+                                    <div class="w-100 my-1 mb-2">
                                         <div class="row g-2">
-                                            <div class="form-check w_50">
-                                                <input class="form-check-input" type="radio" name="choiced" id="radio1" value="1">
-                                                <label class="form-check-label" for="radio1">
-                                                    Muliple-choice
-                                                </label>
-                                            </div>
-                                            <div class="form-check w_50">
-                                                <input class="form-check-input" type="radio" name="choiced" id="radio2"  value="2">
-                                                <label class="form-check-label" for="radio2">
-                                                    True or False
-                                                </label>
-                                            </div>
 
+                                            <div class="form-check w_20">
+                                                <label for="i_1">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_1"
+                                                       value="1" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number1" id="answer1" required>
+
+
+                                            <div class="form-check w_20">
+                                                <label for="i_2">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_2"
+                                                       value="2" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 2" id="answer2" required>
+
+                                            <div class="form-check w_20">
+                                                <label for="i_3">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_3"
+                                                       value="3" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 3" id="answer3" required>
+
+                                            <div class="form-check w_20">
+                                                <label for="i_4">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_4"
+                                                       value="4" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 4" id="answer4" required>
                                         </div>
                                     </div>
-
-                                    <div class="w-100 my-1 mb-2" id="Multied">
-                                        <div class="row g-2" >
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number1">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer1" id="i_1"  value="1">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 2">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer2"  id="i_2"  value="2">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 3">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer3" id="i_3"  value="3">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 4">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer4"  id="i_4"  value="4">
-                                            </div>
-                                        </div>
-
-
-
-
-
-                                    </div>
-
-                                    <div class="col-auto w-100 my-1 mb-2" id="booled" >
-                                        <p>Select right Answer</p>
-                                        <select class="form-select"  id="Boolean" name="Boolean">
-
-                                            <option value="1">True</option>
-                                            <option value="2">False</option>
-
-                                        </select>
-                                    </div>
-
-
-
-
-                                </form>
-
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#EditQuestion2">Close</button>              <button type="button" class="btn btn-outline-primary" >Save</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-dismiss="modal" data-bs-target="#EditQuestion2">Close
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary">Save</button>
                         </div>
-
-
+                        </form>
                     </div>
                 </div>
 
             </div>
 
             <!-- new question modal  -->
-            <div class="modal fade" id="addQuestion2" tabindex="-1" aria-labelledby="exampleModalLabelUpda" aria-hidden="true">
+            <div class="modal fade" id="addQuestion2" tabindex="-1" aria-labelledby="exampleModalLabelUpda"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
+                        <form method="POST" action="/teacher/question" id="formaddQuestion2">
+                            @csrf
+                            @method('POST')
                         <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Add Question</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <form class="row g-2 my-1 py-1" id="formaddQuestion2">
-                                    <button type="button" class="btn btn-outline-primary" onclick="AddQues2(1)" >add Another Question</button>
+                            <div class="modal-body row g-2 my-1 py-1">
+{{--                                    <button type="button" class="btn btn-outline-primary" onclick="AddQues2(1)">add--}}
+{{--                                        Another Question--}}
+{{--                                    </button>--}}
 
                                     <div class="col-auto w_50">
                                         <p>Write Question</p>
-                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title" >
+                                        <input name="question" class="form-control my-1 mb-2 " type="text"
+                                               placeholder="Enter question Title" required>
                                     </div>
                                     <div class="col-auto w_50">
                                         <p>Enter Question Marks</p>
-                                        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks" >
+                                        <input name="mark" class="form-control my-1 mb-2 " type="number"
+                                               placeholder="Enter Question Marks" required>
                                     </div>
-                                    <div class="col-auto w-100 my-1 mb-2" >
-                                        <p>upload Image for Question</p>
-                                        <input class="form-control " type="file" id="formFile2" name="formFile2">
-                                    </div>
-                                    <div class="col-auto w-100 my-1 mb-2" >
-                                        <p>Choose Question Type</p>
+{{--                                    <div class="col-auto w-100 my-1 mb-2">--}}
+{{--                                        <p>upload Image for Question</p>--}}
+{{--                                        <input class="form-control " type="file" id="formFile2" name="formFile2">--}}
+{{--                                    </div>--}}
+                                    <div class="w-100 my-1 mb-2">
                                         <div class="row g-2">
-                                            <div class="form-check w_50">
-                                                <input class="form-check-input" type="radio" name="choiced2" id="radio1" value="1">
-                                                <label class="form-check-label" for="radio1">
-                                                    Muliple-choice
-                                                </label>
-                                            </div>
-                                            <div class="form-check w_50">
-                                                <input class="form-check-input" type="radio" name="choiced2" id="radio2"  value="2">
-                                                <label class="form-check-label" for="radio2">
-                                                    True or False
-                                                </label>
-                                            </div>
 
+                                            <div class="form-check w_20">
+                                                <label for="i_1">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_1"
+                                                       value="1" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number1" required>
+
+
+                                            <div class="form-check w_20">
+                                                <label for="i_2">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_2"
+                                                       value="2" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 2" required>
+
+                                            <div class="form-check w_20">
+                                                <label for="i_3">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_3"
+                                                       value="3" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 3" required>
+
+                                            <div class="form-check w_20">
+                                                <label for="i_4">Correct Answer</label>
+                                                <input class="form-check-input" type="radio" name="correct" id="i_4"
+                                                       value="4" required>
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer[]"
+                                                   placeholder="Enter Answer number 4" required>
                                         </div>
                                     </div>
-
-                                    <div class="w-100 my-1 mb-2" id="Multied2">
-
-                                        <div class="row g-2" >
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number1">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer1" id="i_1"  value="1">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 2">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer2"  id="i_2"  value="2">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 3">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer3" id="i_3"  value="3">
-                                            </div>
-                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number 4">
-                                            <div class="form-check w_20">
-                                                <input class="form-check-input" type="radio" name="answer4"  id="i_4"  value="4">
-                                            </div>
-                                        </div>
-
-
-
-                                    </div>
-
-                                    <div class="col-auto w-100 my-1 mb-2" id="booled2" >
-                                        <p>Select right Answer</p>
-                                        <select class="form-select"  id="Boolean" name="Boolean">
-
-                                            <option value="1">True</option>
-                                            <option value="2">False</option>
-
-                                        </select>
-                                    </div>
-
-
-
-
-                                </form>
-
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#EditQuestion2">Close</button>
-                            <button type="button" class="btn btn-outline-primary" >Save</button>
+                            <input type="hidden" name="questionExamId" value="" id="questionExamId">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                    data-bs-dismiss="modal" data-bs-target="#EditQuestion2">Close
+                            </button>
+                            <button type="submit" class="btn btn-outline-primary">Save</button>
                         </div>
-
+                        </form>
 
                     </div>
                 </div>
@@ -666,7 +506,8 @@
             </div>
 
             <!-- New Exam model -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
 
@@ -674,14 +515,16 @@
                         <div class="modal-body">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">New Exam </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <form class="row g-2 my-1 py-1" method="POST" action="/teacher/exam">
                                 @csrf
                                 @method('POST')
                                 <div class="col-auto w-100">
                                     <p>Exam Title</p>
-                                    <input name="title" class="form-control my-1 mb-2 " type="text" placeholder="Enter Exam Title" required>
+                                    <input name="title" class="form-control my-1 mb-2 " type="text"
+                                           placeholder="Enter Exam Title" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Select Term</p>
@@ -711,7 +554,8 @@
                                         <option value="" disabled selected>Choose the Subject</option>
                                         @if($teacher_sub->count()>0)
                                             @foreach($teacher_sub as $ts)
-                                                <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                                <option
+                                                    value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
                                             @endforeach
                                         @endif
                                     </select>
@@ -719,11 +563,13 @@
 
                                 <div class="col-auto w-100">
                                     <p>Exam Date</p>
-                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date" name="date" required>
+                                    <input class="form-control my-1 mb-2 " type="datetime-local" placeholder="date"
+                                           name="date" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Duration</p>
-                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration" name="duration" required>
+                                    <input class="form-control my-1 mb-2 " type="number" placeholder="duration"
+                                           name="duration" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Exam Status</p>
@@ -735,26 +581,21 @@
                                 </div>
 
 
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" name="add_exam" class="btn btn-outline-primary" >Save</button>
-                            </div>
-                        </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="submit" name="add_exam" class="btn btn-outline-primary">Save</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-
-
 
 
                 </div>
 
 
-
             </div>
-
-
-
-
 
 
             <!--Student Exam attendance model -->
@@ -770,8 +611,10 @@
                             <div class="list-group mb-1">
                                 <a href="" class="list-group-item">
                                     <div class="d-flex  py-1">
-                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                        <div style="margin: auto 10;"><span class="text-dark text-bold">Student Name</span>
+                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle"
+                                             alt="Cinque Terre" width="50" height="50">
+                                        <div style="margin: auto 10;"><span
+                                                class="text-dark text-bold">Student Name</span>
                                             <br/>
                                         </div>
                                     </div>
@@ -781,8 +624,10 @@
                             <div class="list-group mb-1">
                                 <a href="" class="list-group-item">
                                     <div class="d-flex  py-1">
-                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                        <div style="margin: auto 10;"><span class="text-dark text-bold">Student Name</span>
+                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle"
+                                             alt="Cinque Terre" width="50" height="50">
+                                        <div style="margin: auto 10;"><span
+                                                class="text-dark text-bold">Student Name</span>
                                             <br/>
                                         </div>
                                     </div>
@@ -792,8 +637,10 @@
                             <div class="list-group mb-1">
                                 <a href="" class="list-group-item">
                                     <div class="d-flex  py-1">
-                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                        <div style="margin: auto 10;"><span class="text-dark text-bold">Student Name</span>
+                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle"
+                                             alt="Cinque Terre" width="50" height="50">
+                                        <div style="margin: auto 10;"><span
+                                                class="text-dark text-bold">Student Name</span>
                                             <br/>
                                         </div>
                                     </div>
@@ -803,8 +650,10 @@
                             <div class="list-group mb-1">
                                 <a href="" class="list-group-item">
                                     <div class="d-flex  py-1">
-                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                        <div style="margin: auto 10;"><span class="text-dark text-bold">Student Name</span>
+                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle"
+                                             alt="Cinque Terre" width="50" height="50">
+                                        <div style="margin: auto 10;"><span
+                                                class="text-dark text-bold">Student Name</span>
                                             <br/>
                                         </div>
                                     </div>
@@ -814,8 +663,10 @@
                             <div class="list-group mb-1">
                                 <a href="" class="list-group-item">
                                     <div class="d-flex  py-1">
-                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                                        <div style="margin: auto 10;"><span class="text-dark text-bold">Student Name</span>
+                                        <img src="../assets/img/home-decor-2.jpg" class="rounded-circle"
+                                             alt="Cinque Terre" width="50" height="50">
+                                        <div style="margin: auto 10;"><span
+                                                class="text-dark text-bold">Student Name</span>
                                             <br/>
                                         </div>
                                     </div>
@@ -823,7 +674,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close
+                            </button>
 
                         </div>
                     </div>
@@ -833,48 +685,48 @@
     </div>
 
 
-        @section('scripts')
-
+@section('scripts')
+    <script src="{{asset('js/axios.min.js')}}"></script>
     <script>
         $("#bool,#Multi").hide()
-        $("input[type=radio][name=choice]").click(function(){
-            if($(this).val()==1){
+        $("input[type=radio][name=choice]").click(function () {
+            if ($(this).val() == 1) {
                 $("#Multi").show()
                 $("#bool").hide()
-            }else{
+            } else {
                 $("#bool").show()
                 $("#Multi").hide()
             }
 
         });
         $("#bool2,#Multi2").hide()
-        $("input[type=radio][name=choice2]").click(function(){
-            if($(this).val()==1){
+        $("input[type=radio][name=choice2]").click(function () {
+            if ($(this).val() == 1) {
                 $("#Multi2").show()
                 $("#bool2").hide()
-            }else{
+            } else {
                 $("#bool2").show()
                 $("#Multi2").hide()
             }
 
         });
         $("#booled,#Multied").hide()
-        $("input[type=radio][name=choiced]").click(function(){
-            if($(this).val()==1){
+        $("input[type=radio][name=choiced]").click(function () {
+            if ($(this).val() == 1) {
                 $("#Multied").show()
                 $("#booled").hide()
-            }else{
+            } else {
                 $("#booled").show()
                 $("#Multied").hide()
             }
 
         });
         $("#booled2,#Multied2").hide()
-        $("input[type=radio][name=choiced2]").click(function(){
-            if($(this).val()==1){
+        $("input[type=radio][name=choiced2]").click(function () {
+            if ($(this).val() == 1) {
                 $("#Multied2").show()
                 $("#booled2").hide()
-            }else{
+            } else {
                 $("#booled2").show()
                 $("#Multied2").hide()
             }
@@ -895,13 +747,17 @@
             var i;
             var slides = document.getElementsByClassName("mySlides");
 
-            if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
 
-            slides[slideIndex-1].style.display = "block";
+            slides[slideIndex - 1].style.display = "block";
 
         }
 
@@ -920,19 +776,22 @@
             var i;
             var slides = document.getElementsByClassName("mySlides2");
 
-            if (n > slides.length) {slideIndex2 = 1}
-            if (n < 1) {slideIndex2 = slides.length}
+            if (n > slides.length) {
+                slideIndex2 = 1
+            }
+            if (n < 1) {
+                slideIndex2 = slides.length
+            }
             for (i = 0; i < slides.length; i++) {
                 slides[i].style.display = "none";
             }
 
-            slides[slideIndex2-1].style.display = "block";
+            slides[slideIndex2 - 1].style.display = "block";
 
         }
 
 
-
-        function ADDAnswer(){
+        function ADDAnswer() {
             $('#Answer').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
   <div class="form-check w_20">
@@ -941,7 +800,8 @@
 `)
             count++;
         }
-        function ADDAnswer2(){
+
+        function ADDAnswer2() {
             $('#Answer2').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
   <div class="form-check w_20">
@@ -950,7 +810,8 @@
 `)
             count2++;
         }
-        function ADDAnswered(){
+
+        function ADDAnswered() {
             $('#Answered').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
   <div class="form-check w_20">
@@ -959,7 +820,8 @@
 `)
             counted++;
         }
-        function ADDAnswered2(){
+
+        function ADDAnswered2() {
             $('#Answered2').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
   <div class="form-check w_20">
@@ -969,30 +831,30 @@
             counted2++;
         }
 
-        function checkAnswer(id){
-            alert($("#i_"+id).parent().prev().val())
+        function checkAnswer(id) {
+            alert($("#i_" + id).parent().prev().val())
         }
-        function editQuestion(val){
-            if(val==1){
+
+        function editQuestion(val) {
+            if (val == 1) {
                 $("#examplUpdate").modal('show');
 
-            }else if(val==2){
+            } else if (val == 2) {
                 $("#exampleModal").modal('show');
             }
         }
-        function addQuestion(val){
-            if(val==1){
+
+        function addQuestion(val) {
+            if (val == 1) {
                 $("#exampleModal").modal('show');
 
-            }else if(val==2){
+            } else if (val == 2) {
                 $("#examplUpdate").modal('show');
             }
         }
 
 
-
-
-        function ADDAnswer(){
+        function ADDAnswer() {
             $('#Answer').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
   <div class="form-check w_20">
@@ -1001,7 +863,8 @@
 `)
             count++;
         }
-        function ADDAnswer2(){
+
+        function ADDAnswer2() {
             $('#Answer2').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${count}">
   <div class="form-check w_20">
@@ -1010,7 +873,8 @@
 `)
             count2++;
         }
-        function ADDAnswered(id=""){
+
+        function ADDAnswered(id = "") {
             $(`#Answered${id}`).append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
   <div class="form-check w_20">
@@ -1019,7 +883,8 @@
 `)
             counted++;
         }
-        function ADDAnswered2(){
+
+        function ADDAnswered2() {
             $('#Answered2').append(`
   <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${counted}">
   <div class="form-check w_20">
@@ -1029,45 +894,48 @@
             counted2++;
         }
 
-        function checkAnswer(id){
-            alert($("#i_"+id).parent().prev().val())
+        function checkAnswer(id) {
+            alert($("#i_" + id).parent().prev().val())
         }
-        function editQuestion(val){
-            if(val==1){
+
+        function editQuestion(val) {
+            if (val == 1) {
                 $("#examplUpdate").modal('show');
 
-            }else if(val==2){
+            } else if (val == 2) {
                 $("#exampleModal").modal('show');
             }
         }
-        function addQuestion(val){
-            if(val==1){
+
+        function addQuestion(val) {
+            if (val == 1) {
                 $("#exampleModal").modal('show');
 
-            }else if(val==2){
+            } else if (val == 2) {
                 $("#examplUpdate").modal('show');
             }
         }
-        var data=[]
-        var coun_qu=0
 
-        function AddQues(val){
-            data.push({id:0,answerCount:0})
-            data[coun_qu].id=coun_qu+val
-            coun_qu+=val
+        var data = []
+        var coun_qu = 0
+
+        function AddQues(val) {
+            data.push({id: 0, answerCount: 0})
+            data[coun_qu].id = coun_qu + val
+            coun_qu += val
 
             $(`<hr/>
   <div class="col-auto w_50">
-                <p>Write Question ${coun_qu+1}</p>
-                <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title ${coun_qu+1}" >
+                <p>Write Question ${coun_qu + 1}</p>
+                <input class="form-control my-1 mb-2 " type="text" name placeholder="Enter question Title ${coun_qu + 1}" >
               </div>
               <div class="col-auto w_50">
                 <p>Enter Question Marks</p>
-                <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks ${coun_qu+1}" >
+                <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks ${coun_qu + 1}" >
               </div>
               <div class="col-auto w-100 my-1 mb-2" >
                 <p>upload Image for Question</p>
-                <input class="form-control " type="file" id="formFile2" name="formFile${coun_qu+1}">
+                <input class="form-control " type="file" id="formFile2" name="formFile${coun_qu + 1}">
               </div>
               <div class="col-auto w-100 my-1 mb-2" >
                 <p>Choose Question Type</p>
@@ -1089,7 +957,7 @@
               </div>
 
               <div class="w-100 my-1 mb-2 Multied">
-                <button type="button" class="btn btn-outline-primary" onclick="ADDAnswereds(${coun_qu-1})" >add choice</button>
+                <button type="button" class="btn btn-outline-primary" onclick="ADDAnswereds(${coun_qu - 1})" >add choice</button>
 
                 <div class="row g-2 " id="Answered${coun_qu}">
 
@@ -1111,13 +979,13 @@
    `).appendTo("#formaddQuestion1")
             $(".booled,.Multied").hide()
 
-            $(".choiced").click(function(){
-                if($(this).val()==1){
+            $(".choiced").click(function () {
+                if ($(this).val() == 1) {
 
                     $(this).parent().parent().parent().next().show()
                     $(this).parent().parent().parent().next().next().hide()
 
-                }else{
+                } else {
 
                     $(this).parent().parent().parent().next().next().show()
                     $(this).parent().parent().parent().next().hide()
@@ -1127,7 +995,8 @@
 
 
         }
-        function ADDAnswereds(num){
+
+        function ADDAnswereds(num) {
 
             data[num].answerCount++
             $(`#Answered${data[num].id}`).append(`
@@ -1143,109 +1012,122 @@
 
 
 
-<script>
-    var data2=[]
-    var coun_qu2=0
+    <script>
+        var data2 = []
+        var coun_qu2 = 0
 
-    function AddQues2(val){
-    data2.push({id:0,answerCount:0})
-    data2[coun_qu2].id=coun_qu2+val
-    coun_qu2+=val
+        function AddQues2(val) {
+            data2.push({id: 0, answerCount: 0})
+            data2[coun_qu2].id = coun_qu2 + val
+            coun_qu2 += val
 
-    $(`<hr/>
+            $(`<hr/>
     <div class="col-auto w_50">
-        <p>Write Question ${coun_qu2+1}</p>
-        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter question Title ${coun_qu2+1}" >
+        <p>Write Question ${coun_qu2 + 1}</p>
+        <input class="form-control my-1 mb-2 " type="text" name="question[]" placeholder="Enter question Title ${coun_qu2 + 1}" >
     </div>
     <div class="col-auto w_50">
         <p>Enter Question Marks</p>
-        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks ${coun_qu2+1}" >
+        <input class="form-control my-1 mb-2 " type="text" placeholder="Enter Question Marks ${coun_qu2 + 1}" >
     </div>
     <div class="col-auto w-100 my-1 mb-2" >
         <p>upload Image for Question</p>
-        <input class="form-control " type="file" id="formFile3" name="formFile${coun_qu2+1}">
+        <input class="form-control " type="file" id="formFile3" name="formFile${coun_qu2 + 1}">
     </div>
-    <div class="col-auto w-100 my-1 mb-2" >
-        <p>Choose Question Type</p>
-        <div class="row g-2">
-            <div class="form-check w_50">
-                <input class="form-check-input choiced22" type="radio" name="${coun_qu2}" id="radio1" value="1">
-                <label class="form-check-label" for="radio1">
-                    multiple-choice
-                </label>
-            </div>
-            <div class="form-check w_50">
-                <input class="form-check-input choiced22" type="radio" name="${coun_qu2}" id="radio2"  value="2">
-                <label class="form-check-label" for="radio2">
-                    True or False
-                </label>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="w-100 my-1 mb-2 Multied2">
-        <button type="button" class="btn btn-outline-primary" onclick="ADDAnswereds22(${coun_qu2-1})" >add choice</button>
-
-        <div class="row g-2 " id="Answered2${coun_qu2}">
-
-        </div>
-
-
-
-    </div>
-
-    <div class="col-auto w-100 my-1 mb-2 booled2" >
-        <p>Select right Answer</p>
-        <select class="form-select"  id="Boolean" name="Boolean">
-
-            <option value="1">True</option>
-            <option value="2">False</option>
-
-        </select>
-    </div>
+    <div class="w-100 my-1 mb-2">
+                                        <div class="row g-2" >
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer${coun_qu2}[]" placeholder="Enter Answer number1">
+                                            <div class="form-check w_20">
+                                                <input class="form-check-input" type="radio" name="correct" id="i_1"  value="1">
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer${coun_qu2}[]" placeholder="Enter Answer number 2">
+                                            <div class="form-check w_20">
+                                                <input class="form-check-input" type="radio" name="correct"  id="i_2"  value="2">
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer${coun_qu2}[]" placeholder="Enter Answer number 3">
+                                            <div class="form-check w_20">
+                                                <input class="form-check-input" type="radio" name="correct" id="i_3"  value="3">
+                                            </div>
+                                            <input class="form-control w_70 my-1 mb-2 me-3 " type="text" name="answer${coun_qu2}[]" placeholder="Enter Answer number 4">
+                                            <div class="form-check w_20">
+                                                <input class="form-check-input" type="radio" name="correct"  id="i_4"  value="4">
+                                            </div>
+                                        </div>
+                                    </div>
     `).appendTo("#formaddQuestion2")
-    $(".booled2,.Multied2").hide()
+            $(".booled2,.Multied2").hide()
 
-    $(".choiced22").click(function(){
-    if($(this).val()==1){
+            $(".choiced22").click(function () {
+                if ($(this).val() == 1) {
 
-    $(this).parent().parent().parent().next().show()
-    $(this).parent().parent().parent().next().next().hide()
+                    $(this).parent().parent().parent().next().show()
+                    $(this).parent().parent().parent().next().next().hide()
 
-    }else{
+                } else {
 
-    $(this).parent().parent().parent().next().next().show()
-    $(this).parent().parent().parent().next().hide()
-    }
+                    $(this).parent().parent().parent().next().next().show()
+                    $(this).parent().parent().parent().next().hide()
+                }
 
-    });
+            });
 
 
-    }
-    function ADDAnswereds22(num){
-    data2[num].answerCount++
-    $(`#Answered2${data2[num].id}`).append(`
+        }
+
+        function ADDAnswereds22(num) {
+            data2[num].answerCount++
+            $(`#Answered2${data2[num].id}`).append(`
     <input class="form-control w_70 my-1 mb-2 me-3 " type="text" placeholder="Enter Answer number ${data2[num].answerCount}">
     <div class="form-check w_20">
         <input class="form-check-input" type="radio" name="answer${data2.id}" onclick='checkAnswer(${counted2});' id="i_${counted2}"  value="${counted2}">
     </div>
     `);
-    counted2++
-    }
+            counted2++
+        }
 
-    function updateExam(){
-        $('#editExamFrom').attr('action','/teacher/exam/'+$('#update_exam').data('id'));
-        $('#teacher_id').val($('#update_exam').data('teacher'));
-        $('#title').val($('#update_exam').data('title'));
-        $('#term').val($('#update_exam').data('term'));
-        $('#grade').val($('#update_exam').data('grade'));
-        $('#subject').val($('#update_exam').data('subject'));
-        $('#date').value = $('#update_exam').data('date');
-        $('#duration').val($('#update_exam').data('duration'));
-        $('#status').val($('#update_exam').data('status'));
-        $('#examplUpdate').modal('show');
-    }
+        function updateExam() {
+            $('#editExamFrom').attr('action', '/teacher/exam/' + $('#update_exam').data('id'));
+            $('#teacher_id').val($('#update_exam').data('teacher'));
+            $('#title').val($('#update_exam').data('title'));
+            $('#term').val($('#update_exam').data('term'));
+            $('#grade').val($('#update_exam').data('grade'));
+            $('#subject').val($('#update_exam').data('subject'));
+            $('#date').value = $('#update_exam').data('date');
+            $('#duration').val($('#update_exam').data('duration'));
+            $('#status').val($('#update_exam').data('status'));
+            $('#examplUpdate').modal('show');
+        }
+
+        function showQuestions(id){
+            axios({
+                method:'get',
+                url:'/teacher/exam/' + id
+            })
+                .then(response =>{
+                        $('#examQuestionData').html(response.data.data);
+                        $('#questionExamId').val(response.data.id);
+                        $('#EditQuestion2').modal('show');
+                })
+        }
+
+        function editQues(d){
+            $('#formaddQuestion1').attr('action','/teacher/question/'+d.data('id'));
+            $('#question').val(d.data('title'));
+            $('#mark').val(d.data('mark'));
+            $('#answer1').val(d.data('c1'));
+            $('#answer2').val(d.data('c2'));
+            $('#answer3').val(d.data('c3'));
+            $('#answer4').val(d.data('c4'));
+            $('#i_'+d.data('correct')).attr('checked',true);
+            $('#EditQuestion').modal('show');
+        }
+        // click(function (){
+        //     // var id= $(this).data('id');
+        //     alert('hello');
+        // });
+
+            //
+
     </script>
 @endsection
 @endsection

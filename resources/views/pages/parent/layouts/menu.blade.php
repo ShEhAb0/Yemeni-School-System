@@ -1,5 +1,5 @@
 <hr class="horizontal dark mt-0">
-<div class="collapse navbar-collapse  w-auto  max-height-vh-80 h-100 overflowfix" id="sidenav-collapse-main">
+<div class="collapse navbar-collapse  w-auto  max-height-vh-80 h-100 overflowfixside" id="sidenav-collapse-main">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link {{ request()->is('parent/index') ? 'active' : '' }} "  href="{{route('parent.index.index')}}">
@@ -123,7 +123,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  {{ request()->is('parent/student/news') ? 'active' : '' }} "  href="{{url('parent/news')}}">
+            <a class="nav-link  {{ request()->is('parent/grade-news') ? 'active' : '' }} "  href="{{url('parent/grade-news')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-rss-square blue-color-icon" style="font-size: 12px;"></i>
 

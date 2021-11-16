@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Parent;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Assignment;
-use App\Models\Subject;
+use App\Models\StudentNews;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AssignmentController extends Controller
+class StudentNewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +16,9 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::where('level_id',session('student_level'))->get();
-        $assignments = Assignment::where('id',0)->paginate(3);
-        return view('pages.parent.assignment-menu.assignment-index' , compact('subjects','assignments'));
-
+        //
+        $newses = StudentNews::where('level_id',Auth::user()->level_id)->paginate(10);
+        return view('pages.user.student-news-menu.student-news-index' ,compact('newses'));
     }
 
     /**
@@ -52,9 +50,7 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','answer'])->first();
-        return view('pages.parent.assignment-menu.assignment-show' ,compact('assignment'));
-
+        //
     }
 
     /**
@@ -66,8 +62,6 @@ class AssignmentController extends Controller
     public function edit($id)
     {
         //
-        $assignments = Assignment::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->paginate(3);
-        return view('pages.parent.assignment-menu.assignment-data',compact('assignments'));
     }
 
     /**

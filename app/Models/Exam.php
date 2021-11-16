@@ -36,9 +36,9 @@ class Exam extends Model
 
     }
 
-    public function questionsExams()
+    public function questions()
     {
-        return $this->hasMany('App\Models\Exam' , 'exam_id');
+        return $this->hasMany('App\Models\Question' , 'exam_id');
 
     }
 }
