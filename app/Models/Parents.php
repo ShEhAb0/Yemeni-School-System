@@ -24,4 +24,8 @@ class Parents extends Authenticatable
         return $this->belongsTo('App\Models\User');
 
     }
+    public function students()
+    {
+        return $this->hasMany('App\Models\UserParent' , 'parent_id');
+    }
 }

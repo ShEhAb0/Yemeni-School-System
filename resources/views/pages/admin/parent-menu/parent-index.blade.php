@@ -85,7 +85,7 @@
                                             </td>
 
                                             <td class="text-center">
-                                                <p class="text-sm font-weight-bold mb-0"></p>
+                                                <p class="text-sm font-weight-bold mb-0">{{count($parent->students)}}</p>
 
                                             </td>
                                             <td class="align-middle text-center">

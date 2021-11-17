@@ -47,7 +47,8 @@ class ExamController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('pages.user.exam-menu.exam-show');
+
     }
 
     /**

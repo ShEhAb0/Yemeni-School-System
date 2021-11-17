@@ -80,8 +80,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         $students = User::all()->count();
         $teachers = Teacher::all()->count();
         $grades = Grade::all()->count();
-        //$news = News::all()->count();
-        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' ))->name('index');
+        $news = News::all();
+        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' , 'news' ))->name('index');
 
         Route::resource('/terms' , 'App\Http\Controllers\Admin\TermController');
         Route::resource('/parents' , 'App\Http\Controllers\Admin\ParentController');
@@ -97,6 +97,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
 
+        Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
+        Route::get('/terms', 'App\Http\Controllers\Admin\TermController@search')->name('terms');
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });
@@ -138,6 +140,8 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/news' , 'App\Http\Controllers\Teacher\NewsController');
         Route::resource('/question','App\Http\Controllers\Teacher\QuestionController');
 
+        Route::resource('/profile','App\Http\Controllers\Teacher\ProfileController');
+
         Route::post('/logout',[TeacherLoginController::class,'logout'])->name('logout');
     });
 
@@ -168,6 +172,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/news' , 'App\Http\Controllers\User\NewsController');
         Route::resource('/grade-news' , 'App\Http\Controllers\User\StudentNewsController');
 
+        Route::resource('/profile','App\Http\Controllers\User\ProfileController');
 
 
 //        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
@@ -208,6 +213,7 @@ Route::prefix('parent')->name('parent.')->group(function () {
         Route::resource('/news' , 'App\Http\Controllers\Parent\NewsController');
         Route::resource('/grade-news' , 'App\Http\Controllers\Parent\StudentNewsController');
 
+        Route::resource('/profile','App\Http\Controllers\Parent\ProfileController');
 
 
         Route::post('/logout',[ParentLoginController::class,'logout'])->name('logout');

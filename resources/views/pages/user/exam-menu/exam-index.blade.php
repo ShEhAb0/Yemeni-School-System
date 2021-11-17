@@ -43,6 +43,7 @@
                                         <th class="text-secondary purplel-color opacity-9  text-center">Duration</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Exam Date</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Exam Time</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Controller</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -65,51 +66,10 @@
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-sm font-weight-bold">12:00 PM</span>
                                         </td>
-
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/show">Start Exam  </a></span>
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">2</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Biology</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Maha</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">70 mins</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2:00 PM</span>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">3</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">English</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Monna</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">50 mins</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">5:00 PM</span>
-                                        </td>
-
-                                    </tr>
-
 
 
 

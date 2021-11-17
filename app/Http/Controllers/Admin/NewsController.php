@@ -31,9 +31,17 @@ class NewsController extends Controller
 
     public function search(Request $request)
     {
+        $search = $request->input('search');
 
-       $search = $request->get('search');
-        $news = DB::table('news')->where('title' , 'like' , '%'.$search.'%')->paginate(10);
+        // Search in the title and body columns from the posts table
+        $news = News::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->get();
+
+
+        //$search = $request->get('search');
+       // $news = DB::table('news')->where('title' , 'like' , '%'.$search.'%')->paginate(10);
         return view('pages.admin.news-menu.news-index',compact('news'));
 
     }

@@ -22,7 +22,7 @@ class ParentController extends Controller
      */
     public function index()
     {
-        $parents = Parents::all();
+        $parents = Parents::with('students' )->get();
         $users = User::all();
         return view('pages.admin.parent-menu.parent-index' , compact('users','parents'));
 

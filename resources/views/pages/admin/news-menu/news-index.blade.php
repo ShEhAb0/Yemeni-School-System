@@ -25,10 +25,10 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-8">
-                    <form action="news/search" method="get">
+                    <form action="{{ route('admin.news') }}" method="GET">
                     <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="search" class="form-control" placeholder="search..." name="search">
+                        <input type="text" class="form-control" placeholder="search..." name="search">
                     </div>
                     </form>
                 </div>
@@ -109,11 +109,11 @@
                                     </table>
                                 </div>
                                 <div class="text-center my-5">
-                                    {{$news->render()}}
                                 </div>
                             @else
                                 <p class="text-center text-danger">There are no news</p>
                             @endif
+
                         </div>
                     </div>
                 </div>

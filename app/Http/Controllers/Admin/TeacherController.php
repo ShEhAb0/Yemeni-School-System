@@ -19,7 +19,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teacher = Teacher::get();
+        $teacher = Teacher::with('subjects' )->get();
         return view('pages.admin.teacher-menu.teacher-index')->with('teachers' , $teacher);;
 
     }

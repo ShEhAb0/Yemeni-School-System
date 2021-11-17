@@ -2,7 +2,9 @@
     <div class="sidenav-header">
         <!--this is Navbar section 1-->
         <span aria-hidden="true"  id="iconSidenav">
-        <i class="fas fa-times cursor-pointer p-0 text-secondary opacity-5 position-absolute end-4 top-4 d-xl-none" ></i>
+        <i class="fas fa-times cursor-pointer p-0 text-secondary opacity-5 position-absolute end-4 top-4 d-xl-none" >
+
+        </i>
         </span>
         <!--end this is Navbar section 1-->
         <a class="navbar-brand m-0" target="_blank">

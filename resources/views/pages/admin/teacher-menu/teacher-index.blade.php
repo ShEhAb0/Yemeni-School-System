@@ -65,7 +65,6 @@
                                         <tr>
                                             <th class="text-secondary opacity-9 purplel-color text-center">#</th>
                                             <th class="text-secondary opacity-9 purplel-color text-center">Teacher Name</th>
-                                            <th class="text-secondary purplel-color opacity-9 text-center">Students Num</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Subjects Num</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Username</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
@@ -92,12 +91,9 @@
                                                 </td>
 
 
-                                                <td class="text-center" >
-                                                    <p class="text-sm font-weight-bold mb-0">9</p>
 
-                                                </td>
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">25</p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{count($teacher->subjects)}}</p>
 
                                                 </td>
                                                 <td class="align-middle text-center">

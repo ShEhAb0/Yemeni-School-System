@@ -22,6 +22,20 @@ class TermController extends Controller
         $terms = Term::paginate(10);
         return view('pages.admin.term-menu.term-index',compact('terms'));
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $terms = Term::query()
+            ->where('name', 'LIKE', "%{$search}%")
+            ->get();
+
+
+        //$search = $request->get('search');
+        return view('pages.admin.term-menu.term-index',compact('terms'));
+
+    }
 
     /**
      * Show the form for creating a new resource.

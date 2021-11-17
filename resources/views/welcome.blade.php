@@ -89,7 +89,7 @@
                                     </div>
                                     <label>Password</label>
                                     <div class="mb-3" style="position: relative;">
-                                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password">
+                                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password" id="password">
                                         <div class="eye" id="switch"><i class="fas fa-eye-slash" style="font-size: 18px;"></i></div>
                                     </div>
                                     <div class="form-check form-switch">
@@ -149,6 +149,8 @@
             $("#switch").text("")
             $("#switch").append(`<i class="fas fa-eye-slash" style="font-size: 18px;"></i>`)
         }
+
+
     });
 
     function changeForm(id){
