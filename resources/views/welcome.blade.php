@@ -69,6 +69,11 @@
                                 <h3 class="font-weight-bolder text-dark text-gradient">Welcome</h3>
 
                                 <p class="mb-0">Enter your Username and Password to login</p>
+                                @error('username')
+                                <p class="text-danger my-2" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </p>
+                                @enderror
                             </div>
                             <div class="card-body">
                                 <form id="formData" method="POST" action="" role="form">

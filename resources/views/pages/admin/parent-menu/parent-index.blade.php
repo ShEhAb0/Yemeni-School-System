@@ -203,7 +203,7 @@
                                 </div>
 
                                 @if($users->count() > 0)
-                                <div class="row w_50 hidden" id="parentexsits2" >
+                                <div class="row w_50" >
                                     <p>Choose Student </p>
                                     <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
                                         <optgroup >
@@ -224,62 +224,62 @@
                                     <option value="1">Active</option>
                                     <option value="0">Suspend</option>
                                 </select>
-                                <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
-                                    <input class="form-check-input" type="checkbox" name="choose" id="Choose2" value="1" >
-                                    <label class="form-check-label" for="Choose2" checked>
-                                        Add to exist Student
-                                    </label>
-                                </div>
+{{--                                <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">--}}
+{{--                                    <input class="form-check-input" type="checkbox" name="choose" id="Choose2" value="1" >--}}
+{{--                                    <label class="form-check-label" for="Choose2" checked>--}}
+{{--                                        Add to exist Student--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
 
 
-                                <div id="ParentInfo2" class="my-1" >
-                                    <div class="row g-2 my-1">
-                                        <p>Add new Student</p>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">
+{{--                                <div id="ParentInfo2" class="my-1" >--}}
+{{--                                    <div class="row g-2 my-1">--}}
+{{--                                        <p>Add new Student</p>--}}
+{{--                                        <div class="input-group col-auto my-1 mb-2 w_50">--}}
+{{--                                            <input class="form-control" type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">--}}
 
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <span class="input-group-text mr-2" id="basic-addon1">@</span>
-                                            <input type="email" class="form-control  " placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">
+{{--                                        </div>--}}
+{{--                                        <div class="input-group col-auto my-1 mb-2 w_50">--}}
+{{--                                            <span class="input-group-text mr-2" id="basic-addon1">@</span>--}}
+{{--                                            <input type="email" class="form-control  " placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">--}}
 
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Student ID" aria-label="ID">
-                                        </div>
-                                        <div class="row w_50 ">
-                                            <p>Choose Student Gender</p>
-                                            <div class="form-check col-5 " style="margin-left: 20px;">
-                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios12" value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Male
-                                                </label>
-                                            </div>
-                                            <div class="form-check col-5">
-                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios22" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
-                                                    Female
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row w_50 ">
-                                            <p>Choose Student Grade</p>
-                                            <select class="form-select" aria-label="Choose Student Grade">
-                                                <option value="1">First Grade</option>
-                                                <option value="2">Second Grade</option>
-                                                <option value="3">Three Grade</option>
-                                                <option value="4">Forth Grade</option>
-                                                <option value="5">Fifth Grade</option>
-                                            </select>
-                                        </div>
+{{--                                        </div>--}}
+{{--                                        <div class="input-group col-auto my-1 mb-2 w_50">--}}
+{{--                                            <input class="form-control" type="text" placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="input-group col-auto my-1 mb-2 w_50">--}}
+{{--                                            <input class="form-control" type="text" placeholder="Enter Student ID" aria-label="ID">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="row w_50 ">--}}
+{{--                                            <p>Choose Student Gender</p>--}}
+{{--                                            <div class="form-check col-5 " style="margin-left: 20px;">--}}
+{{--                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios12" value="option1" checked>--}}
+{{--                                                <label class="form-check-label" for="exampleRadios1">--}}
+{{--                                                    Male--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="form-check col-5">--}}
+{{--                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios22" value="option2">--}}
+{{--                                                <label class="form-check-label" for="exampleRadios2">--}}
+{{--                                                    Female--}}
+{{--                                                </label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="row w_50 ">--}}
+{{--                                            <p>Choose Student Grade</p>--}}
+{{--                                            <select class="form-select" aria-label="Choose Student Grade">--}}
+{{--                                                <option value="1">First Grade</option>--}}
+{{--                                                <option value="2">Second Grade</option>--}}
+{{--                                                <option value="3">Three Grade</option>--}}
+{{--                                                <option value="4">Forth Grade</option>--}}
+{{--                                                <option value="5">Fifth Grade</option>--}}
+{{--                                            </select>--}}
+{{--                                        </div>--}}
 
 
-                                    </div>
-                                    <br/>
-                                </div>
+{{--                                    </div>--}}
+{{--                                    <br/>--}}
+{{--                                </div>--}}
 
 
 

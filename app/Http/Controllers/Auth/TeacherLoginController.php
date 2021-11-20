@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Validation\ValidationException;
 use Route;
 
 class TeacherLoginController extends Controller
@@ -31,7 +32,13 @@ class TeacherLoginController extends Controller
             return redirect()->intended(route('teacher.index'));
         }
         // if unsuccessful, then redirect back to the login with the form data
-        return redirect()->back()->withInput($request->only('username', 'remember'));
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+    public function username()
+    {
+        return 'username';
     }
 
     public function logout()

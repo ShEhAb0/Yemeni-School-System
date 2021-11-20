@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Validation\ValidationException;
 use Route;
 class AdminLoginController extends Controller
 {
@@ -31,14 +32,16 @@ class AdminLoginController extends Controller
         // Attempt to log the user in
         if (Auth::guard('admin')->attempt(['username' => $request->username, 'password' => $request->password])) {
             // if successful, then redirect to their intended location
-            $students = User::all()->count();
-            $teachers = Teacher::all()->count();
-            $grades = Grade::all()->count();
-            $news = News::all();
-            return redirect()->intended(route('admin.index',compact('students', 'teachers', 'grades' , 'news')));
+            return redirect()->intended(route('admin.index'));
         }
         // if unsuccessful, then redirect back to the login with the form data
-        return redirect()->back()->withInput($request->only('username', 'remember'));
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
+    public function username()
+    {
+        return 'username';
     }
 
     public function logout()

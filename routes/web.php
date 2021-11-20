@@ -77,11 +77,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
     Route::middleware(['auth:admin'])->group(function(){
-        $students = User::all()->count();
-        $teachers = Teacher::all()->count();
-        $grades = Grade::all()->count();
-        $news = News::all();
-        Route::view('/index' , 'pages.admin.index',compact('students', 'teachers', 'grades' , 'news' ))->name('index');
+        Route::get('/index' , 'App\Http\Controllers\Admin\AdminController@index')->name('index');
 
         Route::resource('/terms' , 'App\Http\Controllers\Admin\TermController');
         Route::resource('/parents' , 'App\Http\Controllers\Admin\ParentController');
