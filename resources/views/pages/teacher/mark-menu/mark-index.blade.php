@@ -116,39 +116,44 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($marks as $mark)
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                         </td>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Moahmmed</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$mark->student->student_name}}</p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">80</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->attendance_mark}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">90</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->assignments_mark}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">99</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->exams_mark}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">98%</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->attendance_mark + $mark->assignments_mark + $mark->exams_mark}}%</span>
                                         </td>
                                         <td class="align-middle text-center">
-
-                                            <a  class="text-secondary font-weight-bold text-xs  me-3"  data-bs-toggle="modal" href="#examplUpdate" role="button">
+                                            @if($mark->student->term_id == 1)
+                                            <a  class="text-secondary font-weight-bold text-xs me-3 disabled">
+                                                <i class="fas fa-check-circle text-muted " style="font-size: 20px;"></i>
+                                            </a>
+                                            @else
+                                                <a  class="text-secondary font-weight-bold text-xs  me-3" href="/teacher/mark/{{$mark->id}}/edit" title="Upgrade to the next grade">
+                                                <i class="fas fa-check-circle purplel-color " style="font-size: 20px;"></i>
+                                            </a>
+                                            @endif
+                                            <a  class="text-secondary font-weight-bold text-xs  me-3" data-id="{{$mark->id}}" data-attendance="{{$mark->attendance_mark}}"
+                                                data-assignment="{{$mark->assignments_mark}}" onclick="updateMark($(this));" role="button">
                                                 <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                             </a>
 
-                                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs " data-toggle="tooltip" data-original-title="Edit user">
-                                                <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                            </a>
-
-
                                         </td>
                                     </tr>
-
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -169,27 +174,24 @@
                             <h5 class="modal-title" id="exampleModalLabelUpda">Edit Marks</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <form method="POST" action="" class="row g-2 my-1 py-1" id="formData">
+                            @csrf
+                            @method('PUT')
                         <div class="modal-body">
-                            <form class="row g-2 my-1 py-1">
                                 <div class="col-auto w-100">
                                     <p>Attendance</p>
-                                    <input class="form-control"  placeholder="Edit Attendance Marks">
+                                    <input class="form-control" name="attend" id="attend" placeholder="Edit Attendance Marks" required>
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Assignments</p>
-                                    <input class="form-control"  placeholder="Edit Assignments Marks">
+                                    <input class="form-control" name="assign" id="assign" placeholder="Edit Assignments Marks" required>
                                 </div>
-                                <div class="col-auto w-100">
-                                    <p>Exams</p>
-                                    <input class="form-control"  placeholder="Edit Exams Marks">
-                                </div>
-                            </form>
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-outline-primary" >Save changes</button>
+                            <button type="submit" class="btn btn-outline-primary" >Save changes</button>
                         </div>
+                        </form>
                     </div>
                 </div>
 
@@ -204,7 +206,16 @@
 
         </div>
     </div>
-
+@section('scripts')
+    <script>
+        function updateMark(d){
+            $('#formData').attr('action','/teacher/mark/'+d.data('id'))
+            $('#attend').val(d.data('attendance'));
+            $('#assign').val(d.data('assignment'));
+            $('#examplUpdate').modal('show');
+        }
+    </script>
+@endsection
 @endsection
 
 

@@ -5,6 +5,12 @@
 @section('content')
 
     <div class="container-fluid">
+        @if($message = Session::get('success'))
+            <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+                {{$message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+            </div>
+        @endif
         <br/>
         <br/>
         <br/>
@@ -41,36 +47,40 @@
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Subject Name</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Teacher Name</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Duration</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Date</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Time</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Date Time</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Controller</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    @foreach($exams as $k => $exam)
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$k+1}}</p>
                                         </td>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$exam->subjectsExams->subject_name}}</p>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Mohammed</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->teachersExams->teacher_name}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">50 mins</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->duration_m}} Mins</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
+                                            <span class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">12:00 PM</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/show">Start Exam  </a></span>
+{{--                                            @php($time = \Illuminate\Support\Carbon::make($exam->exam_time)->format('H:m:s'))--}}
+                                            @php($time = new \Carbon\Carbon($exam->exam_time,'Asia/Riyadh'))
+{{--                                            @if($exam->exam_time == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && $time->diffInMinutes(\Illuminate\Support\Carbon::now('Asia/Riyadh')) <= $exam->duration_m)--}}
+                                            @if($time->format('Y-m-d') == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && \Illuminate\Support\Carbon::now('Asia/Riyadh') >= $time && \Illuminate\Support\Carbon::now('Asia/Riyadh') <= $time->addMinutes($exam->duration_m))
+                                            <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/{{$exam->id}}">Start Exam  </a></span>
+                                            @else
+                                            <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100 disabled">Start Exam</a></span>
+                                                @endif
                                         </td>
                                     </tr>
-
+                                    @endforeach
 
 
                                     </tbody>

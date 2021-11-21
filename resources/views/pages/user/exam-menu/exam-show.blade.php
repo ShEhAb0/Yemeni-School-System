@@ -1,4 +1,4 @@
-<!doctype html>
+<!Doctype html>
 <html lang="en">
 <head>
     <title>School</title>
@@ -50,7 +50,9 @@
 
     <div class="container-fluid">
         <div class="row" style="flex-wrap: wrap-reverse;">
-
+            <form method="POST" action="/exam" class="d-flex">
+                @csrf
+                @method('POST')
             <div class="col-12 col-sm-12 col-lg-9 col-xl-9 col-xxl-9  card card-body">
                 <div class="d-flex align-items-between w-100">
                     <div style="width: 70%;">
@@ -73,270 +75,38 @@
 
                     <div class="item ">
                         <div class="row justify-content-center">
-
+                            @foreach($exam->questions as $question)
                             <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
                                 <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>1. questions 1 ?</h6>
+                                    <h6>{{$loop->iteration}}. {{$question->title}}?</h6>
 
                                     <div class="form-check">
-                                        <input class="form-check-input " name="q1" type="checkbox" value="" id="an1">
-                                        <label class="form-check-label" for="an1">
-                                            Answer 1
+                                        <input class="form-check-input " name="questions[{{$question->id}}]" type="radio" value="1" id="answerA{{$question->id}}">
+                                        <label class="form-check-label" for="answerA{{$question->id}}">
+                                            {{$question->choice_1}}
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="q1" type="checkbox" value="" id="an2">
-                                        <label class="form-check-label" for="an2">
-                                            Answer 2
+                                        <input class="form-check-input" name="questions[{{$question->id}}]" type="radio" value="2" id="answerB{{$question->id}}">
+                                        <label class="form-check-label" for="answerB{{$question->id}}">
+                                            {{$question->choice_2}}
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="q1" type="checkbox" value="" id="an3">
-                                        <label class="form-check-label" for="an3">
-                                            Answer 3
+                                        <input class="form-check-input" name="questions[{{$question->id}}]" type="radio" value="3" id="answerC{{$question->id}}">
+                                        <label class="form-check-label" for="answerC{{$question->id}}">
+                                            {{$question->choice_3}}
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" name="q1" type="checkbox" value="" id="an4" >
-                                        <label class="form-check-label" for="an4">
-                                            Answer 4
+                                        <input class="form-check-input" name="questions[{{$question->id}}]" type="radio" value="4" id="answerD{{$question->id}}" >
+                                        <label class="form-check-label" for="answerD{{$question->id}}">
+                                            {{$question->choice_4}}
                                         </label>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>2. questions 2 ?</h6>
-
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " name="q2" type="checkbox" value="" id="q2an1">
-                                        <label class="form-check-label"  for="q2an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" name="q2" type="checkbox" value="" id="q2an2" >
-                                        <label class="form-check-label"  for="q2an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"  name="q2" type="checkbox" value="" id="q2an3">
-                                        <label class="form-check-label" for="q2an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input"  name="q2" type="checkbox" value="" id="q2an4" >
-                                        <label class="form-check-label" for="q2an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>3. questions 3 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input "  type="checkbox" value="" name="q11" id="q11an1">
-                                        <label class="form-check-label" for="q11an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q11" id="q11an2" >
-                                        <label class="form-check-label" for="q11an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q11" id="q11an3">
-                                        <label class="form-check-label" for="q11an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q11" id="q11an4" >
-                                        <label class="form-check-label" for="q11an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>4. questions 4 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" value=""  name="q12" id="q12an1">
-                                        <label class="form-check-label" for="q12an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q12" id="q12an2" >
-                                        <label class="form-check-label" for="q12an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q12" id="q12an3">
-                                        <label class="form-check-label" for="q12an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q12" id="q12an4" >
-                                        <label class="form-check-label" for="q12an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>5. questions 5 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" value="" name="q13" id="q13an1">
-                                        <label class="form-check-label" for="q13an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q13" id="q13an2" >
-                                        <label class="form-check-label" for="q13an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q13" id="q13an3">
-                                        <label class="form-check-label" for="q13an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" name="q13" id="q13an4" >
-                                        <label class="form-check-label" for="q13an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>6. questions 6 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" value="" name="q19" id="q19an1">
-                                        <label class="form-check-label" for="q19an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an2" >
-                                        <label class="form-check-label" for="q19an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an3">
-                                        <label class="form-check-label" for="q19an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an4" >
-                                        <label class="form-check-label" for="q19an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>7. questions 7 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" value="" name="q19" id="q19an1">
-                                        <label class="form-check-label" for="q19an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an2" >
-                                        <label class="form-check-label" for="q19an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an3">
-                                        <label class="form-check-label" for="q19an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an4" >
-                                        <label class="form-check-label" for="q19an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-10 col-sm-5 col-lg-5 col-xl-5 col-xxl-5 m-1 ">
-                                <div class="card min-height-200 p-3 card-body samehieght">
-                                    <h6>8. questions 8 ?</h6>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input " type="checkbox" value="" name="q19" id="q19an1">
-                                        <label class="form-check-label" for="q19an1">
-                                            Answer 1
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an2" >
-                                        <label class="form-check-label" for="q19an2">
-                                            Answer 2
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an3">
-                                        <label class="form-check-label" for="q19an3">
-                                            Answer 3
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value=""  name="q19" id="q19an4" >
-                                        <label class="form-check-label" for="q19an4">
-                                            Answer 4
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                                @endforeach
                         </div>
                     </div>
 
@@ -357,20 +127,27 @@
 			<i class="fas fa-times-circle" style="font-size: 24px;" ></i>
 		</span></p>
                     <!--end add this close button-->
-                    <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Published by:</p><p class="text-sm mt-1 ml-2">Teacher</p></div>
-                    <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Subject:</p><p class="text-sm mt-1 ml-2">Math</p></div>
+                    <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Published by:</p><p class="text-sm mt-1 ml-2">
+                        {{$exam->teachersExams->teacher_name}}</p></div>
+                    <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Subject:</p><p class="text-sm mt-1 ml-2">
+                        {{$exam->subjectsExams->subject_name}}</p></div>
                     <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Total Questions:</p><p class="text-sm mt-1 ml-2" id="Total">8</p></div>
                     <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Total Answers:</p><p class="text-sm mt-1 ml-2" id="Answer">0</p></div>
                     <div class="w_100 d-flex ps-3 ps-sm-0" ><p class="text-bold text-lg blue-color">Total Questions left:</p><p class="text-sm mt-1 ml-2" id="Left">0</p></div>
 
                     <div class="mt-5" >
-                        <button class="btn pur w-100  btn-lg mb-0"  disabled data-bs-toggle="modal" data-bs-target="#exampleModal" id="submit">Submit  </button>
+{{--                        <button class="btn pur w-100  btn-lg mb-0"  disabled data-bs-toggle="modal" data-bs-target="#exampleModal" id="submit">Submit  </button>--}}
+                        <input type="hidden" name="exam" value="{{$exam->id}}">
+                        <input type="hidden" name="subject" value="{{$exam->subject_id}}">
+                        <input type="hidden" name="teacher" value="{{$exam->teacher_id}}">
+                        <input type="submit" class="btn pur w-100  btn-lg mb-0" id="submit" value="Submit" disabled>
 
                     </div>
 
                 </div>
 
             </div>
+            </form>
 
 
         </div>
@@ -408,7 +185,7 @@
     function Open(){
         $("#exampleModal1").toggle();
     }
-    var TotalQuestions=20
+    var TotalQuestions=<?php echo count($exam->questions) ?>
     //assign the dynamic number to the Total Question in page
     $("#Total").text(TotalQuestions)
 
@@ -431,7 +208,7 @@
 
         }
 //if finishing answering all question the submit button will be Enabled
-        if(Answer.length>=20){
+        if(Answer.length>=<?php echo count($exam->questions) ?>){
             $("#submit").addClass("blu")
             $("#submit").removeClass("pur")
 
@@ -444,7 +221,7 @@
         }
 
     })
-    var startmin=1//here the time will br sign from backend as total mins of exam than will be divide to hours/mins/sec if so
+    var startmin=<?php echo $duration ?>//here the time will br sign from backend as total mins of exam than will be divide to hours/mins/sec if so
     var time=startmin*60 //all sec in the time
     var countdown = document.getElementById('Timer');//the apper timer to user
 

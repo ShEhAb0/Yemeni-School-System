@@ -24,29 +24,16 @@
             <br/>
             <div class="row g2">
                 <div class="col-auto w_50">
-                    <p>Select Subject</p>
-                    <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                        <option value="1">Math</option>
-                        <option value="2">Arabic</option>
-                        <option value="3">Biolody</option>
-                        <option value="4">English</option>
-                        <option value="5">science</option>
-                        <option value="6">chemistry</option>
-                        <option value="7">History</option>
-
+                    <p>Select Term</p>
+                    <select class="form-select" aria-label="Select Grade" id="term" name="term" onchange="getMarks(this.value);">
+                        <option value="" disabled selected>Select The Term</option>
+                        @foreach($terms as $term)
+                            <option value="{{$term->id}}">{{$term->name}}</option>
+                        @endforeach
                     </select>
                 </div>
-
-                <div class="col-auto w_50">
-                    <p>Select Term</p>
-                    <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                        <option value="1">Term 1</option>
-                        <option value="2">Term 2</option>
-
-
-                    </select>
+                <div class="text-center col-auto align-items-end hidden" id="loader">
+                    <i class="fa fa-spinner fa-3x fa-spin"></i>
                 </div>
 
 
@@ -70,29 +57,17 @@
                                 <thead>
                                 <tr>
                                     <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                    <th class="text-secondary purplel-color opacity-9 text-center ">Title</th>
-                                    <th class="text-secondary purplel-color opacity-9  text-center">Marks</th>
-                                    <th class="text-secondary purplel-color opacity-9  text-center">percentage</th>
+                                    <th class="text-secondary purplel-color opacity-9 text-center ">Subject</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Term</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Level</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Attendances</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Assignments</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Exam</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Total</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-0 text-center">Attandance</p>
-                                    </td>
-
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm font-weight-bold">99</span>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm font-weight-bold">80%</span>
-                                    </td>
-
-                                </tr>
-
+                                <tbody id="tableData">
+                                @include('pages.parent.mark-menu.mark-table')
                                 </tbody>
                             </table>
                         </div>
@@ -113,4 +88,22 @@
 
 
 </div>
+@section('scripts')
+    <script src="{{asset('js/axios.min.js')}}"></script>
+    <script>
+        function getMarks(id) {
+            $('#loader').removeClass('hidden');
+            $('#loader').addClass('row');
+            axios({
+                method:'get',
+                url:'/parent/mark/' + id
+            })
+                .then(response =>{
+                    $('#tableData').html(response.data);
+                    $('#loader').addClass('hidden');
+                    $('#loader').removeClass('row');
+                })
+        }
+    </script>
+@endsection
 @endsection

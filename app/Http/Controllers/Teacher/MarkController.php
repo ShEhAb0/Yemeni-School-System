@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mark;
 use App\Models\MarkSetting;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
@@ -15,8 +18,8 @@ class MarkController extends Controller
      */
     public function index()
     {
-        $marks = MarkSetting::all();
-        return view('pages.teacher.mark-menu.mark-index')->with('marks' , $marks);;
+        $marks = Mark::where('teacher_id',Auth::id())->with(['student'])->where('status',0)->paginate(10);
+        return view('pages.teacher.mark-menu.mark-index',compact('marks'));
 
     }
 
@@ -61,6 +64,12 @@ class MarkController extends Controller
     public function edit($id)
     {
         //
+        $mark = Mark::find($id);
+        $student = User::find($mark->student_id);
+        User::where('id',$student->id)->update(['level_id'=>$student->level_id+1,'term_id'=>1]);
+        $mark->status = 1;
+        $mark->save();
+        return redirect('/teacher/mark')->withSuccess('Student has been upgrade successfully.');
     }
 
     /**
@@ -73,6 +82,13 @@ class MarkController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+           'attend' => 'required',
+           'assign' => 'required',
+        ]);
+
+        $mark = Mark::where('id',$id)->update(['attendance_mark'=>$request->attend, 'assignments_mark'=>$request->assign]);
+        return redirect('/teacher/mark')->withSuccess('Data has been updated successfully.');
     }
 
     /**

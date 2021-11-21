@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mark;
+use App\Models\Term;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MarkController extends Controller
 {
@@ -14,7 +17,10 @@ class MarkController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.mark-menu.mark-index');
+        $terms = Term::all();
+        $marks = Mark::where('student_id',session('student_id'))->where('level_id',session('student_level'))
+            ->with(['subject','term','grade'])->paginate(10);
+        return view('pages.parent.mark-menu.mark-index',compact('terms','marks'));
 
     }
 
@@ -48,6 +54,10 @@ class MarkController extends Controller
     public function show($id)
     {
         //
+        $marks = Mark::where('student_id',session('student_id'))->where('level_id',session('student_level'))
+            ->where('term_id',$id)->with(['subject','term','grade'])->paginate(10);
+
+        return view('pages.parent.mark-menu.mark-table',compact('marks'));
     }
 
     /**
