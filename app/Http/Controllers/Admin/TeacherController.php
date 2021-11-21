@@ -43,12 +43,12 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $this->validate($request ,[
-            'teacher_name' => 'required',
-            'username' => 'required|max:20',
-            'email' => 'required',
-            'password' => 'required',
+            'teacher_name' => 'required|max:50',
+            'username' => 'required|unique:teachers,username|min:3',
+            'email' => 'required|unique:teachers,email',
+            'password' => 'required|min:6',
             'gender' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric',
             'address' => 'required',
             'teacher_education_certificate' => 'required',
             'teacher_id_or_passport' => 'required',
@@ -104,7 +104,7 @@ class TeacherController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -129,15 +129,14 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'teacher_name' => 'required',
-            'username' => 'required|max:20',
-            'email' => 'required',
-            'password' => 'required',
+            'teacher_name' => 'required|max:50',
+            'username' => "required|unique:teachers,username,$id|min:3",
+            'email' => "required|unique:teachers,email,$id",
             'gender' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric',
             'address' => 'required',
-            'teacher_education_certificate' => 'required',
-            'teacher_id_or_passport' => 'required',
+            //'teacher_education_certificate' => 'required',
+            //'teacher_id_or_passport' => 'required',
             'status' => 'required',
 
         ]);

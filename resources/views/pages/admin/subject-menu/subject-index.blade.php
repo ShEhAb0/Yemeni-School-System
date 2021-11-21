@@ -118,7 +118,6 @@
                                 </table>
                             </div>
                                 <div class="text-center my-5">
-                                    {{$subjects->render()}}
                                 </div>
                             @else
                                 <div class="text-center">
@@ -279,7 +278,7 @@
                         <p class="text-center text-danger">Are you sure you want to delete this subject?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger" >Delete</button>
+                            <button type="submit" class="btn btn-outline-danger" >Delete</button>
                         </div>
                     </form>
 

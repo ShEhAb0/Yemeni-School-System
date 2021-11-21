@@ -49,12 +49,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request ,[
-            'student_name' => 'required',
-            'username' => 'required|max:20',
-            'email' => 'required',
-            'password' => 'required',
+            'student_name' => 'required|max:50',
+            'username' => 'required|unique:users,username|min:3',
+            'email' => 'required|unique:users,email',
+            'password' => 'required|min:6',
             'gender' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric',
             'address' => 'required',
             'term' => 'required',
             'grade' => 'required',
@@ -124,12 +124,11 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request ,[
-            'student_name' => 'required',
-            'username' => 'required|max:20',
-            'email' => 'required',
-            'password' => 'required',
+            'student_name' => 'required|max:50',
+            'username' => "required|unique:users,username,$id|min:3",
+            'email' => "required|unique:users,email,$id",
             'gender' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric',
             'address' => 'required',
             'level_id' => 'required',
             'term_id' => 'required',

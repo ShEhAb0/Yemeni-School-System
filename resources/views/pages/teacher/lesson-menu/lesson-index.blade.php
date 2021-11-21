@@ -66,6 +66,7 @@
 
             </div>
         </div>
+
         <div class="container-fluid py-4">
 
             <div class="row">
@@ -158,7 +159,7 @@
 
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
-                                    <select class="form-select" aria-label="Select Term" name="term">
+                                    <select class="form-select" aria-label="Select Term" name="term" required>
                                         <option value="" disabled selected>Choose the Term</option>
                                         @foreach($terms as $term)
                                             <option value="{{$term->id}}">{{$term->name}}</option>
@@ -200,7 +201,6 @@
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="details" required></textarea>
 
                                 </div>
-
                                 <h6>Add Attachments</h6>
                                 <div class="row g-2">
                                     <div class="col-auto w_50 my-1 mb-2" >
@@ -209,8 +209,10 @@
                                     </div>
                                     <div class="col-auto w_50 my-1 mb-2" >
                                         <p>Upload Picture</p>
+
                                         <input class="form-control " type="file" id="upload_image" name="upload_image"  accept="image/png, image/gif, image/jpeg" >
                                     </div>
+
                                 </div>
                                 <div class="col-auto w-100  my-1 mb-2" >
                                     <p>Upload File</p>
@@ -354,10 +356,10 @@
                                 <input type="hidden" name="id" id="id" value="">
 
 
-                                <p>Are you sure you want to delete this lesson?</p>
+                                <p class="text-danger">Are you sure you want to delete this lesson?</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
                                 </div>
                             </form>
 

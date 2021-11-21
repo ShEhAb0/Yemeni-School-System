@@ -172,33 +172,6 @@
                         <div class="col-lg-12">
                             <h5 class="font-weight-bolder">News</h5>
                             <div class="max-height-vh-80  h-80" style="overflow-y: auto;">
-                                <div class="d-flex flex-column card mt-2" style="padding: 20px;background-color: #e4e9ff;        ">
-                                    <p class="mb-1 pt-2 text-bold">Published at </p>
-                                    <h5 class="font-weight-bolder">News Name</h5>
-                                    <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
-                                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
-                                        Read More
-                                        <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column card mt-2" style="padding: 20px;background-color: #e4e9ff;        ">
-                                    <p class="mb-1 pt-2 text-bold">Published at </p>
-                                    <h5 class="font-weight-bolder">News Name</h5>
-                                    <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
-                                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
-                                        Read More
-                                        <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                                <div class="d-flex flex-column card mt-2" style="padding: 20px;background-color: #e4e9ff;        ">
-                                    <p class="mb-1 pt-2 text-bold">Published at </p>
-                                    <h5 class="font-weight-bolder">News Name</h5>
-                                    <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
-                                    <a class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto" href="javascript:;">
-                                        Read More
-                                        <i class="fas fa-arrow-right text-sm ms-1" aria-hidden="true"></i>
-                                    </a>
-                                </div>
 
 
                             </div>

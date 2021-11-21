@@ -53,13 +53,13 @@ class ParentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'parent_name' => 'required',
-            'username' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'parent_name' => 'required|max:50',
+            'username' => 'required|unique:parents,username|min:3',
+            'email' => 'required|unique:parents,email',
+            'password' => 'required|min:6',
             'gender' => 'required',
             'address' => 'required',
-            'phone' => 'required',
+            'phone' => 'numeric',
             'parent_id_or_passport' => 'required',
             'user' => 'required',
             'status' => 'required',
@@ -132,14 +132,13 @@ class ParentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'parent_name' => 'required',
-            'username' => 'required',
-            'email' => 'required',
-            'password' => 'required',
+            'parent_name' => 'required|max:50',
+            'username' => "required|unique:parents,username|min:3,$id",
+            'email' => "required|unique:parents,email,$id",
             'gender' => 'required',
             'address' => 'required',
-            'phone' => 'required',
-            'parent_id_or_passport' => 'required',
+            'phone' => 'numeric',
+            //'parent_id_or_passport' => 'required',
             'user' => 'required',
             'status' => 'required',
         ]);
@@ -162,11 +161,11 @@ class ParentController extends Controller
         $parent->address = $request->input('address');
         $parent->phone = $request->input('phone');
 
-        $parent->parent_id_or_passport = $request->input('parent_id_or_passport');
-        $parent_id_or_passport = $request->file('parent_id_or_passport');
-        $filename = time().'.'.$parent_id_or_passport->getClientOriginalExtension();
-        $request->parent_id_or_passport->move(public_path('images/parents_IDs') , $filename);
-        $parent->parent_id_or_passport=$filename;
+//        $parent->parent_id_or_passport = $request->input('parent_id_or_passport');
+//        $parent_id_or_passport = $request->file('parent_id_or_passport');
+//        $filename = time().'.'.$parent_id_or_passport->getClientOriginalExtension();
+//        $request->parent_id_or_passport->move(public_path('images/parents_IDs') , $filename);
+//        $parent->parent_id_or_passport=$filename;
 
         $parent->status = $request->input('status');
         $parent->save();

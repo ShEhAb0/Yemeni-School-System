@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Exam extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+
     protected $table = "exams";
     public $timestamps = false;
     protected $fillable = ['id' , 'teacher_id ', 'exam_title' , 'level_id' ,'term_id' , 'subject_id ' , 'exam_time' , 'duration_m' , 'status' , 'total_ques' ];

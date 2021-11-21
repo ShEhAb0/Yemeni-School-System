@@ -33,6 +33,28 @@ class LessonController extends Controller
         return view('pages.teacher.lesson-menu.lesson-index',compact('lessons','terms','teacher_sub','grades'));
     }
 
+//    public function getSubjects($id)
+//    {
+//        $subjects = TeacherSubject::where('teacher_id',Auth::id())->where('level_id',$id)->where('status',1)->with('subject')->get();
+////        $subjects = Subject::where('level_id',Auth::user()->level_id)->where('status',1)->get();
+//        if ($subjects->count() > 0) {
+//            $data = '<option value="" disabled selected>Select the subject</option>';
+//            foreach ($subjects as $subject) {
+//                $data .= '
+//            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_name . '</option>
+//            ';
+//            }
+//            return response($data,200);
+//        }
+//        return response('',201);
+//    }
+//
+//    public function getLessons($grade,$subject)
+//    {
+//        $lessons = Lesson::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->paginate(10);
+//        return view('pages.teacher.lesson-menu.lesson-table',compact('lessons'))->render();
+//    }
+
     /**
      * Show the form for creating a new resource.
      *

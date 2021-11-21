@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <p class="text-body text-truncate content">{{$news->description}}</p>
-                        <a role="button" class="purplel-color text-bold show_hide" >Read More..</a>
+                       <!-- <a role="button" class="purplel-color text-bold show_hide" >Read More..</a> -->
                     </div>
                 </div>
             @endforeach

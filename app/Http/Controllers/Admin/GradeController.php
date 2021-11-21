@@ -46,7 +46,7 @@ class GradeController extends Controller
         //
         $request->validate([
            'grade_name' => 'required',
-           'grade_code' => 'required',
+           'grade_code' => 'required|unique:grades,grade_code',
            'status' => 'required',
         ]);
 
@@ -103,7 +103,7 @@ class GradeController extends Controller
         //
         $request->validate([
             'grade_name' => 'required',
-            'grade_code' => 'required',
+            'grade_code' => "required|unique:grades,grade_code,$id",
             'status' => 'required',
         ]);
 

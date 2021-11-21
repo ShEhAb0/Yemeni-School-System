@@ -156,9 +156,10 @@
                                                            style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a href="javascript:;"
-                                                       class="text-secondary font-weight-bold text-xs me-3"
-                                                       data-toggle="tooltip" data-original-title="Edit user">
+
+                                                    <a
+                                                        class="text-secondary font-weight-bold text-xs me-3"
+                                                        data-toggle="tooltip"onclick="deleteExam({{$exam->id}}); "  role="button" >
                                                         <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                     </a>
 
@@ -681,6 +682,41 @@
                     </div>
                 </div>
             </div>
+
+
+            <!-------------------------Start Delete Assignment------------------------------->
+
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Exam</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="my-1 py-1" action="" method="POST" id="deleteForm">
+                                {{csrf_field()}}
+                                {{ method_field('DELETE') }}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="id" id="id" value="">
+
+
+                                <p class="text-danger">Are you sure you want to delete this exam?</p>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-------------------------End Delete Lesson------------------------------->
+
+
+
         </div>
     </div>
 
@@ -1127,6 +1163,10 @@
         // });
 
             //
+        function deleteExam(id) {
+            $('#deleteForm').attr('action','/teacher/exam/'+id);
+            $('#deleteModal').modal('show');
+        }
 
     </script>
 @endsection

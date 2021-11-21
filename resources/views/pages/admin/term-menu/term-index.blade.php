@@ -189,7 +189,7 @@
                         <p class="text-danger">Are you sure you want to delete this term?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger" >Delete</button>
+                            <button type="submit" class="btn btn-outline-danger" >Delete</button>
                         </div>
                     </form>
 

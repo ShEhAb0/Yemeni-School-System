@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
-                                    <select class="form-select" aria-label="Select Grade" name="term">
+                                    <select class="form-select" aria-label="Select Grade" name="term" required>
                                         <option value="" disabled selected>Choose the Term</option>
                                         @foreach($terms as $term)
                                             <option value="{{$term->id}}">{{$term->name}}</option>
@@ -297,10 +297,10 @@
                                 <input type="hidden" name="id" id="id" value="">
 
 
-                                <p>Are you sure you want to delete this assignment?</p>
+                                <p class="text-danger">Are you sure you want to delete this assignment?</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
                                 </div>
                             </form>
 
@@ -399,7 +399,7 @@
                         $('#subject').val(response.data.subject_id);
                         $('#title').val(response.data.title);
                         $('#description').val(response.data.description);
-                        $('#date').val(response.data.due_date);
+                        $('#date').val(response.data.date);
                         $('#status').val(response.data.status);
                         $('#editModal').modal('show');
                     }

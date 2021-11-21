@@ -312,9 +312,9 @@
                                         <span  style="font-size: 15px;" class="text-primary"><i class="fas fa-clock me-2" style="font-size: 14px;"></i><span class="font-weight-bold">Recive Date: </span> {{$answer->delivery_date}}</span>
                                     </div>
 
-                                    <div class="form-check align-middle text-center me-4" style="float: none;">
+                                   <!-- <div class="form-check align-middle text-center me-4" style="float: none;">
                                         <input class="form-check-input"  style="float: none;" type="radio" value="" id="flexCheckChecked" >
-                                    </div>
+                                    </div> -->
 
 
                                     <div class="align-middle text-center " style="margin-top: 3px;">

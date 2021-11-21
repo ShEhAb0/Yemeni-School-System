@@ -73,7 +73,7 @@
                                         <td>
                                             <div class="d-flex px-2 py-1 justify-content-center">
                                                 <div>
-                                                    <img src="../asset/img/{{$admin->image}}" class="avatar avatar-sm me-3" alt="{{$admin->admin_name}}">
+                                                    <img src="{{asset('/images/profile.png/')}}" class="avatar avatar-sm me-3" alt="{{$admin->admin_name}}">
                                                 </div>
                                                 <div class="d-flex flex-column justify-content-center">
                                                     <h6 class="mb-0 text-sm">{{$admin->admin_name}}</h6>
@@ -186,9 +186,9 @@
                         <div class="modal-body">
                                 @csrf
                                 @method('POST')
-                                <input name="fullname" class="form-control my-1 mb-2 " type="text" placeholder="Full Name" aria-label="Full Name">
-                                <input name="username" class="form-control my-1 mb-2 " type="text" placeholder="Username" aria-label="Username">
-                                <input name="email" class="form-control my-1 mb-2 " type="Email" placeholder="Email" aria-label="Email">
+                                <input name="fullname" class="form-control my-1 mb-2 " type="text" placeholder="Full Name" aria-label="Full Name" required>
+                                <input name="username" class="form-control my-1 mb-2 " type="text" placeholder="Username" aria-label="Username" required>
+                                <input name="email" class="form-control my-1 mb-2 " type="Email" placeholder="Email" aria-label="Email" required>
                                 <div class="row ">
                                     <p>Gender</p>
                                     <div class="form-check col-5 " style="margin-left: 20px;">
@@ -217,8 +217,8 @@
                                     <option value="0">Disabled</option>
                                 </select>
 
-                                <input name="password" class="form-control my-1 mb-2 " type="Password" placeholder="Password" aria-label="Password">
-                                <input name="password_confirmation" class="form-control my-1 mb-2 " type="Password" placeholder="Confirm Password" aria-label="Confirm Password">
+                                <input name="password" class="form-control my-1 mb-2 " type="Password" placeholder="Password" aria-label="Password" required>
+                                <input name="password_confirmation" class="form-control my-1 mb-2 " type="Password" placeholder="Confirm Password" aria-label="Confirm Password" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -244,7 +244,7 @@
                                 <p class="text-danger">Are you sure you want to delete this admin?</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger" >Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
                                 </div>
                             </form>
 

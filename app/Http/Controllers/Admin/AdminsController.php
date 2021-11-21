@@ -45,13 +45,13 @@ class AdminsController extends Controller
     {
         //
         $request->validate([
-            'fullname' => 'required',
-            'username' => 'required',
-            'email' => 'required',
+            'fullname' => 'required|max:50',
+            'username' => 'required|unique:admins,username|min:3',
+            'email' => 'required|unique:admins,email',
             'gender' => 'required',
             'type' => 'required',
             'status' => 'required',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed|min:6'
         ]);
 
         $admin = new Admin();
@@ -111,9 +111,9 @@ class AdminsController extends Controller
     {
         //
         $request->validate([
-            'fullname' => 'required',
-            'username' => 'required',
-            'email' => 'required',
+            'fullname' => 'required|max:50',
+            'username' => "required|unique:admins,username,$id|min:3",
+            'email' => "required|unique:admins,email,$id",
             'gender' => 'required',
             'type' => 'required',
             'status' => 'required',
@@ -121,7 +121,7 @@ class AdminsController extends Controller
 
         if ($request->input('password') != null){
             $request->validate([
-                'password' => 'required|confirmed'
+                'password' => 'required|confirmed|min:6'
             ]);
         }
 

@@ -157,6 +157,7 @@ class AssignmentController extends Controller
                 'description' => 'required',
                 'term' => 'required',
                 'subject' => 'required',
+                'date' => 'required',
                 'grade' => 'required',
                 'status' => 'required',
             ]);

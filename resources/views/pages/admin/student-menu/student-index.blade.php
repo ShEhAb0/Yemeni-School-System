@@ -77,7 +77,7 @@
                                                 <td >
                                                     <div class="d-flex px-2 py-1 justify-content-center">
                                                         <div>
-                                                            <img src="{{asset('/img/team-2.jpg')}}" class="avatar avatar-sm me-3" alt="user1">
+                                                            <img src="{{asset('/images/profile.png/')}}" class="avatar avatar-sm me-3" alt="user1">
                                                         </div>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">{{$students->student_name}}</h6>
@@ -110,7 +110,7 @@
                                                     <a  class="text-secondary font-weight-bold text-xs me-3" onclick="deleteStudent({{$students->id}});" role="button">
                                                         <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                     </a>
-                                                    <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#Schedule" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs" data-name="{{$students->student_name}}" data-username="{{$students->username}}" data-email="{{$students->email}}" data-gender="{{$students->gender}}" data-phone="{{$students->phone}}" data-address="{{$students->address}}" onclick="showStudent($(this));" role="button">
                                                         <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
                                                     </a>
                                                 </td>
@@ -272,20 +272,21 @@
 
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control my-1 mb-2 " required name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
+                                    <input class="form-control my-1 mb-2"  name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
+
                                 </div>
 
                                 <div class="row ">
                                     <p>Enter Student Gender</p>
                                     <div class="form-check col-5 " style="margin-left: 20px;">
-                                        <input class="form-check-input" type="radio" name="gender" id="gender" value="male" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
+                                        <input class="form-check-input gender" type="radio" name="gender" id="male" value="male" required>
+                                        <label class="form-check-label" for="male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check col-5">
-                                        <input class="form-check-input" type="radio" name="gender" id="gender" value="female">
-                                        <label class="form-check-label" for="exampleRadios2">
+                                        <input class="form-check-input gender" type="radio" name="gender" id="female" value="female" required>
+                                        <label class="form-check-label" for="female">
                                             Female
                                         </label>
                                     </div>
@@ -300,7 +301,7 @@
 
                                 <div class="row w_50 ">
                                     <p>Choose Student Term </p>
-                                    <select class="form-select my-1 mb-2" name="term" required>
+                                    <select class="form-select my-1 mb-2" name="term_id" id="term_id" required>
                                         @if($terms->count() > 0)
                                             <option value="" disabled selected>Select the term</option>
                                             @foreach($terms as $term)
@@ -312,7 +313,7 @@
 
                                 <div class="row w_50">
                                     <p>Choose Student Grade</p>
-                                    <select class="form-select my-1 mb-2" name="grade" required>
+                                    <select class="form-select my-1 mb-2" name="level_id" id="level_id" required>
                                         @if($grades->count() > 0)
                                             <option value="" disabled selected>Select the grade</option>
                                             @foreach($grades as $grade)
@@ -345,6 +346,54 @@
                     </div>
                 </div>
             </div>
+            <!-------------------------End Edit Teacher------------------------------->
+
+
+
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-start" style="flex-wrap: wrap;">
+                                <div class="container-fluid py-4">
+
+                                    <div class="col-12 p-2" style="margin: 0 auto;">
+                                        <div class="card h-100">
+                                            <div class="card-header pb-0 p-3 " >
+                                                <div class="row">
+                                                    <div class="col-md-8 d-flex align-items-center ">
+                                                        <h6 class="mb-0 ">Teacher Information</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-3 ">
+                                                <br/>
+
+                                                <ul class="list-group">
+                                                    <li class="list-group-item border-0 ps-0 pt-0 text-sm" ><strong class="text-dark " id="tname" >Name: </strong> &nbsp;</li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm "><strong class="text-dark " id="tusername">Username: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="temail">Email: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="taddress">Address: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="tphone">Phone Number: (+967) </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="tgender">Gender: </strong> &nbsp; </li>
+
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
 
 
 
@@ -364,10 +413,10 @@
                                 {{csrf_field()}}
                                 {{ method_field('DELETE') }}
 
-                                <p>Are you sure you want to delete this student?</p>
+                                <p class="text-danger">Are you sure you want to delete this student?</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
                                 </div>
                             </form>
 
@@ -396,7 +445,7 @@
                         $('#student_name').val(response.data.student_name);
                         $('#username').val(response.data.username);
                         $('#email').val(response.data.email);
-                        $('#password').val(response.data.password);
+                        $('#'+response.data.gender).attr('checked',true);
                         $('#phone').val(response.data.phone);
                         $('#address').val(response.data.address);
                         $('#term_id').val(response.data.term_id);
@@ -411,6 +460,21 @@
             $('#deleteForm').attr('action','/admin/students/'+id);
             $('#deleteModal').modal('show');
         }
+    </script>
+    <script>
+
+
+        function showStudent(d){
+            $('#tname').html("Name: "+d.data('name'));
+            $('#tusername').html("Username: "+d.data('username'));
+            $('#temail').html("Email: "+d.data('email'));
+            $('#taddress').html("Address: "+d.data('address'));
+            $('#tphone').html("Phone Number: (+967) "+d.data('phone'));
+            $('#tgender').html("Gender: "+d.data('gender'));
+
+            $('#showModal').modal('show');
+        };
+
     </script>
 @endsection
 

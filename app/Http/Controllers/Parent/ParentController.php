@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use App\Models\User;
 use App\Models\UserParent;
 use Illuminate\Http\Request;
@@ -17,11 +18,12 @@ class ParentController extends Controller
      */
     public function index()
     {
+        $news = News::where('type' , 3 )->get();
         $student_id = session('student_id');
         if($student_id) {
             //
 //            $parents_us = UserParent::where('parent_id', Auth::id())->with('user')->get();
-            return view('pages.parent.index');
+            return view('pages.parent.index' , compact('news'));
         }else{
             return redirect('/parent/choose-student');
         }

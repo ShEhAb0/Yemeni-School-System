@@ -23,7 +23,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->paginate(10);
+        $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->get();
         $terms = Term::all();
         $grades = Grade::all();
         $teachers = Teacher::all();
@@ -52,7 +52,7 @@ class SubjectController extends Controller
         //
         $request->validate([
            'subject_name' => 'required',
-           'subject_code' => 'required',
+           'subject_code' => 'required|unique:subjects,subject_code|min:4',
             'term' => 'required',
             'grade' => 'required',
             'teacher' => 'required',
@@ -124,7 +124,7 @@ class SubjectController extends Controller
         //
         $request->validate([
             'subject_name' => 'required',
-            'subject_code' => 'required',
+            'subject_code' => "required|unique:subjects,subject_code,$id|min:4",
             'term' => 'required',
             'grade' => 'required',
             'teacher' => 'required',

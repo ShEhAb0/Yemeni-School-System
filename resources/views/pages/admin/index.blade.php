@@ -108,7 +108,7 @@
                                     @foreach($news as $n)
                                         <p class="mb-1 pt-2 text-bold">Published at : {{$n->created_at}} </p>
                                         <h5 class="font-weight-bolder">News Title: {{$n->title}}</h5>
-                                        <p class="mb-5">{{substr($n->description , 2 , 50)}} {{strlen($n->description) > 50 ? "..." : ""}}</p>
+                                        <p class="mb-5">{{substr($n->description , 0 , 50)}} {{strlen($n->description) > 50 ? "..." : ""}}</p>
                                     @endforeach
                                 </div>
 

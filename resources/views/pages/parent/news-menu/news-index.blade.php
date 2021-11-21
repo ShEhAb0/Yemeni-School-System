@@ -23,7 +23,7 @@
                         </div>
                         <div class="card-body  pb-0">
                             <p class="text-body"class="text-body content">{{$news->description}}
-                                <a role="button" class="purplel-color text-bold show_hide" >View More..</a></p>
+                           <!--     <a role="button" class="purplel-color text-bold show_hide" >View More..</a></p> -->
 
                         </div>
                     </div>

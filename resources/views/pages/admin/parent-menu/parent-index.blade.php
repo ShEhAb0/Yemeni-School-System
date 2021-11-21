@@ -75,7 +75,7 @@
                                             <td >
                                                 <div class="d-flex px-2 py-1 justify-content-center">
                                                     <div>
-                                                        <img src="{{asset('/images/parent_id_passport/'.$parent->parent_id_or_passport)}}" class="avatar avatar-sm me-3" >
+                                                        <img src="{{asset('/images/profile.png/')}}" class="avatar avatar-sm me-3" >
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-sm">{{$parent->parent_name}}</h6>
@@ -105,7 +105,7 @@
                                                 <a class="text-secondary font-weight-bold text-xs me-3" onclick="deleteParents({{$parent->id}});" role="button">
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
-                                                <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#" role="button">
+                                                <a  class="text-secondary font-weight-bold text-xs" data-name="{{$parent->parent_name}}" data-username="{{$parent->username}}" data-email="{{$parent->email}}" data-gender="{{$parent->gender}}" data-phone="{{$parent->phone}}" data-address="{{$parent->address}}" onclick="showParent($(this));" role="button">
                                                     <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
                                                 </a>
                                             </td>
@@ -205,7 +205,7 @@
                                 @if($users->count() > 0)
                                 <div class="row w_50" >
                                     <p>Choose Student </p>
-                                    <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
+                                    <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="true" name="user" required >
                                         <optgroup >
                                             <option value="" disabled selected>Select the student</option>
                                             @foreach($users as $user)
@@ -299,7 +299,49 @@
 
 
 
+            <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="document">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-start" style="flex-wrap: wrap;">
+                                <div class="container-fluid py-4">
 
+                                    <div class="col-12 p-2" style="margin: 0 auto;">
+                                        <div class="card h-100">
+                                            <div class="card-header pb-0 p-3 " >
+                                                <div class="row">
+                                                    <div class="col-md-8 d-flex align-items-center ">
+                                                        <h6 class="mb-0 ">Teacher Information</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-3 ">
+                                                <br/>
+
+                                                <ul class="list-group">
+                                                    <li class="list-group-item border-0 ps-0 pt-0 text-sm" ><strong class="text-dark " id="tname" >Name: </strong> &nbsp;</li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm "><strong class="text-dark " id="tusername">Username: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="temail">Email: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="taddress">Address: </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="tphone">Phone Number: (+967) </strong> &nbsp; </li>
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark" id="tgender">Gender: </strong> &nbsp; </li>
+
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
 
 
             <!-------------------------Start Edit Parent------------------------------->
@@ -330,20 +372,20 @@
                                 </div>
 
                                 <div class="input-group col-auto my-1 mb-2 w_50">
-                                    <input class="form-control my-1 mb-2" required name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
+                                    <input class="form-control my-1 mb-2"  name="password" type="Password" id="password" placeholder="Password" aria-label="Password">
 
                                 </div>
                                 <div class="row ">
                                     <p>Enter Parent Gender</p>
-                                    <div class="form-check col-5 "  style="margin-left: 20px;">
-                                        <input class="form-check-input"  type="radio" name="gender" id="gender" value="male" checked>
-                                        <label class="form-check-label" for="exampleRadios1">
+                                    <div class="form-check col-5 " style="margin-left: 20px;">
+                                        <input class="form-check-input gender" type="radio" name="gender" id="male" value="male" required>
+                                        <label class="form-check-label" for="male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="form-check col-5">
-                                        <input class="form-check-input"  type="radio" name="gender" id="gender" value="female">
-                                        <label class="form-check-label" for="exampleRadios2">
+                                        <input class="form-check-input gender" type="radio" name="gender" id="female" value="female" required>
+                                        <label class="form-check-label" for="female">
                                             Female
                                         </label>
                                     </div>
@@ -366,7 +408,7 @@
 
 
                                 @if($users->count() > 0)
-                                    <div class="row w_50 hidden" id="parentexsits" >
+                                    <div class="row w_50 "  >
                                         <p>Choose Student </p>
                                         <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
                                             <optgroup >
@@ -389,63 +431,63 @@
                                 </select>
 
 
-
-                                <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
-                                    <input class="form-check-input" type="checkbox" name="choose" id="Choose" value="1" >
-                                    <label class="form-check-label" for="Choose2" checked>
-                                        Add to exsist Student
-                                    </label>
-                                </div>
-
-
-                                <div id="ParentInfo" class="my-1" >
-                                    <div class="row g-2 my-1">
-                                        <p>Add new Student</p>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control  " type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">
-
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <span class="input-group-text mr-2" id="basic-addon1">@</span>
-                                            <input type="email" class="form-control  " placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">
-                                        </div>
-                                        <div class="input-group col-auto my-1 mb-2 w_50">
-                                            <input class="form-control" type="text" placeholder="Enter Student ID" aria-label="ID">
-                                        </div>
-                                        <div class="row w_50 ">
-                                            <p>Choose Student Gender</p>
-                                            <div class="form-check col-5 " style="margin-left: 20px;">
-                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios12" value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    Male
-                                                </label>
-                                            </div>
-                                            <div class="form-check col-5">
-                                                <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios22" value="option2">
-                                                <label class="form-check-label" for="exampleRadios2">
-                                                    Female
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="row w_50 ">
-                                            <p>Choose Student Grade</p>
-                                            <select class="form-select" aria-label="Choose Student Grade">
-                                                <option value="1">First Grade</option>
-                                                <option value="2">Second Grade</option>
-                                                <option value="3">Three Grade</option>
-                                                <option value="4">Forth Grade</option>
-                                                <option value="5">Fifth Grade</option>
-                                            </select>
-                                        </div>
+                                <!--
+                                                               <div class="form-check w_50 my-1" style="align-self: flex-end;margin-left: 10px;">
+                                                                   <input class="form-check-input" type="checkbox" name="choose" id="Choose" value="1" >
+                                                                   <label class="form-check-label" for="Choose2" checked>
+                                                                       Add to exsist Student
+                                                                   </label>
+                                                               </div>
 
 
-                                    </div>
-                                    <br/>
-                                </div>
+                                                                                              <div id="ParentInfo" class="my-1" >
+                                                                                                  <div class="row g-2 my-1">
+                                                                                                      <p>Add new Student</p>
+                                                                                                      <div class="input-group col-auto my-1 mb-2 w_50">
+                                                                                                          <input class="form-control  " type="text" placeholder="Enter Student Full Name" aria-label="Enter Student Full Name">
 
+                                                                                                      </div>
+                                                                                                      <div class="input-group col-auto my-1 mb-2 w_50">
+                                                                                                          <span class="input-group-text mr-2" id="basic-addon1">@</span>
+                                                                                                          <input type="email" class="form-control  " placeholder="Enter Student Email" aria-label="Email" aria-describedby="basic-addon1">
+                                                                                                      </div>
+                                                                                                      <div class="input-group col-auto my-1 mb-2 w_50">
+                                                                                                          <input class="form-control" type="text" placeholder="Enter Student Phone Number" aria-label="Enter Student Phone Number">
+                                                                                                      </div>
+                                                                                                      <div class="input-group col-auto my-1 mb-2 w_50">
+                                                                                                          <input class="form-control" type="text" placeholder="Enter Student ID" aria-label="ID">
+                                                                                                      </div>
+                                                                                                      <div class="row w_50 ">
+                                                                                                          <p>Choose Student Gender</p>
+                                                                                                          <div class="form-check col-5 " style="margin-left: 20px;">
+                                                                                                              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios12" value="option1" checked>
+                                                                                                              <label class="form-check-label" for="exampleRadios1">
+                                                                                                                  Male
+                                                                                                              </label>
+                                                                                                          </div>
+                                                                                                          <div class="form-check col-5">
+                                                                                                              <input class="form-check-input" type="radio" name="exampleRadios1" id="exampleRadios22" value="option2">
+                                                                                                              <label class="form-check-label" for="exampleRadios2">
+                                                                                                                  Female
+                                                                                                              </label>
+                                                                                                          </div>
+                                                                                                      </div>
+                                                                                                      <div class="row w_50 ">
+                                                                                                          <p>Choose Student Grade</p>
+                                                                                                          <select class="form-select" aria-label="Choose Student Grade">
+                                                                                                              <option value="1">First Grade</option>
+                                                                                                              <option value="2">Second Grade</option>
+                                                                                                              <option value="3">Three Grade</option>
+                                                                                                              <option value="4">Forth Grade</option>
+                                                                                                              <option value="5">Fifth Grade</option>
+                                                                                                          </select>
+                                                                                                      </div>
+
+
+                                                                                                  </div>
+                                                                                                  <br/>
+                                                                                              </div>
+                                                                                          -->
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-outline-primary" >Save changes</button>
@@ -479,10 +521,10 @@
                         {{csrf_field()}}
                         {{ method_field('DELETE') }}
 
-                        <p>Are you sure you want to delete this Parent?</p>
+                        <p class="text-danger">Are you sure you want to delete this parent?</p>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-outline-primary" >Delete</button>
+                            <button type="submit" class="btn btn-outline-danger" >Delete</button>
                         </div>
                     </form>
 
@@ -541,7 +583,7 @@
                         $('#parent_name').val(response.data.parent_name);
                         $('#username').val(response.data.username);
                         $('#email').val(response.data.email);
-                        $('#password').val(response.data.password);
+                        $('#'+response.data.gender).attr('checked',true);
                         $('#phone').val(response.data.phone);
                         $('#address').val(response.data.address);
                         $('#user').val(response.data.user);
@@ -556,7 +598,21 @@
             $('#deleteModal').modal('show');
         }
     </script>
+    <script>
 
+
+        function showParent(d){
+            $('#tname').html("Name: "+d.data('name'));
+            $('#tusername').html("Username: "+d.data('username'));
+            $('#temail').html("Email: "+d.data('email'));
+            $('#taddress').html("Address: "+d.data('address'));
+            $('#tphone').html("Phone Number: (+967) "+d.data('phone'));
+            $('#tgender').html("Gender: "+d.data('gender'));
+
+            $('#showModal').modal('show');
+        };
+
+    </script>
 
 
 @endsection
