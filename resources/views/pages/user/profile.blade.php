@@ -156,7 +156,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="modal" href="#ProfileSt" role="button">
+                            <a class="nav-link mb-0 px-0 py-1 "  onclick="getStudent({{}});" role="button">
                                 <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <title>settings</title>
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -212,7 +212,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="ProfileSt" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -220,7 +220,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body max-height-vh-80" style="overflow-y:auto">
-                    <form>
+                    <form class="row g-2"  id="editForm" method="POST" action="">
+                        @csrf
+                        @method('PUT')
                         <div class="text-center">
                             <div class="avatar" id="avatar">
                                 <div id="preview"><img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" id="avatar-image" class="avatar_img" id="">
@@ -235,25 +237,27 @@
                                 <span id="name" tabindex="4" data-key="1" contenteditable="true"  onblur="changeAvatarName('blur', this.dataset.key, this.textContent)"></span>
                             </div>
                         </div>
-                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Username" name="username" id="username">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" name="email" id="email">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Address" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" aria-label="add Lesson Title" name="phone" id="phone">
 
-                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Address" aria-label="add Lesson Title" name="address" id="address">
+
+                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" aria-label="add Lesson Title" name="password" id="password">
 
 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-primary" >Save changes</button>
 
+                        </div>
 
 
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" >Save changes</button>
 
-                </div>
             </div>
         </div>
     </div>
@@ -266,6 +270,28 @@
 <script src="{{asset('/js/popper.min.js')}}"></script>
 <script src="{{asset('/js/bootstrap.min.js')}}"></script>
 <script src="{{asset('/js/soft-ui-dashboard.js')}}"></script>
+
+
+<script>
+    function getStudent(id) {
+        axios({
+            method:'get',
+            url:'/profile/' + id + '/edit'
+        })
+            .then(response =>{
+                if(response.status === 200){
+                    $('#editForm').attr('action','/profile/'+id);
+
+                    $('#username').val(response.data.username);
+                    $('#email').val(response.data.email);
+                    $('#phone').val(response.data.phone);
+                    $('#address').val(response.data.address);
+                    $('#editModal').modal('show');
+                }
+            })
+    }
+</script>
+
 <script>
 
     var upload = document.getElementById("upload");
@@ -355,6 +381,7 @@
 
 
 </script>
+
 </body>
 
 </html>

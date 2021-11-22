@@ -202,19 +202,49 @@
                                     </div>
                                 </div>
 
-                                @if($users->count() > 0)
-                                <div class="row w_50" >
-                                    <p>Choose Student </p>
-                                    <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="true" name="user" required >
-                                        <optgroup >
-                                            <option value="" disabled selected>Select the student</option>
-                                            @foreach($users as $user)
-                                                <option value="{{$user->id}}">{{$user->student_name}}</option>
-                                            @endforeach
-                                        </optgroup>
-                                    </select>
-                                </div>
-                                @endif
+                                <div class="row">
+                                    @if($users->count() > 0)
+
+                                                <div class="multiselect row w_50 " style="width: 150px;" >
+                                                    <div class="selectBox" onclick="showCheckboxes()" style="position: relative;" >
+                                                        <select style=" width: 100%;" aria-label="select example"  required  >
+                                                            <option>Select Student</option>
+                                                        </select>
+                                                        <div class="overSelect" style="position: absolute;
+                                                  left: 0;
+                                                  right: 0;
+                                                  top: 0;
+                                                  bottom: 0;"
+                                                        ></div>
+                                                    </div>
+                                                    <div id="checkboxes" style="display: none;
+                                                 border: 1px #dadada solid;">
+                                                        @foreach($users as $user)
+                                                            <label for="one" style=" display: block; margin-right: 20px;">
+                                                                <input type="checkbox" id="one" name="user" style="margin-right: 10px;" value="{{$user->id}}" />{{$user->student_name}}</label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+
+                                        @endif
+                                    </div>
+
+
+
+
+                                {{--                            @if($users->count() > 0)--}}
+{{--                                <div class="row w_50" >--}}
+{{--                                    <p>Choose Student </p>--}}
+{{--                                    <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="true" name="user" required >--}}
+{{--                                        <optgroup >--}}
+{{--                                            <option value="" disabled selected>Select the student</option>--}}
+{{--                                            @foreach($users as $user)--}}
+{{--                                                <option value="{{$user->id}}">{{$user->student_name}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </optgroup>--}}
+{{--                                    </select>--}}
+{{--                                </div>--}}
+{{--                                @endif--}}
 
 
                                 <p>Choose Parent Status</p>
@@ -311,7 +341,7 @@
                                             <div class="card-header pb-0 p-3 " >
                                                 <div class="row">
                                                     <div class="col-md-8 d-flex align-items-center ">
-                                                        <h6 class="mb-0 ">Teacher Information</h6>
+                                                        <h6 class="mb-0 ">Parent Information</h6>
                                                     </div>
                                                 </div>
                                             </div>
@@ -407,21 +437,55 @@
                                 </div>
 
 
-                                @if($users->count() > 0)
-                                    <div class="row w_50 "  >
-                                        <p>Choose Student </p>
-                                        <select class="form-control select-checkbox" size="6" aria-label="select example" multiple="" name="user" required >
-                                            <optgroup >
-                                                <option value="" disabled selected>Select the student</option>
-                                                @foreach($users as $user)
-                                                    <option value="{{$user->id}}">{{$user->student_name}}</option>
-                                                @endforeach
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                @endif
+                                <div class="row ">
+                                    @if($users->count() > 0)
+
+                                            <div class="multiselect row w_50 " style="width: 150px;" >
+                                                <div class="selectBox" onclick="editCheckboxes()" style="position: relative;" >
+                                                    <select style=" width: 100%;" aria-label="select example"  >
+                                                        <option>Select Student</option>
+                                                    </select>
+                                                    <div class="overSelect" style="position: absolute;
+                                                  left: 0;
+                                                  right: 0;
+                                                  top: 0;
+                                                  bottom: 0;"
+                                                    ></div>
+                                                </div>
+                                                <div id="editcheckboxes" style="display: none;
+                                                 border: 1px #dadada solid;">
+                                                    @foreach($users as $user)
+                                                        <label for="one" style=" display: block; margin-right: 20px;">
+                                                            <input type="checkbox" id="one" name="user" style="margin-right: 10px;" value="{{$user->id}}" />
+                                                            {{$user->student_name}}</label>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                    @endif
+                                </div>
 
 
+
+                                {{--                        <!----}}
+{{--                                @if($users->count() > 0)--}}
+{{--                                    <div class="row w_50 "  >--}}
+{{--                                        <p>Choose Student </p>--}}
+{{--                                        <select class="form-control " size="6" aria-label="select example" multiple="" name="user" required >--}}
+{{--                                            <optgroup >--}}
+{{--                                                <option class="form-control select-checkbox" value="" disabled selected>Select the student</option>--}}
+{{--                                                @foreach($users as $user)--}}
+{{--                                                    <option value="{{$user->id}}">{{$user->student_name}}</option>--}}
+{{--                                                @endforeach--}}
+
+{{--                                            </optgroup>--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
+{{--                                @endif--}}
+
+{{--                                -->--}}
+
+                                    <br>
                                 <p>Choose Parent Status</p>
 
                                 <select name="status" class="form-select" id="status"  required>
@@ -488,6 +552,8 @@
                                                                                                   <br/>
                                                                                               </div>
                                                                                           -->
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-outline-primary" >Save changes</button>
@@ -499,9 +565,9 @@
                 </div>
 
             </div>
+
             <!-------------------------End Edit Parent------------------------------->
-        </div>
-    </div>
+
 
 
 
@@ -535,6 +601,8 @@
 
 
         </div>
+    </div>
+    </div>
     </div>
 
     <!-------------------------End Delete Parent------------------------------->
@@ -611,8 +679,41 @@
 
             $('#showModal').modal('show');
         };
+    </script>
+<script>
+        var expanded = false;
+
+        function showCheckboxes() {
+            var checkboxes = document.getElementById("checkboxes");
+            if (!expanded) {
+                checkboxes.style.display = "block";
+                expanded = true;
+            } else {
+                checkboxes.style.display = "none";
+                expanded = false;
+            }
+        }
+
+
 
     </script>
 
+    <script>
+        var expanded = false;
+
+        function editCheckboxes() {
+            var editcheckboxes = document.getElementById("editcheckboxes");
+            if (!expanded) {
+                editcheckboxes.style.display = "block";
+                expanded = true;
+            } else {
+                editcheckboxes.style.display = "none";
+                expanded = false;
+            }
+        }
+
+
+
+    </script>
 
 @endsection
