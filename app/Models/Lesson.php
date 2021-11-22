@@ -71,9 +71,9 @@ class Lesson extends Model
 
     }
 
-    public function lessonsComments()
+    public function lessonComments()
     {
-        return $this->hasMany('App\Models\Lesson' , 'lesson_id');
+        return $this->hasMany('App\Models\LessonComment' , 'lesson_id');
 
     }
 

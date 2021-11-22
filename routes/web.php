@@ -92,6 +92,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/admins' , 'App\Http\Controllers\Admin\AdminsController');
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
+        Route::resource('/notifications' , 'App\Http\Controllers\Admin\NotificationController');
 
         Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
         Route::get('/terms', 'App\Http\Controllers\Admin\TermController@search')->name('terms');
@@ -137,6 +138,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/question','App\Http\Controllers\Teacher\QuestionController');
 
         Route::resource('/profile','App\Http\Controllers\Teacher\ProfileController');
+        Route::resource('/notifications','App\Http\Controllers\Teacher\NotificationController');
 
         Route::post('/logout',[TeacherLoginController::class,'logout'])->name('logout');
     });
@@ -169,6 +171,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/grade-news' , 'App\Http\Controllers\User\StudentNewsController');
 
         Route::resource('/profile','App\Http\Controllers\User\ProfileController');
+        Route::resource('/notifications','App\Http\Controllers\User\NotificationController');
 
 
 //        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
@@ -210,6 +213,7 @@ Route::prefix('parent')->name('parent.')->group(function () {
         Route::resource('/grade-news' , 'App\Http\Controllers\Parent\StudentNewsController');
 
         Route::resource('/profile','App\Http\Controllers\Parent\ProfileController');
+        Route::resource('/notifications','App\Http\Controllers\Parent\NotificationController');
 
 
         Route::post('/logout',[ParentLoginController::class,'logout'])->name('logout');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\Exam;
 use App\Models\Mark;
+use App\Models\Notification;
 use App\Models\Question;
 use App\Models\StudentAnswer;
 use App\Models\StudentAssignment;
@@ -86,6 +87,16 @@ class ExamController extends Controller
         $marks->exams_mark = $totalMark;
         $marks->status = 0;
         $marks->save();
+
+        $name= Auth::user()->student_name;
+        $notification = new Notification();
+        $notification->type = 2;
+        $notification->title = "Student complete exam";
+        $notification->details = "Student ($name) complete the exam.";
+        $notification->url = "/teacher/mark";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
 
         if (Auth::user()->term_id == 1){
             User::where('id',Auth::id())->update(['term_id'=>2]);

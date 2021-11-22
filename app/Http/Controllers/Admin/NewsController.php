@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AdminLog;
 use App\Models\News;
+use App\Models\Notification;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -87,6 +89,100 @@ class NewsController extends Controller
         $log->created_at = now();
         $log->save();
 
+        switch ($request->input('type')) {
+            case 0:
+                    $notification = new Notification();
+                    $notification->type = 1;
+                    $notification->title = "Admin add new news";
+                    $notification->details = $news->description;
+                    $notification->url = "/admin/news";
+                    $notification->created_at = Carbon::now('Asia/Riyadh');
+                    $notification->status = 0;
+                    $notification->save();
+
+                    $notification = new Notification();
+                    $notification->type = 2;
+                    $notification->title = "Admin add new news";
+                    $notification->details = $news->description;
+                    $notification->url = "/teacher/news";
+                    $notification->created_at = Carbon::now('Asia/Riyadh');
+                    $notification->status = 0;
+                    $notification->save();
+
+                    $notification = new Notification();
+                    $notification->type = 3;
+                    $notification->level_id = 0;
+                    $notification->title = "Admin add new news";
+                    $notification->details = $news->description;
+                    $notification->url = "/news";
+                    $notification->created_at = Carbon::now('Asia/Riyadh');
+                    $notification->status = 0;
+                    $notification->save();
+
+                    $notification = new Notification();
+                    $notification->type = 4;
+                    $notification->level_id = 00;
+                    $notification->title = "Admin add new news";
+                    $notification->details = $news->description;
+                    $notification->url = "/parent/news";
+                    $notification->created_at = Carbon::now('Asia/Riyadh');
+                    $notification->status = 0;
+                    $notification->save();
+                break;
+            case 1:
+                $notification = new Notification();
+                $notification->type = 1;
+                $notification->title = "Super Admin add new news";
+                $notification->details = $news->description;
+                $notification->url = "/admin/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 2:
+                $notification = new Notification();
+                $notification->type = 2;
+                $notification->title = "Admin add new teacher news";
+                $notification->details = $news->description;
+                $notification->url = "/teacher/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 3:
+                $notification = new Notification();
+                $notification->type = 3;
+                $notification->level_id = 0;
+                $notification->title = "Admin add new news";
+                $notification->details = $news->description;
+                $notification->url = "/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                $notification = new Notification();
+                $notification->type = 4;
+                $notification->level_id = 00;
+                $notification->title = "Admin add new student news";
+                $notification->details = $news->description;
+                $notification->url = "/parent/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 4:
+                $notification = new Notification();
+                $notification->type = 4;
+                $notification->level_id = 00;
+                $notification->title = "Admin add new parent news";
+                $notification->details = $news->description;
+                $notification->url = "/parent/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+        }
+
         return redirect('/admin/news')->withSuccess('News Published successfully.');
     }
 
@@ -148,6 +244,94 @@ class NewsController extends Controller
         $news->status =  $request->input('status');
         $news->save();
 
+        switch ($request->input('type')) {
+            case 0:
+                $notification = new Notification();
+                $notification->type = 1;
+                $notification->title = "Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/admin/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                $notification = new Notification();
+                $notification->type = 2;
+                $notification->title = "Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/teacher/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                $notification = new Notification();
+                $notification->type = 3;
+                $notification->title = "Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                $notification = new Notification();
+                $notification->type = 4;
+                $notification->title = "Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/parent/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 1:
+                $notification = new Notification();
+                $notification->type = 1;
+                $notification->title = "Super Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/admin/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 2:
+                $notification = new Notification();
+                $notification->type = 2;
+                $notification->title = "Admin update teacher news";
+                $notification->details = $news->description;
+                $notification->url = "/teacher/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 3:
+                $notification = new Notification();
+                $notification->type = 3;
+                $notification->title = "Admin update news";
+                $notification->details = $news->description;
+                $notification->url = "/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                $notification = new Notification();
+                $notification->type = 4;
+                $notification->title = "Admin update student news";
+                $notification->details = $news->description;
+                $notification->url = "/parent/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+            case 4:
+                $notification = new Notification();
+                $notification->type = 4;
+                $notification->title = "Admin update parent news";
+                $notification->details = $news->description;
+                $notification->url = "/parent/news";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+                break;
+        }
         return redirect('/admin/news')->withSuccess('News updated successfully.');
     }
 

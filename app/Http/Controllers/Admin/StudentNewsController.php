@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
 use App\Models\AdminLog;
+use App\Models\Notification;
 use App\Models\StudentNews;
 use App\Models\Term;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +63,27 @@ class StudentNewsController extends Controller
         $news->term_id = $request->input('term');
         $news->status = $request->input('status');
         $news->save();
+
+        $notification = new Notification();
+        $notification->type = 3;
+        $notification->level_id = $news->level_id;
+        $notification->title = "Admin add new grade news";
+        $notification->details = $news->description;
+        $notification->url = "/grade-news";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
+        $notification = new Notification();
+        $notification->type = 4;
+        $notification->level_id = $news->level_id;
+        $notification->title = "Admin add new grade news";
+        $notification->details = $news->description;
+        $notification->url = "/parent/grade-news";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();

@@ -193,14 +193,14 @@
                             <div class="d-flex justify-content-around">
                                 @if($lesson->photo)
                                 <div>
-                                    <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" download="filename"><img src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
+                                    <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" download="{{$lesson->photo->url}}"><img src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
                                 </div>
                                     @endif
                             </div>
 
                             <div class="d-flex justify-content-around mt-2">
                                 @if($lesson->photo)
-                                <div><a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="files" download="{{$lesson->photo->url}}"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
+                                <div><a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" download="{{$lesson->photo->url}}"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>
                                     @endif
                             </div>
                         </div>
@@ -211,7 +211,7 @@
 
                                 <div>
                                     @if($lesson->doc)
-                                    <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->doc->url)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$lesson->doc->url}}</span></a>
+                                    <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->doc->url)}}" download="{{$lesson->doc->url}}"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$lesson->doc->url}}</span></a>
                                         @endif
                                 </div>
                             </div>
@@ -275,78 +275,63 @@
         <h3>Comments</h3>
         <hr/>
         <div class="chatsBody2 mb-3" id="BodyText">
-
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+            @if(count($lesson->lessonComments) > 0)
+            @foreach($lesson->lessonComments as $comment)
+                @if($comment->user_type == 0)
+            <div class="sender2 bg_gr w-50">
+{{--                <div>--}}
+{{--                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">--}}
+{{--                </div>--}}
+                <div class="w-100" style="margin: auto 0;">
+                    <span class="ms-2"><strong>{{$comment->username}}</strong></span>
                 </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">heyy! much better</span>
-
+                <div class="w-100" style="margin: auto 0;">
+                    <span class="ms-2">{{$comment->comment}}</span>
                 </div>
-
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">How did the interview go? was it good?</span>
-
+                <div class="w-100" style="margin: auto 0;">
+                    <small class="ms-2">{{$comment->created_at}}</small>
                 </div>
 
             </div>
+                    @else
+            <div class="receiver2 bg_gr w-50">
+{{--                <div>--}}
+{{--                    <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">--}}
+{{--                </div>--}}
+                <div class="w-100" style="margin: auto 0;">
+                    <span class="ms-2"><strong>T. {{$comment->username}}</strong></span>
 
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                 </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
+                <div class="w-100" style="margin: auto 0;">
+                    <span class="ms-2">{{$comment->comment}}</span>
                 </div>
 
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
+                <div class="w-100" style="margin: auto 0;">
+                    <small class="ms-2">{{$comment->created_at}}</small>
                 </div>
 
             </div>
-
-
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">your most welcome</span>
-
-                </div>
-
-            </div>
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Thanks</span>
-
-                </div>
-
-            </div>
+                    @endif
+            @endforeach
+            @else
+                    <strong class="text-danger">No comments yet.</strong>
+            @endif
         </div>
         <div class="input-msg">
-            <input type="text" id="send-input" placeholder="type something" onfocus="this.value=''"/>
-            <i onclick="send()" class='far fa-paper-plane'></i>
+            <form method="POST" action="/lesson" class="row w-100">
+                @csrf
+                @method('POST')
+                    <div class="col-11">
+            <input type="text" name="comment" class="form-control w-100" placeholder="Type your comment.." required/>
+                    </div>
+                    <div class="col-1">
+                        <input type="hidden" name="lesson_id" value="{{$lesson->id}}">
+                        <input type="hidden" name="level" value="{{$lesson->level_id}}">
+                        <button type="submit" class="btn btn-link">
+                            <i class='far fa-paper-plane'></i>
+                        </button>
+                    </div>
+            </form>
         </div>
 
         <hr/>

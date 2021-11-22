@@ -4,9 +4,11 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
+use App\Models\Notification;
 use App\Models\StudentAssignment;
 use App\Models\Subject;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -62,6 +64,16 @@ class AssignmentController extends Controller
         $answer->mark = 0;
         $answer->status = 0;//($request->due >= Carbon::today('Asia/Riyadh')->format('Y-m-d') ? 1 : 0);
         $answer->save();
+
+        $name= Auth::user()->student_name;
+        $notification = new Notification();
+        $notification->type = 2;
+        $notification->title = "Student submit assignment";
+        $notification->details = "Student ($name) submit ($subject->subject_name's) assignment.";
+        $notification->url = "/teacher/assignment/$answer->assignment_id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
 
         return redirect('/assignment/'.$answer->assignment_id)->withSuccess('Your answer has been uploaded successfully..');
     }

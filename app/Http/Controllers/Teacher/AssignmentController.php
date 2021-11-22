@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Lesson;
+use App\Models\Notification;
 use App\Models\StudentAssignment;
 use App\Models\TeacherSubject;
 use App\Models\Term;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -96,6 +98,27 @@ class AssignmentController extends Controller
         $assignment->due_date = $request->input('date');
         $assignment->status = $request->input('status');
         $assignment->save();
+
+        $name = Auth::user()->teacher_name;
+        $notification = new Notification();
+        $notification->type = 3;
+        $notification->level_id = $assignment->level_id;
+        $notification->title = "New Assignment";
+        $notification->details = "Your Teacher ($name) post new assignment, check it now.";
+        $notification->url = "/assignment/$assignment->id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
+        $notification = new Notification();
+        $notification->type = 4;
+        $notification->level_id = $assignment->level_id;
+        $notification->title = "New Assignment";
+        $notification->details = "Teacher ($name) post new assignment, check it now.";
+        $notification->url = "/parent/assignment/$assignment->id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
 
         $path = public_path().'/Assignments/'.$assignment->subjectsAssignments->subject_name;
         if (!File::exists($path)){

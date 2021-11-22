@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Models\LessonComment;
+use App\Models\Notification;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Term;
@@ -73,6 +77,33 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('save_comment')){
+            $request->validate([
+                'comment' => 'required'
+            ]);
+
+            $comment = new LessonComment();
+            $comment->lesson_id = $request->lesson_id;
+            $comment->user_id = Auth::id();
+            $comment->user_type = 1;
+            $comment->username = Auth::user()->teacher_name;
+            $comment->comment = $request->comment;
+            $comment->created_at = Carbon::now('Asia/Riyadh');
+            $comment->status = 1;
+            $comment->save();
+
+            $notification = new Notification();
+            $notification->type = 3;
+            $notification->level_id = $request->level;
+            $notification->title = "Teacher comment";
+            $notification->details = "Your Teacher ($comment->username) submit new comment on the lesson.";
+            $notification->url = "/lesson/$request->lesson_id";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
+
+            return redirect('/teacher/lesson/'.$request->lesson_id);
+        }
         $request->validate([
             'title' => 'required',
             'details' => 'required',
@@ -90,6 +121,27 @@ class LessonController extends Controller
         $lesson->level_id = $request->input('grade');
         $lesson->status = $request->input('status');
         $lesson->save();
+
+        $name = Auth::user()->teacher_name;
+        $notification = new Notification();
+        $notification->type = 3;
+        $notification->level_id = $lesson->level_id;
+        $notification->title = "New Lesson";
+        $notification->details = "Your Teacher ($name) post new lesson.";
+        $notification->url = "/lesson/$lesson->id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
+        $notification = new Notification();
+        $notification->type = 4;
+        $notification->level_id = $lesson->level_id;
+        $notification->title = "New Lesson";
+        $notification->details = "Teacher ($name) post new lesson.";
+        $notification->url = "/parent/lesson/$lesson->id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
 
         if ($request->file('video') != null) {
             $path = public_path().'/Lessons/'.$lesson->subjectsLessons->subject_name;
@@ -164,7 +216,7 @@ class LessonController extends Controller
 ////        })->get();
 ////        dd($grades);
 ///
-        $lesson = Lesson::where('id' , $id)->first();
+        $lesson = Lesson::where('id' , $id)->with(['teacher','subjects','video','photo','doc','lessonComments'])->first();
         return view('pages.teacher.lesson-menu.lesson-show',compact('lesson'));
 
        // $lessons = Lesson::find($id);
@@ -180,7 +232,6 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-
         $lesson = Lesson::find($id);
         return response($lesson,200);
     }
@@ -213,6 +264,51 @@ class LessonController extends Controller
 
         $lesson->save();
 
+        $name = Auth::user()->teacher_name;
+        $notification = new Notification();
+        $notification->type = 3;
+        $notification->level_id = $lesson->level_id;
+        $notification->title = "Lesson updated";
+        $notification->details = "Your Teacher ($name) update lesson, check it now.";
+        $notification->url = "/lesson/$lesson->id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
+        if ($request->file('video') != null) {
+            $path = public_path().'/Lessons/'.$lesson->subjectsLessons->subject_name;
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $lessonFile = $request->file('video');
+            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $request->video->move($path, $filename);
+
+            Attachment::where('type',1)->where('type_id',$lesson->id)->where('attachment_type',1)->update(['url'=>$filename]);
+        }
+        if ($request->file('image') != null) {
+            $path = public_path().'/Lessons/'.$lesson->subjectsLessons->subject_name;
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $lessonFile = $request->file('image');
+            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $request->image->move($path, $filename);
+
+            Attachment::where('type',1)->where('type_id',$lesson->id)->where('attachment_type',2)->update(['url'=>$filename]);
+        }
+
+        if ($request->file('doc') != null) {
+            $path = public_path().'/Lessons/'.$lesson->subjectsLessons->subject_name;
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $lessonFile = $request->file('doc');
+            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $request->doc->move($path, $filename);
+
+            Attachment::where('type',1)->where('type_id',$lesson->id)->where('attachment_type',3)->update(['url'=>$filename]);
+        }
         return redirect('/teacher/lesson')->withSuccess('Lesson has been updated successfully..!');
 
     }

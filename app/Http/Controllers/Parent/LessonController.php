@@ -51,7 +51,7 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc','lessonComments'])->first();
         return view('pages.parent.lesson-menu.lesson-show' , compact('lesson'));
 
     }

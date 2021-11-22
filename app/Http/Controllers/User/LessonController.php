@@ -4,7 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Models\LessonComment;
+use App\Models\Notification;
 use App\Models\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,6 +44,43 @@ class LessonController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+           'comment' => 'required'
+        ]);
+
+        $comment = new LessonComment();
+        $comment->lesson_id = $request->lesson_id;
+        $comment->user_id = Auth::id();
+        $comment->user_type = 0;
+        $comment->username = Auth::user()->student_name;
+        $comment->comment = $request->comment;
+        $comment->created_at = Carbon::now('Asia/Riyadh');
+        $comment->status = 1;
+        $comment->save();
+
+        $name= Auth::user()->student_name;
+        $notification = new Notification();
+        $notification->type = 2;
+        $notification->title = "Student comment";
+        $notification->details = "Student ($name) submit new comment on the lesson.";
+        $notification->url = "/teacher/lesson/$request->lesson_id";
+        $notification->created_at = Carbon::now('Asia/Riyadh');
+        $notification->status = 0;
+        $notification->save();
+
+        if (!$comment->user_id == Auth::id()) {
+            $notification = new Notification();
+            $notification->type = 3;
+            $notification->level_id = $request->level;
+            $notification->title = "Student comment";
+            $notification->details = "Student ($name) submit new comment on the lesson.";
+            $notification->url = "/lesson/$request->lesson_id";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
+        }
+
+        return redirect('/lesson/'.$request->lesson_id);
     }
 
     /**
@@ -51,7 +91,8 @@ class LessonController extends Controller
      */
     public function show($id)
     {
-        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc'])->first();
+        $lesson = Lesson::where('id',$id)->with(['teacher','subjects','video','photo','doc','lessonComments'])->first();
+
         return view('pages.user.lesson-menu.lesson-show',compact('lesson'));
     }
 

@@ -39,6 +39,7 @@
                             <h6>Exams Schedule </h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
+                            @if($exams->count() > 0)
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                     <thead>
@@ -86,6 +87,11 @@
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                                <div class="text-center text-danger">
+                                    No exams yet.
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

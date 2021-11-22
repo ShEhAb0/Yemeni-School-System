@@ -9,7 +9,9 @@ class LessonComment extends Model
 {
     use HasFactory;
     protected $table = "lesson_comments";
+    public $timestamps = false;
     protected $fillable = ['id' , 'lesson_id ', 'user_id' , 'user_type' ,'comment' , 'total_likes ' , 'status' ];
+
 
     public function lessonsComments()
     {

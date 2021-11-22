@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Exam;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExamController extends Controller
 {
@@ -14,7 +17,9 @@ class ExamController extends Controller
      */
     public function index()
     {
-        return view('pages.parent.exam-menu.exam-index');
+        $exams = Exam::where('level_id',session('student_level'))->where('term_id',session('student_term'))
+            ->where('exam_time','>=',Carbon::today('Asia/Riyadh'))->with(['teachersExams','subjectsExams'])->where('status',1)->get();
+        return view('pages.parent.exam-menu.exam-index',compact('exams'));
 
     }
 

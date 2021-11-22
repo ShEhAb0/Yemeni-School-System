@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exam;
+use App\Models\Notification;
 use App\Models\Question;
 use App\Models\TeacherSubject;
 use App\Models\Term;
@@ -74,6 +75,27 @@ class ExamController extends Controller
             $exam->status = $request->status;
             $exam->total_ques = 0;
             $exam->save();
+
+            $name = Auth::user()->teacher_name;
+            $notification = new Notification();
+            $notification->type = 3;
+            $notification->level_id = $exam->level_id;
+            $notification->title = "New Exam";
+            $notification->details = "Your Teacher ($name) post new exam, check it now.";
+            $notification->url = "/exam";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
+
+            $notification = new Notification();
+            $notification->type = 4;
+            $notification->level_id = $exam->level_id;
+            $notification->title = "New Exam";
+            $notification->details = "Teacher ($name) post new exam, check it now.";
+            $notification->url = "/parent/exam";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
 
             return redirect('/teacher/exam')->withSuccess('New Exam has been added successfully..');
 

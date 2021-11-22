@@ -198,8 +198,8 @@
                 <span class="white me-9"><i class="fas fa-clock me-2 grey" style="font-size: 15px;"></i><span class="white">Publishing Date: </span><span class="ms-2 text-sm">{{$lesson->created_at}}</span></span>
             </div>
             <div>
-                <p class="white"><i class="fas fa-chalkboard-teacher me-2 grey" style="font-size: 15px;"></i>Teacher Name: <span>{{Auth::user()->teacher_name}}</span></p>
-                <p class="white"><i class="fas fa-book-open me-2 grey" style="font-size: 15px;"></i>Subject Related: <span>(grade {{$lesson->level_id}})</span></p>
+                <p class="white"><i class="fas fa-chalkboard-teacher me-2 grey" style="font-size: 15px;"></i>Teacher Name: <span>{{$lesson->teacher->teacher_name}}</span></p>
+                <p class="white"><i class="fas fa-book-open me-2 grey" style="font-size: 15px;"></i>Subject Related: {{$lesson->subjects->subject_name}}<span>(grade {{$lesson->level_id}})</span></p>
                 <div class="d-flex justify-content-between w_70">
                     <h4 class="white"></h4>
                 </div>
@@ -225,8 +225,10 @@
 
                 data-setup="{}"
             >
+                @if($lesson->video)
                 <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
-                <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />
+                @endif
+{{--                <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                 <p class="vjs-no-js">
                     To view this video please enable JavaScript, and consider upgrading to a
                     web browser that
@@ -263,38 +265,24 @@
                 <div>
                     <h4 class="white" >Photos </h4>
                     <div class="d-flex justify-content-around">
+                        @if($lesson->photo)
                         <div>
-                            <a href="{{asset('/img/bruce-mars.jpg')}}" download="filename"><img src="../assets/img/home-decor-1.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
+                            <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" download="{{$lesson->photo->url}}"><img src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->photo->url)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
                         </div>
-                        <div>
-                            <a href="{{asset('/img/bruce-mars.jpg')}}" download="filename"><img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                        </div>
-                        <div>
-                            <a href="{{asset('/img/bruce-mars.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
-                        </div>
+                            @endif
                     </div>
 
-                    <div class="d-flex justify-content-around mt-2">
-                        <div><a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>
-                        <div> <a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>         </div>
-                        <div>
-                            <a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> </a>       </div>
 
-                    </div>
                     <br/>
                     <!--File section-->
                     <div>
                         <h4 class="white">Files </h4>
                         <div class="d-flex justify-content-around ">
+                            @if($lesson->doc)
                             <div>
-                                <a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
+                                <a href="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->doc->url)}}" download="{{$lesson->doc->url}}"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">{{$lesson->doc->url}}</span></a>
                             </div>
-                            <div>
-                                <a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
-                            </div>
-                            <div>
-                                <a href="{{asset('/img/bruce-mars.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 grey" style="font-size:15px;"></i> <span class="white">File name</span></a>
-                            </div>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -318,125 +306,64 @@
             <h3>Comments</h3>
             <hr/>
             <div class="chatsBody2 mb-3" id="BodyText">
+                @if(count($lesson->lessonComments) > 0)
+                    @foreach($lesson->lessonComments as $comment)
+                        @if($comment->user_type == 1)
+                            <div class="sender2 bg_gr w-50">
+                                {{--                <div>--}}
+                                {{--                    <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">--}}
+                                {{--                </div>--}}
+                                <div class="w-100" style="margin: auto 0;">
+                                    <span class="ms-2"><strong>T. {{$comment->username}}</strong></span>
+                                </div>
+                                <div class="w-100" style="margin: auto 0;">
+                                    <span class="ms-2">{{$comment->comment}}</span>
+                                </div>
+                                <div class="w-100" style="margin: auto 0;">
+                                    <small class="ms-2">{{$comment->created_at}}</small>
+                                </div>
 
+                            </div>
+                        @else
+                            <div class="receiver2 bg_gr w-50">
+                                {{--                <div>--}}
+                                {{--                    <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">--}}
+                                {{--                </div>--}}
+                                <div class="w-100" style="margin: auto 0;">
+                                    <span class="ms-2"><strong>{{$comment->username}}</strong></span>
 
-                <div class="d-flex sender2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">heyy! much better</span>
-                        <div class="col-1">
+                                </div>
+                                <div class="w-100" style="margin: auto 0;">
+                                    <span class="ms-2">{{$comment->comment}}</span>
+                                </div>
 
+                                <div class="w-100" style="margin: auto 0;">
+                                    <small class="ms-2">{{$comment->created_at}}</small>
+                                </div>
 
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="d-flex sender2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">How did the interview go? was it good?</span>
-                        <div class="col-1">
-
-
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="d-flex sender2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">Wow I'm soo happy for you</span>
-                        <div class="col-1">
-
-
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="d-flex sender2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">Wow I'm soo happy for you</span>
-                        <div class="col-1">
-
-
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="d-flex receiver2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">your most welcome</span>
-                        <div class="col-2">
-                            <a  class="text-secondary font-weight-bold text-xs  me-1" href="#" role="button">
-                                <i class="fas fa-edit text-dark " style="font-size: 15px;"></i>
-                            </a>
-
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
-                <div class="d-flex receiver2 bg_gr">
-                    <div>
-                        <img src="{{asset('/img/bruce-mars.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                    </div>
-                    <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                        <span class="ms-2">Thanks</span>
-                        <div class="col-2">
-                            <a  class="text-secondary font-weight-bold text-xs  me-1" href="#" role="button">
-                                <i class="fas fa-edit text-dark " style="font-size: 15px;"></i>
-                            </a>
-
-                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-1" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fas fa-trash text-dark" style="font-size: 15px;"></i>
-                            </a>
-
-                        </div>
-                    </div>
-
-                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                @else
+                    <strong class="text-danger">No comments yet.</strong>
+                @endif
             </div>
 
             <div class="input-msg">
-                <input type="text" id="send-input" placeholder="type something" onfocus="this.value=''"/>
-                <i onclick="send()" class='far fa-paper-plane'></i>
+                <form method="POST" action="/teacher/lesson" class="row w-100">
+                    @csrf
+                    @method('POST')
+                    <div class="col-11">
+                        <input type="text" name="comment" class="form-control w-100" placeholder="Type your comment.." required/>
+                    </div>
+                    <div class="col-1">
+                        <input type="hidden" name="lesson_id" value="{{$lesson->id}}">
+                        <input type="hidden" name="level" value="{{$lesson->level_id}}">
+                        <button type="submit" name="save_comment" class="btn btn-link">
+                            <i class='far fa-paper-plane'></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
 

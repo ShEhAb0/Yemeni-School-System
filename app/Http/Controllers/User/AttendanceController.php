@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Notification;
 use App\Models\Subject;
 use App\Models\Term;
 use Carbon\Carbon;
@@ -65,6 +66,16 @@ class AttendanceController extends Controller
             $attendance->mark = ($dif <= 24 ? 1 : 0);
             $attendance->status = ($dif <= 24 ? 1 : 0);
             $attendance->save();
+
+            $name= Auth::user()->student_name;
+            $notification = new Notification();
+            $notification->type = 2;
+            $notification->title = "Student attendance";
+            $notification->details = "Student ($name) present lesson dated ($request->date)";
+            $notification->url = "/teacher/lesson/$request->lesson";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
         }
 
         return redirect('/lesson/'.$request->lesson);

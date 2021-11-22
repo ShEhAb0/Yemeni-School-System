@@ -249,7 +249,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-2"  id="editForm" method="POST" action="">
+                            <form class="row g-2"  id="editForm" method="POST" action="" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -307,16 +307,16 @@
                                 <div class="row g-2">
                                     <div class="col-auto w_50 my-1 mb-2" >
                                         <p>Upload Video</p>
-                                        <input class="form-control " type="file" id="upload_video" name="upload_video" accept="video/mp4,video/x-m4v,video/*" >
+                                        <input class="form-control " type="file" id="upload_video" name="video" accept="video/mp4,video/x-m4v,video/*" >
                                     </div>
                                     <div class="col-auto w_50 my-1 mb-2" >
                                         <p>Upload Picture</p>
-                                        <input class="form-control " type="file" id="upload_image" name="upload_image"  accept="image/png, image/gif, image/jpeg" >
+                                        <input class="form-control " type="file" id="upload_image" name="image"  accept="image/png, image/gif, image/jpeg" >
                                     </div>
                                 </div>
                                 <div class="col-auto w-100  my-1 mb-2" >
                                     <p>Upload File</p>
-                                    <input class="form-control " type="file" id="upload_file" name="upload_file"  accept="application/pdf,application/msword,
+                                    <input class="form-control " type="file" id="upload_file" name="doc"  accept="application/pdf,application/msword,
                                     application/vnd.openxmlformats-officedocument.wordprocessingml.document">
                                 </div>
 

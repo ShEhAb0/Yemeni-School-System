@@ -33,6 +33,7 @@
                             <h6>Exams Schedule </h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
+                            @if($exams->count() > 0)
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0">
                                     <thead>
@@ -41,81 +42,47 @@
                                         <th class="text-secondary purplel-color opacity-9 text-center ">Subject Name</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Teacher Name</th>
                                         <th class="text-secondary purplel-color opacity-9  text-center">Duration</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Date</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Time</th>
+                                        <th class="text-secondary purplel-color opacity-9  text-center">Exam Date Time</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Math</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Mohammed</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">50 mins</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">12:00 PM</span>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">2</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Biology</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Maha</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">70 mins</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">2:00 PM</span>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">3</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">English</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">Monna</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">50 mins</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">10/6/2020</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">5:00 PM</span>
-                                        </td>
-
-                                    </tr>
-
-
-
-
+                                    @foreach($exams as $k => $exam)
+                                        <tr>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$k+1}}</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$exam->subjectsExams->subject_name}}</p>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm font-weight-bold">{{$exam->teachersExams->teacher_name}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm font-weight-bold">{{$exam->duration_m}} Mins</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                <span class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
+                                            </td>
+                                            <td class="align-middle text-center">
+                                                {{--                                            @php($time = \Illuminate\Support\Carbon::make($exam->exam_time)->format('H:m:s'))--}}
+                                                @php($time = new \Carbon\Carbon($exam->exam_time,'Asia/Riyadh'))
+                                                {{--                                            @if($exam->exam_time == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && $time->diffInMinutes(\Illuminate\Support\Carbon::now('Asia/Riyadh')) <= $exam->duration_m)--}}
+                                                @if($time->format('Y-m-d') == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && \Illuminate\Support\Carbon::now('Asia/Riyadh') >= $time && \Illuminate\Support\Carbon::now('Asia/Riyadh') <= $time->addMinutes($exam->duration_m))
+                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/{{$exam->id}}">Start Exam  </a></span>
+                                                @else
+                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100 disabled">Start Exam</a></span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
+                            @else
+                                <div class="text-center text-danger">
+                                    No exams yet.
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
