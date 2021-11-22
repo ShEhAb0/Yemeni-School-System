@@ -220,8 +220,8 @@
                                                     <div id="checkboxes" style="display: none;
                                                  border: 1px #dadada solid;">
                                                         @foreach($users as $user)
-                                                            <label for="one" style=" display: block; margin-right: 20px;">
-                                                                <input type="checkbox" id="one" name="user" style="margin-right: 10px;" value="{{$user->id}}" />{{$user->student_name}}</label>
+                                                            <label for="{{$user->id}}" style=" display: block; margin-right: 20px;">
+                                                                <input type="checkbox" id="{{$user->id}}" name="user[]" style="margin-right: 10px;" value="{{$user->id}}" />{{$user->student_name}}</label>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -455,8 +455,8 @@
                                                 <div id="editcheckboxes" style="display: none;
                                                  border: 1px #dadada solid;">
                                                     @foreach($users as $user)
-                                                        <label for="one" style=" display: block; margin-right: 20px;">
-                                                            <input type="checkbox" id="one" name="user" style="margin-right: 10px;" value="{{$user->id}}" />
+                                                        <label for="st{{$user->id}}" style=" display: block; margin-right: 20px;">
+                                                            <input type="checkbox" id="st{{$user->id}}" name="user[]" style="margin-right: 10px;" value="{{$user->id}}" class="stu"/>
                                                             {{$user->student_name}}</label>
                                                     @endforeach
                                                 </div>
@@ -641,21 +641,28 @@
         <script src="{{asset('js/axios.min.js')}}"></script>
     <script>
         function getParents(id) {
+            $('.stu').prop('checked',false);
             axios({
                 method:'get',
                 url:'/admin/parents/' + id + '/edit'
             })
                 .then(response =>{
                     if(response.status === 200){
+                        var students = response.data.students;
+
                         $('#editForm').attr('action','/admin/parents/'+id);
-                        $('#parent_name').val(response.data.parent_name);
-                        $('#username').val(response.data.username);
-                        $('#email').val(response.data.email);
-                        $('#'+response.data.gender).attr('checked',true);
-                        $('#phone').val(response.data.phone);
-                        $('#address').val(response.data.address);
-                        $('#user').val(response.data.user);
-                        $('#status').val(response.data.status);
+                        $('#parent_name').val(response.data.parent.parent_name);
+                        $('#username').val(response.data.parent.username);
+                        $('#email').val(response.data.parent.email);
+                        $('#'+response.data.parent.gender).attr('checked',true);
+                        $('#phone').val(response.data.parent.phone);
+                        $('#address').val(response.data.parent.address);
+                        $('#user').val(response.data.parent.user);
+                        $('#status').val(response.data.parent.status);
+                        students.forEach(function (item){
+                            $('#st'+item.user_id).prop('checked',true);
+                        })
+
                         $('#editModal').modal('show');
                     }
                 })

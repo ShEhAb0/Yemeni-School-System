@@ -84,7 +84,9 @@ class ParentController extends Controller
         $parent->status = $request->input('status');
         $parent->save();
 
-        DB::table('users_parents')->insert(['parent_id'=>$parent->id, 'user_id'=>$request->input('user')]);
+        foreach ($request->input('user') as $user) {
+            DB::table('users_parents')->insert(['parent_id' => $parent->id, 'user_id' => $user]);
+        }
 
         $log = new AdminLog();
         $log->admin_id = Auth::id();
@@ -119,7 +121,8 @@ class ParentController extends Controller
     public function edit($id)
     {
         $parent = Parents::find($id);
-        return response($parent,200);
+        $students = $parent->students;
+        return response(['parent'=>$parent,'students'=>$students],200);
     }
 
     /**
@@ -133,8 +136,8 @@ class ParentController extends Controller
     {
         $request->validate([
             'parent_name' => 'required|max:50',
-            'username' => "required|unique:parents,username|min:3,$id",
-            'email' => "required|unique:parents,email,$id",
+            'username' => 'min:3|required|unique:parents,username,'.$id,
+            'email' => 'required|unique:parents,email,'.$id,
             'gender' => 'required',
             'address' => 'required',
             'phone' => 'numeric',
@@ -144,6 +147,9 @@ class ParentController extends Controller
         ]);
 
         $parent = Parents::find($id);
+
+        DB::table('users_parents')->where('parent_id',$id)->delete();
+
         $log = new AdminLog();
         $log->admin_id = Auth::id();
         $log->action = "Update_Parent";
@@ -170,6 +176,9 @@ class ParentController extends Controller
         $parent->status = $request->input('status');
         $parent->save();
 
+        foreach ($request->input('user') as $user) {
+            DB::table('users_parents')->insert(['parent_id' => $parent->id, 'user_id' => $user]);
+        }
         return redirect('/admin/parents')->withSuccess('Parent has been updated successfully..!');
 
     }
