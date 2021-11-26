@@ -53,7 +53,7 @@
 
             <div class="card col-12  col-sm-12  col-md-12 col-lg-4 col-xl-4 col-xxl-4  ms-2 mb-2">
                 <div class="card-header pb-0 p-3">
-                    <h6 class="purplel-color mb-1">Assignments DeadLine</h6>
+                    <h6 class="purplel-color mb-1">Today Assignments</h6>
                 </div>
                 @if($assignments->count() > 0)
 

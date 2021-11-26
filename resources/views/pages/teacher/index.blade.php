@@ -103,84 +103,42 @@
                         <div class="col-lg-12">
                             <h5 class="font-weight-bolder">Delivered Assignments</h5>
                             <div class="modal-body max-height-vh-80" style="overflow-y:auto">
+                                @if($answers->count() > 0)
+                                    @foreach($answers as $answer)
                                 <div class="list-group mb-1">
+
                                     <div class="list-group-item">
                                         <div class="d-flex  py-1">
                                             <img src="../assets/img/home-decor-2.jpg" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
-                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">Student Name</span>
+                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">{{$answer->student->student_name}}</span>
                                                 <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>2021/2/1 12:00 PM</span>
+                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>{{$answer->delivery_date}}</span>
                                             </div>
-                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">Assignment Title</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>Grade 1</span>
-                                            </div>
-
-                                            <a  href="" class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="list-group mb-1">
-                                    <div class="list-group-item">
-                                        <div class="d-flex  py-1">
-                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
-                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">Student Name</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>2021/2/1 12:00 PM</span>
-                                            </div>
-                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">Assignment Title</span>
+                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">{{$answer->assignment->title}}</span>
                                                 <br/>
                                                 <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>Grade 1</span>
                                             </div>
+                                            <div class="align-middle text-center " style="margin-top: 3px;">
+          <span onclick="Assigment($(this))" data-id="{{$answer->id}}" data-name="{{$answer->student->student_name}}"
+                data-date="{{$answer->delivery_date}}" data-attch="{{asset('/Assignments/'.$answer->subjects->subject_name.'/Answers/'.$answer->file_name)}}"
+                data-fname="{{$answer->file_name}}" class="text-secondary font-weight-bold text-xs me-3" >
+            <a class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
+          </span>
+                                            </div>
 
-                                            <a  href="" class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
+{{--                                            <a  href="" class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>--}}
 
                                         </div>
+
                                     </div>
+
                                 </div>
+                                    @endforeach
+                                @else
+                                    <p class="text-center h5">No answers yet..</p>
+                                @endif
 
 
-                                <div class="list-group mb-1">
-                                    <div class="list-group-item">
-                                        <div class="d-flex  py-1">
-                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
-                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">Student Name</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>2021/2/1 12:00 PM</span>
-                                            </div>
-                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">Assignment Title</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>Grade 1</span>
-                                            </div>
-
-                                            <a  href="" class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="list-group mb-1">
-                                    <div class="list-group-item">
-                                        <div class="d-flex  py-1">
-                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
-                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">Student Name</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>2021/2/1 12:00 PM</span>
-                                            </div>
-                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">Assignment Title</span>
-                                                <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>Grade 1</span>
-                                            </div>
-
-                                            <a  href="" class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
-
-                                        </div>
-                                    </div>
-                                </div>
 
 
 
@@ -200,6 +158,38 @@
 
 
             </div>
+
+
+            <div class="modal  fade" id="Assigment" tabindex="-1" aria-labelledby="Assigments" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content ">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="Assigments">Student Answer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="POST" action="" id="formData">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-body max-height-vh-80" style="overflow-y:auto">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-bold" id="studentName"></span><span class="text-bold">Recive Date: <span class="text-bold" id="recDate"></span></span>
+
+                                </div>
+                                <div class="my-1 mb-2">
+                                    <a href="" id="attch" class="btn btn-block btn-secondary bg-dark text-white w-100 py-1 pb-3 pt-3 mt-3" download="">
+                                        <i class="fas fa-arrow-circle-up white me-2" style="font-size: 18px;"></i>Student Attachments</a></div>
+                                <input class="form-control my-1 mb-2" name="mark" type="number" placeholder="Enter Student Marks" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="marks" class="btn btn-outline-primary" >Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
 
             <div class="col-lg-5">
 
@@ -227,5 +217,19 @@
 @endsection
 @section('scripts')
 
-
+<script>
+    function Assigment(d){
+        var id = d.data('id');
+        var name = d.data('name');
+        var date = d.data('date');
+        var attch = d.data('attch');
+        var fname = d.data('fname');
+        $('#formData').attr('action','/teacher/assignment/'+id);
+        $('#studentName').html(name);
+        $('#recDate').html(date);
+        $('#attch').attr('href',attch);
+        $('#attch').attr('download',fname);
+        $('#Assigment').modal('toggle');
+    }
+</script>
 @endsection

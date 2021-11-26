@@ -98,9 +98,9 @@
                                                         <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                     </a>
 
-                                                    <a  class="text-secondary font-weight-bold text-xs  "  data-bs-toggle="modal" href="#" role="button">
-                                                        <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
-                                                    </a>
+{{--                                                    <a  class="text-secondary font-weight-bold text-xs  "  data-bs-toggle="modal" href="#" role="button">--}}
+{{--                                                        <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>--}}
+{{--                                                    </a>--}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -210,7 +210,7 @@
                                 <p class="text-center text-danger">Are you sure you want to delete this news?</p>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-danger" >Delete</button>
+                                    <button type="submit" class="btn btn-outline-danger" >Delete</button>
                                 </div>
                             </form>
 

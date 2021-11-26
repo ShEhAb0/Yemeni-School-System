@@ -354,7 +354,7 @@ class NewsController extends Controller
         $log->save();
 
         $news->delete();
-        return  redirect()->route('admin.news.index')->withSuccess('News deleted successfully.');
+        return  redirect('/admin/news')->withSuccess('News deleted successfully.');
 
     }
 }

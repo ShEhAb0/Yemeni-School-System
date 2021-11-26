@@ -93,9 +93,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
         Route::resource('/notifications' , 'App\Http\Controllers\Admin\NotificationController');
+        Route::resource('/all/students' , 'App\Http\Controllers\Admin\AllStudentController');
+
 
         Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
         Route::get('/terms', 'App\Http\Controllers\Admin\TermController@search')->name('terms');
+        Route::get('/grades', 'App\Http\Controllers\Admin\GradeController@search')->name('grades');
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });
@@ -139,6 +142,10 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
 
         Route::resource('/profile','App\Http\Controllers\Teacher\ProfileController');
         Route::resource('/notifications','App\Http\Controllers\Teacher\NotificationController');
+
+
+        Route::get('/assignments', 'App\Http\Controllers\Teacher\AssignmentController@search')->name('assignments');
+
 
         Route::post('/logout',[TeacherLoginController::class,'logout'])->name('logout');
     });

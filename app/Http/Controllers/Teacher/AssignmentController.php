@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
+use App\Models\AssignmentComment;
 use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\StudentAssignment;
@@ -55,6 +56,21 @@ class AssignmentController extends Controller
         return view('pages.teacher.assignment-menu.assignment-table',compact('assignments'))->render();
     }
 
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $assignments = Assignment::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->get();
+
+        return view('pages.teacher.assignment-menu.assignment-index',compact('assignments'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -73,6 +89,25 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->has('save_comment')){
+            $request->validate([
+                'comment' => 'required'
+            ]);
+
+            $comment = new AssignmentComment();
+            $comment->assignment_id = $request->assignment_id;
+            $comment->user_id = Auth::id();
+            $comment->user_type = 1;
+            $comment->username = Auth::user()->teacher_name;
+            $comment->comment = $request->comment;
+            $comment->created_at = Carbon::now('Asia/Riyadh');
+            $comment->status = 1;
+            $comment->save();
+            return redirect('/teacher/assignment/'.$request->assignment_id);
+        }
+
+
+
         //
         $request->validate([
            'title' => 'required',
@@ -137,7 +172,7 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        $assignment = Assignment::where('id' , $id)->first();
+        $assignment = Assignment::where('id' , $id)->with('assignmentComments')->first();
         $answers = StudentAssignment::where('assignment_id',$id)->where('status',0)->with('student')->get();
         return view('pages.teacher.assignment-menu.assignment-show' , compact('assignment','answers'));
 

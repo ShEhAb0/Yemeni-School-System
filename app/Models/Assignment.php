@@ -56,4 +56,10 @@ class Assignment extends Model
     {
         return $this->hasOne('App\Models\StudentAssignment','assignment_id')->where('student_id',Auth::id());
     }
+
+    public function assignmentComments()
+    {
+        return $this->hasMany('App\Models\AssignmentComment' , 'assignment_id');
+
+    }
 }

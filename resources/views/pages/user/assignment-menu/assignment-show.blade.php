@@ -428,7 +428,7 @@
                     <input type="hidden" name="subject_id" value="{{$assignment->subject_id}}">
                     <input type="hidden" name="as_id" value="{{$assignment->id}}">
                     <input type="hidden" name="due" value="{{$assignment->due_date}}">
-                        <button type="submit" class="btn btn--primary btn--inside uppercase">Submit</button>
+                        <button type="submit" name="saveAnswer" class="btn btn--primary btn--inside uppercase">Submit</button>
                 </div>
             </div>
             </form>
@@ -452,90 +452,73 @@
 <hr/>
 
 <!--chat section-->
+
 <div  class="container-fluid ">
 
     <div>
         <h3>Comments</h3>
         <hr/>
-        <div class="chatsBody2  mb-3" id="BodyText">
+        <div class="chatsBody2 mb-3" id="BodyText">
+            @if(count($assignment->assignmentComments) > 0)
+                @foreach($assignment->assignmentComments as $comment)
+                    @if($comment->user_type == 0)
+                        <div class="sender2 bg_gr w-50">
+                                            <div>
+                                                <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2"><strong>{{$comment->username}}</strong></span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2">{{$comment->comment}}</span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <small class="ms-2">{{$comment->created_at}}</small>
+                            </div>
 
+                        </div>
+                    @else
+                        <div class="receiver2 bg_gr w-50">
+                                            <div>
+                                                <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2"><strong>T. {{$comment->username}}</strong></span>
 
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">heyy! much better</span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2">{{$comment->comment}}</span>
+                            </div>
 
-                </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <small class="ms-2">{{$comment->created_at}}</small>
+                            </div>
 
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">How did the interview go? was it good?</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
-                </div>
-
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}"" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">your most welcome</span>
-
-                </div>
-
-            </div>
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Thanks</span>
-
-
-
-                </div>
-
-            </div>
-            <hr/>
-            <hr/>
+                        </div>
+                    @endif
+                @endforeach
+            @else
+                <strong class="text-danger">No comments yet.</strong>
+            @endif
         </div>
         <div class="input-msg">
-            <input type="text" id="send-input" placeholder="type something" onfocus="this.value=''"/>
-            <i onclick="send()" class='far fa-paper-plane'></i>
+            <form method="POST" action="/assignment" class="row w-100">
+                @csrf
+                @method('POST')
+                <div class="col-11">
+                    <input type="text" name="comment" class="form-control w-100" placeholder="Type your comment.." required/>
+                </div>
+                <div class="col-1">
+                    <input type="hidden" name="assignment_id" value="{{$assignment->id}}">
+                    <input type="hidden" name="level" value="{{$assignment->level_id}}">
+                    <button type="submit" class="btn btn-link" name="saveComment">
+                        <i class='far fa-paper-plane'></i>
+                    </button>
+                </div>
+            </form>
         </div>
 
+        <hr/>
     </div>
 
 

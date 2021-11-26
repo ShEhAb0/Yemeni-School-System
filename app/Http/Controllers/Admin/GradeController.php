@@ -25,6 +25,23 @@ class GradeController extends Controller
 
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Search in the title and body columns from the posts table
+        $grades = Grade::query()
+            ->where('grade_name', 'LIKE', "%{$search}%")
+            ->orWhere('grade_code', 'LIKE', "%{$search}%")
+            ->get();
+
+
+        //$search = $request->get('search');
+        // $news = DB::table('news')->where('title' , 'like' , '%'.$search.'%')->paginate(10);
+        return view('pages.admin.grade-menu.grade-index',compact('grades'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
