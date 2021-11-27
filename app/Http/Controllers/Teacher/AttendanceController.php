@@ -80,6 +80,7 @@ class AttendanceController extends Controller
     public function showAttendance($grade, $subject){
         $attendances = Attendance::where('level_id',$grade)->where('subject_id',$subject)
             ->with(['lessonsAttendances','student'])->orderBy('lesson_id','asc')->paginate(10);
+
 //        $total = $attendances->count();
 //        $absence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
 //            ->where('level_id',Auth::user()->level_id)->where('grade_id',$grade)->where('status',0)->count();
@@ -98,6 +99,26 @@ class AttendanceController extends Controller
     public function edit($id)
     {
         //
+        $data = '';
+        $attends = Attendance::where('lesson_id',$id)->with('student')->get();
+        if ($attends->count() > 0) {
+            foreach ($attends as $attend) {
+                $data .= '
+                    <div class="list-group mb-1">
+                    <a href="" class="list-group-item"><div class="d-flex  py-1">
+                    <img src="" class="rounded-circle" alt="Cinque Terre" width="50" height="50"/>
+<div style="margin: auto 10px;"><span class="text-dark text-bold">' . $attend->student->student_name . '</span> <br/>
+<span  style="font-size: 15px;" class="text-primary">
+<i class="fas fa-clock me-2" style="font-size: 14px;"></i>' . $attend->view_date . '</span>
+</div> </div> </a> </div>
+            ';
+            }
+            return response($data);
+        }else {
+            $data .='<div class="text-center">No Attendace</div>';
+            return response($data);
+        }
+
     }
 
     /**

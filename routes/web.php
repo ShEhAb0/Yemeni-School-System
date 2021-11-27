@@ -139,6 +139,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::get('/get_assignment_subjects/{grade}' , 'App\Http\Controllers\Teacher\AssignmentController@getSubjects');
         Route::get('/get_assignments/{grade}/{subject}' , 'App\Http\Controllers\Teacher\AssignmentController@getAssignments');
         Route::resource('/attendance' , 'App\Http\Controllers\Teacher\AttendanceController');
+//        Route::get('/attendance/{id}' , 'App\Http\Controllers\Teacher\AttendanceController');
         Route::get('/get_teacher_attendance/{grade}/{subject}' , 'App\Http\Controllers\Teacher\AttendanceController@showAttendance');
         Route::resource('/news' , 'App\Http\Controllers\Teacher\NewsController');
         Route::resource('/question','App\Http\Controllers\Teacher\QuestionController');

@@ -12,45 +12,30 @@
                             <table class="table align-items-center mb-0">
                                 <thead>
                                 <tr>
-{{--                                    <th class="text-secondary purplel-color opacity-9 text-center ">#</th>--}}
+                                    <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
                                     <th class="text-secondary purplel-color opacity-9 text-center ">Lesson Title </th>
-                                    <th class="text-secondary purplel-color opacity-9 text-center ">Student Name </th>
-                                    <th class="text-secondary purplel-color opacity-9  text-center">Date</th>
-                                    <th class="text-secondary purplel-color opacity-9  text-center">status</th>
+                                    <th class="text-secondary purplel-color opacity-9  text-center">Creation Date</th>
                                     <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($attendances as $attendance)
+                                @foreach($attendances->unique('lesson_id') as $attendance)
                                 <tr>
-{{--                                    <td>--}}
-{{--                                        <p class="text-sm font-weight-bold mb-0 text-center"></p>--}}
-{{--                                    </td>--}}
+                                    <td>
+                                        <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
+                                    </td>
                                     <td>
                                         <p class="text-sm font-weight-bold mb-0 text-center">{{$attendance->lessonsAttendances->title}}</p>
                                     </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-0 text-center">{{$attendance->student->student_name}}</p>
-                                    </td>
+
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-sm font-weight-bold">{{$attendance->view_date}}</span>
-                                    </td>
-                                    <td>
-                                        <p class="text-sm font-weight-bold mb-0 text-center {{$attendance->status == 1 ? 'text-info' :'text-danger'}}">
-                                            {{$attendance->status == 1 ? "Present" : "Absent"}}</p>
+                                        <span class="text-secondary text-sm font-weight-bold">{{$attendance->lesson_creation_date}}</span>
                                     </td>
 
                                     <td class="align-middle text-center">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs me-3" data-toggle="tooltip" data-original-title="Edit user">
-                                            <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                        </a>
-
-
-                                        <a  class="text-secondary font-weight-bold text-xs"  data-bs-toggle="modal" href="#attendance" role="button">
+                                        <a  class="text-secondary font-weight-bold text-xs" data-id="{{$attendance->lesson_id}}" onclick="showAttend($(this))" role="button">
                                             <i class="far fa-id-card purplel-color" style="font-size: 20px;"></i>
                                         </a>
-
-
                                     </td>
                                 </tr>
                                     @endforeach

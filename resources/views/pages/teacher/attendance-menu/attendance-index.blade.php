@@ -82,6 +82,23 @@
                 @include('pages.teacher.attendance-menu.attendance-table')
             </div>
 
+            <div class="modal fade" id="attendance" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModal">Student attendance</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body max-height-vh-80" style="overflow-y:auto" id="modalBody">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 
 @section('scripts')
@@ -153,6 +170,25 @@
                 }
             })
     });
+
+    function showAttend(d){
+        var id = d.data('id');
+        d.html('<i class="fa fa-spinner fa-spin"></i>');
+
+        axios({
+            method: 'get',
+            url: '/teacher/attendance/'+id+'/'+'edit'
+        })
+            .then(response => {
+                d.html('<i class="far fa-id-card purplel-color" style="font-size: 20px;"></i>');
+                $('#modalBody').html(response.data);
+                $('#attendance').modal('show');
+                // $('#loader').addClass('hidden');
+                // $('#messages').addClass('hidden');
+                // $('#content').html(response.data);
+                // $('#content').removeClass('hidden');
+            })
+    }
 </script>
 @endsection
 @endsection
