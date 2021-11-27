@@ -226,7 +226,7 @@
                 data-setup="{}"
             >
                 @if($lesson->video)
-                <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />
+                <source src="{{asset('/Lessons/'.$lesson->subjects->subject_name.'/'.$lesson->video->url)}}" type="video/mp4" />
                 @endif
 {{--                <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                 <p class="vjs-no-js">

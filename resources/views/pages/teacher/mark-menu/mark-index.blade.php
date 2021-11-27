@@ -37,52 +37,35 @@
 
                     <div class="col-auto w_3">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                            <option value="1">Grade 1</option>
-                            <option value="2">Grade 2</option>
-                            <option value="3">Grade 3</option>
-
-
-                            <option value="4">Grade 4</option>
-                            <option value="5">Grade 5</option>
-                            <option value="6">Grade 6</option>
-
-
-                            <option value="7">Grade 7</option>
-                            <option value="8">Grade 8</option>
-                            <option value="9">Grade 9</option>
-
-
-                            <option value="10">Grade 10</option>
-                            <option value="11">Grade 11</option>
-                            <option value="12">Grade 12</option>
-                            <option value="13">Grade 13</option>
-
+                        <select class="form-select" aria-label="Select Grade" id="grade_id" name="grade" onchange="$('#subject_id').prop('disabled',false)">
+                            <option value="" disabled selected>Select Grade</option>
+                            @if($grades->count()>0)
+                                @foreach($grades as $grade)
+                                    @foreach($grade as $g)
+                                        <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                    @endforeach
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="col-auto w_3">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                            <option value="1">Math</option>
-                            <option value="2">Arabic</option>
-                            <option value="3">Biolody</option>
-                            <option value="4">English</option>
-                            <option value="5">science</option>
-                            <option value="6">chemistry</option>
-                            <option value="7">History</option>
-
+                        <select class="form-select" aria-label="Select Subject" id="subject_id" name="subject" onchange="$('#term_id').prop('disabled',false)" disabled>
+                            <option value="" disabled selected>Select Subject</option>
+                            @if($teacher_sub->count()>0)
+                                @foreach($teacher_sub as $ts)
+                                    <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                     <div class="col-auto w_3">
                         <p>Select Term</p>
-                        <select class="form-select" aria-label="Select Class" id="Lesson" name="Lesson">
-
-                            <option value="1">Term 1</option>
-                            <option value="2">Term 2</option>
-
-
+                        <select class="form-select" aria-label="Select Term" id="term_id" name="term" onchange="showMarks(this.value)" disabled>
+                            <option value="" disabled selected>Select Term</option>
+                            @foreach($terms as $term)
+                                <option value="{{$term->id}}">{{$term->name}}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -115,45 +98,8 @@
                                         <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @foreach($marks as $mark)
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$mark->student->student_name}}</p>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->attendance_mark}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->assignments_mark}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->exams_mark}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">{{$mark->attendance_mark + $mark->assignments_mark + $mark->exams_mark}}%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            @if($mark->student->term_id == 1)
-                                            <a  class="text-secondary font-weight-bold text-xs me-3 disabled">
-                                                <i class="fas fa-check-circle text-muted " style="font-size: 20px;"></i>
-                                            </a>
-                                            @else
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3" href="/teacher/mark/{{$mark->id}}/edit" title="Upgrade to the next grade">
-                                                <i class="fas fa-check-circle purplel-color " style="font-size: 20px;"></i>
-                                            </a>
-                                            @endif
-                                            <a  class="text-secondary font-weight-bold text-xs  me-3" data-id="{{$mark->id}}" data-attendance="{{$mark->attendance_mark}}"
-                                                data-assignment="{{$mark->assignments_mark}}" onclick="updateMark($(this));" role="button">
-                                                <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                            </a>
-
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    <tbody id="tableData">
+                                    @include('pages.teacher.mark-menu.mark-table')
                                     </tbody>
                                 </table>
                             </div>
@@ -214,6 +160,40 @@
             $('#assign').val(d.data('assignment'));
             $('#examplUpdate').modal('show');
         }
+
+        function showMarks(term){
+            var grade = $('#grade_id').val();
+            var subject = $('#subject_id').val();
+            $('#tableData').html('<tr><td colspan="7" class="text-center text-danger">Please Wait.</td></tr>');
+            axios({
+                method:'get',
+                url:'/teacher/mark/'+grade +'/'+ subject +'/'+ term
+            })
+                .then(response => {
+                    $('#tableData').html(response.data);
+                    $('#paginat').addClass('pagination');
+                })
+        }
+
+        $(document).on('click', '.pagination a', function(event){
+            event.preventDefault();
+            $('#tableData').html('<tr><td colspan="7" class="text-center text-danger">Please Wait.</td></tr>');
+            var page = $(this).attr('href').split('page=')[1];
+            var term = $('#term_id').val();
+            var grade = $('#grade_id').val();
+            var subject = $('#subject_id').val();
+
+            axios({
+                method: 'get',
+                url: '/teacher/mark/'+grade +'/'+ subject +'/'+ term+'?page='+page
+            })
+                .then(response => {
+                    if (response.status === 200) {
+                        $('#tableData').html(response.data);
+                        $('#paginat').addClass('pagination');
+                    }
+                })
+        });
     </script>
 @endsection
 @endsection

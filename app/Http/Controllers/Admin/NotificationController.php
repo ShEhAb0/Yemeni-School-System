@@ -18,7 +18,7 @@ class NotificationController extends Controller
     public function index()
     {
         //
-        Notification::where('type',1)->where('status',0)->update(['status'=>1]);
+//        Notification::where('type',1)->where('status',0)->update(['status'=>1]);
         $notifications = Notification::where('type',1)->orderBy('created_at','desc')->paginate(10);
         return view('',compact($notifications));
     }
@@ -32,7 +32,7 @@ class NotificationController extends Controller
     {
         //
         $note = '';
-        $notifications = Notification::where('type',1)->where('status',0)->orderBy('created_at','desc')->take(3)->get();
+        $notifications = Notification::where('type',1)->orderBy('created_at','desc')->take(3)->get();
         $count = Notification::where('type',1)->where('status',0)->count();
 
         if ($count > 0){

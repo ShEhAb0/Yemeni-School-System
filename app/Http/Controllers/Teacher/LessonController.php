@@ -53,11 +53,11 @@ class LessonController extends Controller
 //        return response('',201);
 //    }
 //
-//    public function getLessons($grade,$subject)
-//    {
-//        $lessons = Lesson::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->paginate(10);
-//        return view('pages.teacher.lesson-menu.lesson-table',compact('lessons'))->render();
-//    }
+    public function getLessons($grade,$subject)
+    {
+        $lessons = Lesson::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->paginate(10);
+        return view('pages.teacher.lesson-menu.lesson-table',compact('lessons'))->render();
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -149,7 +149,7 @@ class LessonController extends Controller
                 File::makeDirectory($path);
             }
             $lessonFile = $request->file('video');
-            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $filename = $lesson->title.time();
             $request->video->move($path, $filename);
 
             $attachment = new Attachment();
@@ -166,7 +166,7 @@ class LessonController extends Controller
                 File::makeDirectory($path);
             }
             $lessonFile = $request->file('image');
-            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $filename = $lesson->title.time().'.'.$lessonFile->getClientOriginalExtension();
             $request->image->move($path, $filename);
 
             $attachment = new Attachment();
@@ -281,7 +281,7 @@ class LessonController extends Controller
                 File::makeDirectory($path);
             }
             $lessonFile = $request->file('video');
-            $filename = time() . '.' . $lessonFile->getClientOriginalName();
+            $filename = $lesson->title.time().'.'.$lessonFile->getClientOriginalExtension();
             $request->video->move($path, $filename);
 
             Attachment::where('type',1)->where('type_id',$lesson->id)->where('attachment_type',1)->update(['url'=>$filename]);

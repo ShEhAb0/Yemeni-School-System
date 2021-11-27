@@ -31,7 +31,7 @@ class NotificationController extends Controller
     {
         //
         $note = '';
-        $notifications = Notification::where('type',2)->where('status',0)->orderBy('created_at','desc')->take(3)->get();
+        $notifications = Notification::where('type',2)->orderBy('created_at','desc')->take(3)->get();
         $count = Notification::where('type',2)->where('status',0)->count();
 
         if ($count > 0){

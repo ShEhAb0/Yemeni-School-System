@@ -94,6 +94,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
         Route::resource('/notifications' , 'App\Http\Controllers\Admin\NotificationController');
         Route::resource('/all/students' , 'App\Http\Controllers\Admin\AllStudentController');
+        Route::get('/all/students/{term}/{grade}' , 'App\Http\Controllers\Admin\AllStudentController@showStudents');
 
 
         Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
@@ -127,11 +128,13 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
 
         Route::resource('/schedule' , 'App\Http\Controllers\Teacher\ScheduleController');
         Route::resource('/lesson' , 'App\Http\Controllers\Teacher\LessonController');
+        Route::get('/lesson/{grade}/{subject}' , 'App\Http\Controllers\Teacher\LessonController@getLessons');
         Route::resource('/my/students' , 'App\Http\Controllers\Teacher\MyStudentController');
         Route::get('/my_students/{grade_id}' , 'App\Http\Controllers\Teacher\MyStudentController@getSubjects');
         Route::post('/my_students' , 'App\Http\Controllers\Teacher\MyStudentController@getStudents');
         Route::resource('/exam' , 'App\Http\Controllers\Teacher\ExamController');
         Route::resource('/mark' , 'App\Http\Controllers\Teacher\MarkController');
+        Route::get('/mark/{grade}/{subject}/{term}' , 'App\Http\Controllers\Teacher\MarkController@showMarks');
         Route::resource('/assignment' , 'App\Http\Controllers\Teacher\AssignmentController');
         Route::get('/get_assignment_subjects/{grade}' , 'App\Http\Controllers\Teacher\AssignmentController@getSubjects');
         Route::get('/get_assignments/{grade}/{subject}' , 'App\Http\Controllers\Teacher\AssignmentController@getAssignments');

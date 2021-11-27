@@ -14,66 +14,79 @@
 
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
-                <div class="col-12">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="search...">
-                    </div>
-                </div>
+{{--                <div class="col-12">--}}
+{{--                    <div class="input-group">--}}
+{{--                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>--}}
+{{--                        <input type="text" class="form-control" placeholder="search...">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <br/>
-                <br/>
-                <div class="row g2">
+{{--                <br/>--}}
+{{--                <br/>--}}
+                <form method="POST" action="/admin/all/students" class="row g2">
+                    @csrf
+                    @method('POST')
+                    <div class="col-auto w-50">
+                        <div class="form-group">
+                        <span>Select Term</span>
+                        <select class="form-select" aria-label="Select Term" id="term" name="term" onchange="showGrades()">
 
-                    <div class="col-auto w_50">
-                        <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
-
-                            <option value="1">Grade 1</option>
-                            <option value="2">Grade 2</option>
-                            <option value="3">Grade 3</option>
-
-
-                            <option value="4">Grade 4</option>
-                            <option value="5">Grade 5</option>
-                            <option value="6">Grade 6</option>
-
-
-                            <option value="7">Grade 7</option>
-                            <option value="8">Grade 8</option>
-                            <option value="9">Grade 9</option>
-
-
-                            <option value="10">Grade 10</option>
-                            <option value="11">Grade 11</option>
-                            <option value="12">Grade 12</option>
-                            <option value="13">Grade 13</option>
-
+                            <option value="" disabled selected>Select Term</option>
+                            @foreach($terms as $term)
+                                <option value="{{$term->id}}">{{$term->name}}</option>
+                            @endforeach
                         </select>
                     </div>
-                    <div class="col-auto w_50">
-                        <p>Select Number Of Subjects</p>
-                        <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
+                    </div>
 
+                    <div class="col-auto w-50">
+                        <div class="form-group">
+                        <span>Select Grade</span>
+                        <select class="form-select" aria-label="Select Grade" id="grade" name="grade" onchange="showSubjects(this.value)">
+                            <option value="" disabled selected>Select Grade</option>
+                            @foreach($grades as $grade)
+                                <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    </div>
+
+                    <hr>
+                    <div class="text-center mb-2">
+                        <p class="h5 purplel-color">Upgrade Students</p>
+                    </div>
+                    <div class="col-auto w-50">
+                        <span>Select Number Of Pass Subjects</span>
+                        <select class="form-select" aria-label="Select Number Of Pass Subjects" name="subject" id="subject" onchange="showTotal()">
+                            <option value="" disabled selected>Pass Subjects</option>
                             <option value="1">1</option>
-                            <option value="1">2</option>
-                            <option value="1">3</option>
-                            <option value="1">4</option>
-
-
-
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
                         </select>
                     </div>
-                    <div class="col-auto "
-                         >
-                        <a  class="text-secondary font-weight-bold text-xs  me-3" href="" title="Upgrade to the next grade">
-                            <i class="fas fa-check-circle purplel-color " style="font-size: 20px;"></i>
-                        </a>
-
+                    <div class="col-auto w-50">
+                        <span>Select Minimum Total</span>
+                        <select class="form-select" aria-label="Select Min. Total" name="total" id="totalMarks">
+                            <option value="" disabled selected>Select Min. Total</option>
+                            <option value="50">>= 50</option>
+                            <option value="60">>= 60 </option>
+                        </select>
+                    </div>
+                    <div class="my-2">
+                        <button type="submit"  class="btn btn-primary btn-sm w-100 mb-0" title="Upgrade to the next grade" id="submit">
+                            <i class="fas fa-check-circle"></i> Upgrade
+                        </button>
                     </div>
 
 
-                </div>
+                </form>
 
 
             </div>
@@ -87,53 +100,14 @@
                             <h6>Grade table</h6>
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">#</th>
-                                        <th class="text-secondary purplel-color opacity-9 text-center ">Student Name</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Attendance</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Assignments</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Exams</th>
-                                        <th class="text-secondary purplel-color opacity-9  text-center">Total</th>                                        <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">Moahmmed</p>
-                                        </td>
-
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">98%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">98%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">98%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-sm font-weight-bold">98%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-
-
-
-                                                <a  class="text-secondary font-weight-bold text-xs  me-3" href="" title="Upgrade to the next grade">
-                                                    <i class="fas fa-check-circle purplel-color " style="font-size: 20px;"></i>
-                                                </a>
-
-
-                                        </td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
+                            <div class="text-center text-danger" id="message">
+                                <i class="fa fa-exclamation-circle"></i> Select Term and Grade.
+                            </div>
+                            <div class="text-center py-3 hidden" id="loader">
+                                <i class="fa fa-spinner fa-3x fa-spin"></i>
+                            </div>
+                            <div class="table-responsive p-0 hidden" id="tableData">
+                                @include('pages.admin.upgrade-menu.upgrade-table')
                             </div>
                         </div>
                     </div>
@@ -141,5 +115,41 @@
             </div>
         </div>
     </div>
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#grade').prop('disabled', true);
+            $('#subject').prop('disabled', true);
+            $('#totalMarks').prop('disabled', true);
+            $('#submit').prop('disabled', true);
+        });
 
+        function showGrades(){
+            $('#grade').prop('disabled', false);
+        }
+
+        function showSubjects(grade){
+            $('#subject').prop('disabled', false);
+            $('#message').addClass('hidden');
+            $('#tableData').addClass('hidden');
+            $('#loader').removeClass('hidden');
+            var term = $('#term').val();
+            axios({
+                method:'get',
+                url:'/admin/all/students/' + term + '/' + grade
+            })
+                .then(response =>{
+                        $('#tableData').html(response.data);
+                        $('#loader').addClass('hidden');
+                        $('#tableData').removeClass('hidden');
+                });
+
+        }
+
+        function showTotal(){
+            $('#totalMarks').prop('disabled', false);
+            $('#submit').prop('disabled', false);
+        }
+    </script>
+@endsection
 @endsection

@@ -39,7 +39,8 @@
 
                     <div class="col-auto w_50">
                         <p>Select Grade</p>
-                        <select class="form-select" aria-label="Select Grade"  name="Grade">
+                        <select class="form-select" aria-label="Select Grade" id="grd" name="grade" onchange="$('#subj').prop('disabled',false)">
+                            <option value="" disabled selected>Select Grade</option>
                             @if($grades->count()>0)
                                 @foreach($grades as $grade)
                                     @foreach($grade as $g)
@@ -51,7 +52,8 @@
                     </div>
                     <div class="col-auto w_50">
                         <p>Select Subject</p>
-                        <select class="form-select" aria-label="Select Class"  name="Subject">
+                        <select class="form-select" aria-label="Select Subject" id="subj" name="subject" onchange="showLesson(this.value)" disabled>
+                            <option value="" disabled selected>Select Subject</option>
                             @if($teacher_sub->count()>0)
                                 @foreach($teacher_sub as $ts)
                                     <option value="{{$ts->subject_id}}">{{$ts->subject->subject_code}}</option>
@@ -89,47 +91,8 @@
                                             <th class="text-secondary purplel-color opacity-9 text-center">Controllers</th>
                                         </tr>
                                         </thead>
-                                        @foreach($lessons as $lesson)
-
-                                            <tbody>
-                                            <tr>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$lesson->id}}</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$lesson->title}}</p>
-                                                </td>
-
-
-
-                                                <td>
-                                                    <p class="text-sm font-weight-bold mb-0 text-center {{$lesson->status == 1 ? "text-danger" : "text-info"}}">
-                                                        {{$lesson->status == 1 ? "New" : "Published"}}
-                                                    </p>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-sm font-weight-bold">{{$lesson->created_at}}</span>
-                                                </td>
-                                                <td class="align-middle text-center">
-
-                                                    <a  class="text-secondary font-weight-bold text-xs  me-3"    role="button"   onclick="javascript:getLesson({{$lesson->id}})">
-                                                        <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
-                                                    </a>
-
-                                                    <a  class="text-secondary font-weight-bold text-xs me-3" role="button" onclick="deleteLesson({{$lesson->id}});">
-                                                        <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
-                                                    </a>
-                                                    <a  class="text-secondary font-weight-bold text-xs me-3"  data-bs-toggle="modal" href="#attendance" role="button">
-                                                        <i class="far fa-id-card purplel-color" style="font-size: 20px;"></i>
-                                                    </a>
-
-                                                    <a  class="text-secondary font-weight-bold text-xs  "  href="/teacher/lesson/{{$lesson->id}}" role="button">
-                                                        <i class="fas fa-external-link-alt blue-color" style="font-size: 20px;"></i>
-                                                    </a>
-
-                                                </td>
-                                            </tr>
-                                            @endforeach
+                                            <tbody id="tableData">
+                                            @include('pages.teacher.lesson-menu.lesson-table')
                                             </tbody>
                                     </table>
                                 </div>
@@ -429,25 +392,15 @@
             $('#deleteModal').modal('show');
         }
         function showLesson(id){
+            var grade = $('#grd').val();
+            $('#tableData').html('<tr><td colspan="5" class="text-center text-danger">Please Wait.</td></tr>');
             axios({
                 method:'get',
-                url:'/teacher/lesson/' + id + '/show'
+                url:'/teacher/lesson/'+grade +'/'+ id
             })
-            var newWindow = window.open('/teacher/lesson/' +id);
-                        $('#term').val(response.data.term_id);
-                        $('#grade').val(response.data.level_id);
-                        $('#subject').val(response.data.subject_id);
-                        $('#title').val(response.data.title);
-                        $('#description').val(response.data.description);
-                        $('#status').val(response.data.status);
-                        newWindow.my_childs_special_setting = $('#title').val(response.data.title);
-
-
-
-
-
-
-
+                .then(response => {
+                    $('#tableData').html(response.data);
+                })
         }
     </script>
 @endsection

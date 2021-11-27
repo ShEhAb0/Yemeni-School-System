@@ -19,7 +19,7 @@ class NotificationController extends Controller
         //
 //        Notification::where('type',4)->whereIn('level_id',[null,0,session('student_level')])->where('status',0)->update(['status'=>1]);
         $notifications = Notification::whereIn('level_id',[00,session('student_level')])->where('type',4)
-            ->where('status',0)->orderBy('created_at','desc')->paginate(10);
+            ->orderBy('created_at','desc')->paginate(10);
         return view('',compact($notifications));
     }
 
@@ -33,7 +33,7 @@ class NotificationController extends Controller
         //
         $note = '';
         $notifications = Notification::whereIn('level_id',[00,session('student_level')])->where('type',4)
-            ->where('status',0)->orderBy('created_at','desc')->take(4)->get();
+            ->orderBy('created_at','desc')->take(4)->get();
         $count = Notification::whereIn('level_id',[00,session('student_level')])->where('type',4)
             ->where('status',0)->count();
 //        $cc = new Carbon();

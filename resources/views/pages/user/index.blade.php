@@ -23,7 +23,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Grade</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        2
+                                        {{Auth::user()->level_id}}
                                     </h5>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Term</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        1
+                                        {{Auth::user()->term_id}}
                                     </h5>
                                 </div>
                             </div>

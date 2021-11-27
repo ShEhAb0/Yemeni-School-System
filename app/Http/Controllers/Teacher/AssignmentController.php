@@ -63,11 +63,16 @@ class AssignmentController extends Controller
 
         // Search in the title and body columns from the posts table
         $assignments = Assignment::query()
+            ->where('teacher_id', Auth::id())
             ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
-            ->get();
-
-        return view('pages.teacher.assignment-menu.assignment-index',compact('assignments'));
+            ->paginate(10);
+        $terms = Term::all();
+        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+            return $row->take(1);
+        });
+        return view('pages.teacher.assignment-menu.assignment-index',compact('assignments','terms','teacher_sub','grades'));
 
     }
 

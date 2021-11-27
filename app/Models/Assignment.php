@@ -17,7 +17,7 @@ class Assignment extends Model
 
     public function teachersAssignments()
     {
-        return $this->belongsTo('App\Models\Teacher' , 'teacher_id');
+        return $this->belongsTo('App\Models\Teacher' , 'teacher_id')->withTrashed();
     }
 
     public function studentsAssignments()

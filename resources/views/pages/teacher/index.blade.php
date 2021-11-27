@@ -19,7 +19,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold"> Grades Number</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        53,000
+                                        {{count($subject->unique()->values())}}
 
                                     </h5>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Students Number</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        2,300
+                                        {{$students}}
                                     </h5>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 <div class="numbers">
                                     <p class="text-sm mb-0 text-capitalize font-weight-bold">Subjects Number</p>
                                     <h5 class="font-weight-bolder mb-0">
-                                        30
+                                        {{count($subject->unique()->keys())}}
                                     </h5>
                                 </div>
                             </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Mark;
 use App\Models\MarkSetting;
+use App\Models\TeacherSubject;
+use App\Models\Term;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +21,19 @@ class MarkController extends Controller
     public function index()
     {
         $marks = Mark::where('teacher_id',Auth::id())->with(['student'])->where('status',0)->paginate(10);
-        return view('pages.teacher.mark-menu.mark-index',compact('marks'));
+        $terms = Term::all();
+        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+            return $row->take(1);
+        });
+        return view('pages.teacher.mark-menu.mark-index',compact('marks','terms','teacher_sub','grades'));
+
+    }
+
+    public function showMarks($grade,$subject,$term)
+    {
+        $marks = Mark::where('teacher_id',Auth::id())->where('level_id',$grade)->where('subject_id',$subject)->where('term_id',$term)->with(['student'])->where('status',0)->paginate(10);
+        return view('pages.teacher.mark-menu.mark-table',compact('marks'));
 
     }
 
@@ -87,7 +101,11 @@ class MarkController extends Controller
            'assign' => 'required',
         ]);
 
-        $mark = Mark::where('id',$id)->update(['attendance_mark'=>$request->attend, 'assignments_mark'=>$request->assign]);
+        $mark = Mark::find($id);
+        $mark->attendance_mark = $request->attend;
+        $mark->assignments_mark = $request->assign;
+        $mark->save();
+        Mark::where('id',$id)->update(['total'=>$mark->attendance_mark+$mark->assignments_mark+$mark->exams_mark]);
         return redirect('/teacher/mark')->withSuccess('Data has been updated successfully.');
     }
 

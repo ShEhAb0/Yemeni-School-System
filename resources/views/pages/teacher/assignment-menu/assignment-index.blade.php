@@ -88,7 +88,7 @@
                     </div>
                 </div>
             </div>
-            <div id="content" class="hidden">
+            <div id="content">
                 @include('pages.teacher.assignment-menu.assignment-table')
             </div>
 
@@ -346,7 +346,7 @@
         }
 
         function getAssingments() {
-            $('#content').addClass('hidden');
+            // $('#content').addClass('hidden');
             $('#choose').addClass('hidden');
             $('#error').addClass('hidden');
             $('#messages').removeClass('hidden');
@@ -361,7 +361,7 @@
                     if (response.status === 200) {
                         $('#loader').addClass('hidden');
                         $('#messages').addClass('hidden');
-                        $('#content').removeClass('hidden');
+                        // $('#content').removeClass('hidden');
                         $('#content').html(response.data);
                     }
                 })
@@ -369,7 +369,7 @@
 
         $(document).on('click', '.pagination a', function(event){
             event.preventDefault();
-            $('#content').addClass('hidden');
+            // $('#content').addClass('hidden');
             $('#messages').removeClass('hidden');
             $('#loader').removeClass('hidden');
             var page = $(this).attr('href').split('page=')[1];
@@ -385,7 +385,7 @@
                         $('#loader').addClass('hidden');
                         $('#messages').addClass('hidden');
                         $('#content').html(response.data);
-                        $('#content').removeClass('hidden');
+                        // $('#content').removeClass('hidden');
                     }
                 })
         });

@@ -49,7 +49,7 @@ class ExamController extends Controller
     public function store(Request $request)
     {
         //
-        $totalMark = 0;
+        $examMark = 0;
         $questions = $request->questions;
         foreach ($questions as $k => $question) {
             $correct = Question::where('id',$k)->first();
@@ -68,13 +68,13 @@ class ExamController extends Controller
             $answer->status = 1;
             $answer->save();
 
-            $totalMark += $mark;
+            $examMark += $mark;
         }
         $absence = Attendance::where('student_id',Auth::id())->where('subject_id',$request->subject)
             ->where('level_id',Auth::user()->level_id)->where('term_id',Auth::user()->term_id)->where('status',0)->count();
         $attendanceMark = 20-(round($absence/2,2));
         $assignmentMark = StudentAssignment::where('student_id',Auth::id())->where('subject_id',$request->subject)->sum('mark');
-
+        $totalMark = $examMark + $attendanceMark + $assignmentMark;
         $marks = new Mark();
         $marks->teacher_id = $request->teacher;
         $marks->student_id = Auth::id();
@@ -84,6 +84,7 @@ class ExamController extends Controller
         $marks->exam_id = $request->exam;
         $marks->attendance_mark = $attendanceMark;
         $marks->assignments_mark = $assignmentMark;
+        $marks->exams_mark = $examMark;
         $marks->exams_mark = $totalMark;
         $marks->status = 0;
         $marks->save();
@@ -98,9 +99,6 @@ class ExamController extends Controller
         $notification->status = 0;
         $notification->save();
 
-        if (Auth::user()->term_id == 1){
-            User::where('id',Auth::id())->update(['term_id'=>2]);
-        }
 
         return redirect('/exam')->withSuccess('Congratulations you have end your exam');
     }
