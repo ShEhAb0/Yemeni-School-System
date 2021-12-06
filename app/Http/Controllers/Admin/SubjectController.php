@@ -23,7 +23,21 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->get();
+        $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->orderBy('id','DESC')->get();
+
+        $terms = Term::all();
+        $grades = Grade::all();
+        $teachers = Teacher::all();
+        return view('pages.admin.subject-menu.subject-index', compact('subjects','terms','grades','teachers'));
+
+    }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $subjects = Subject::query()
+            ->where('subject_name', 'LIKE', "%{$search}%")
+            ->orWhere('subject_code', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->get();
         $terms = Term::all();
         $grades = Grade::all();
         $teachers = Teacher::all();

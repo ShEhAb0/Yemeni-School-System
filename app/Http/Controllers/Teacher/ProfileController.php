@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -47,7 +50,9 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $tpro = Teacher::where('id' , $id)->get();
+        return view('pages.teacher.profile',compact('tpro'));
+
     }
 
     /**
@@ -58,7 +63,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tpro = Teacher::find($id);
+        return response($tpro,200);
     }
 
     /**
@@ -70,7 +76,26 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'username' => "required|unique:teachers,username,$id|min:3",
+            'email' => "required|unique:teachers,email,$id",
+            'phone' => 'numeric',
+            'address' => 'required',
+
+        ]);
+
+        $tpro = Teacher::find($id);
+        $tpro->username = $request->input('username');
+        $tpro->phone = $request->input('phone');
+        $tpro->email = $request->input('email');
+        $tpro->address = $request->input('address');
+        if ($request->input('password') != null) {
+            $tpro->password = Hash::make($request->input('password'));
+        }
+        $tpro->save();
+
+        return redirect('/teacher/profile/'.$id)->withSuccess('Profile has been updated successfully..!');
+
     }
 
     /**

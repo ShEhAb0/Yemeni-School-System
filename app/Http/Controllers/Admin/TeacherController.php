@@ -23,6 +23,23 @@ class TeacherController extends Controller
         return view('pages.admin.teacher-menu.teacher-index')->with('teachers' , $teacher);;
 
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $teachers = Teacher::query()
+            ->where('teacher_name', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('gender', 'LIKE', "%{$search}%")
+            ->orWhere('address', 'LIKE', "%{$search}%")
+            ->orWhere('phone', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->paginate(10);
+
+
+        return view('pages.admin.teacher-menu.teacher-index' , compact('teachers' ));
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

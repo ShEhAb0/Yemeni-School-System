@@ -29,10 +29,12 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-8">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="search...">
-                    </div>
+                    <form action="{{ route('admin.students') }}" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" placeholder="search..." name="search">
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-3 text-end">
@@ -121,10 +123,13 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="text-center my-5">
+{{--                                    {{$students->render()}}--}}
+                                </div>
 
                             @else
                                 <div class="text-center">
-                                    <p class="h5 text-danger">There are no students yet..!</p>
+                                    <p class="h5 text-danger">There are no students ..!</p>
                                 </div>
                             @endif
                         </div>

@@ -39,7 +39,7 @@ class NewsController extends Controller
         $news = News::query()
             ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
-            ->get();
+            ->orderBy('id','DESC')->paginate(10);
 
 
         //$search = $request->get('search');

@@ -29,6 +29,19 @@ class StudentNewsController extends Controller
         return view('pages.admin.student-news-menu.student-news-index',compact('news','terms','grades'));
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $news = StudentNews::query()
+            ->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('description', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->paginate(10);
+        $terms = Term::all();
+        $grades = Grade::all();
+        return view('pages.admin.student-news-menu.student-news-index',compact('news','terms','grades'));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *

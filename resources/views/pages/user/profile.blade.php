@@ -156,7 +156,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 "  onclick="getStudent({{}});" role="button">
+                            <a class="nav-link mb-0 px-0 py-1 "   role="button" onclick="javascript:getUserProfile({{Auth::user()->id}})">
                                 <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <title>settings</title>
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -183,6 +183,18 @@
     </div>
 </div>
 <div class="container-fluid py-4">
+    @if($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endif
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endforeach
     <div class="d-flex justify-content-start" style="flex-wrap: wrap;">
 
         <div class="col-12 col-md-8 col-xl-8 p-2" style="margin: 0 auto;">
@@ -199,8 +211,8 @@
 
                     <ul class="list-group">
                         <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ Auth::user()->student_name}}</li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"> Student Parent:</strong> &nbsp; <a href="#"> Mohammed Khald</a></li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Grade:</strong> &nbsp; 2</li>
+{{--                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark"> Student Parent:</strong> &nbsp; <a href="#"> Mohammed Khald</a></li>--}}
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Username:</strong> &nbsp; {{ Auth::user()->username}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+967) {{ Auth::user()->phone}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; {{ Auth::user()->address}}</li>
@@ -380,6 +392,28 @@
     };
 
 
+</script>
+
+<script src="{{asset('js/axios.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    function getUserProfile(id) {
+        axios({
+            method:'get',
+            url:'/profile/' + id + '/edit'
+        })
+            .then(response =>{
+                if(response.status === 200){
+                    $('#editForm').attr('action','/profile/'+id);
+                    $('#username').val(response.data.username);
+                    $('#phone').val(response.data.phone);
+                    $('#address').val(response.data.address);
+                    $('#email').val(response.data.email);
+                    $('#editModal').modal('show');
+                }
+            })
+    }
 </script>
 
 </body>

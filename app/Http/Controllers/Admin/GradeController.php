@@ -20,24 +20,19 @@ class GradeController extends Controller
     public function index()
     {
 
-        $grades = Grade::with('students')->paginate(10);
-        return view('pages.admin.grade-menu.grade-index' )->with('grades' , $grades);
+        $grades = Grade::with('students')->orderBy('id','DESC')->get();
+
+        return view('pages.admin.grade-menu.grade-index' , compact('grades'));
 
     }
 
     public function search(Request $request)
     {
         $search = $request->input('search');
-
-        // Search in the title and body columns from the posts table
         $grades = Grade::query()
             ->where('grade_name', 'LIKE', "%{$search}%")
             ->orWhere('grade_code', 'LIKE', "%{$search}%")
-            ->get();
-
-
-        //$search = $request->get('search');
-        // $news = DB::table('news')->where('title' , 'like' , '%'.$search.'%')->paginate(10);
+            ->orderBy('id','DESC')->paginate(10);
         return view('pages.admin.grade-menu.grade-index',compact('grades'));
 
     }

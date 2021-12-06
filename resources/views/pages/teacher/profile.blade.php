@@ -28,6 +28,7 @@
 <nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2">
     <div class="container-fluid py-1">
 
+
         <h6 class="text-dark font-weight-bolder ms-2">Profile</h6>
 
         <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
@@ -115,6 +116,7 @@
                 </ul>
             </div>
         </div>
+    </div>
 </nav>
 
 
@@ -154,7 +156,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="modal" href="#ProfileSt" role="button">
+                            <a class="nav-link mb-0 px-0 py-1 " role="button" onclick="javascript:getTeacherProfile({{Auth::user()->id}})">
                                 <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <title>settings</title>
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -181,111 +183,81 @@
     </div>
 </div>
 <div class="container-fluid py-4">
-    <div class="d-flex justify-content-around" style="flex-wrap: wrap;">
+    @if($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endif
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endforeach
 
-        <div class="col-12 col-md-4 col-xl-4 p-2">
-            <div class="card h-100">
-                <div class="card-header pb-0 p-3">
-                    <div class="row">
-                        <div class="col-md-8 d-flex align-items-center">
-                            <h6 class="mb-0">Profile Information</h6>
-                        </div>
+    {{--    <div class="d-flex justify-content-around" style="flex-wrap: wrap;">--}}
+
+{{--        <div class="col-auto my-auto">--}}
+{{--            <div class="card h-100">--}}
+{{--                <div class="card-header pb-0 p-3">--}}
+{{--                    <div class="row">--}}
+{{--                        <div class="col-md-8 d-flex align-items-center">--}}
+{{--                            <h6 class="mb-0">Profile Information</h6>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="card-body p-3">--}}
+{{--                    <p class="text-sm">--}}
+{{--                        Hi, I’m Alec Thompson,If you can’t decide,Hi, I’m Alec Thompson, Decisions: If you can’t decide.--}}
+{{--                    </p>--}}
+{{--                    <hr class="horizontal gray-light my-4">--}}
+{{--                    <ul class="list-group">--}}
+{{--                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>{{ Auth::user()->teacher_name}}</li>--}}
+{{--                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+967) {{ Auth::user()->phone}}</li>--}}
+{{--                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> {{ Auth::user()->email}}</li>--}}
+{{--                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">School Teaching Experience:</strong> &nbsp; 3 Years</li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+    <div class="col-12 col-md-8 col-xl-8 p-2" style="margin: 0 auto;">
+        <div class="card h-100">
+            <div class="card-header pb-0 p-3">
+                <div class="row">
+                    <div class="col-md-8 d-flex align-items-center">
+                        <h6 class="mb-0">Teacher Information</h6>
                     </div>
                 </div>
-                <div class="card-body p-3">
-                    <p class="text-sm">
-                        Hi, I’m Alec Thompson, Decisions: If you can’t decide,Hi, I’m Alec Thompson, Decisions: If you can’t decide,Hi, I’m Alec Thompson, Decisions: If you can’t decide.
-                    </p>
-                    <hr class="horizontal gray-light my-4">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong>{{ Auth::user()->teacher_name}}</li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+967) {{ Auth::user()->phone}}</li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> {{ Auth::user()->email}}</li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">School Teaching Experience:</strong> &nbsp; 3 Years</li>
-                    </ul>
-                </div>
             </div>
-        </div>
-        <div class="col-12 col-md-4 col-xl-4 p-2" >
-            <div class="card h-100">
-                <div class="card-header pb-0 p-3">
-                    <h6 class="mb-0">Experiences</h6>
-                </div>
-                <div class="card-body p-3">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">1- Teaching Math in Jhsk School for 1 Year.</h6>
-                            </div>
-                        </li>
+            <div class="card-body p-3">
+                <br/>
 
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">2- Teaching Math in Jhsk School for 1 Year.</h6>
-                            </div>
-                        </li>
+                <ul class="list-group">
+                    <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ Auth::user()->teacher_name}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Username:</strong> &nbsp; {{ Auth::user()->username}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+967) {{ Auth::user()->phone}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email}}</li>
+                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; {{ Auth::user()->address}}</li>
+                    <li class="list-group-item border-0 ps-0 pb-0">
 
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">3- Teaching Math in Jhsk School for 1 Year.</h6>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">4- Teaching Math in Jhsk School for 1 Year.</h6>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">5- Teaching Math in Jhsk School for 1 Year.</h6>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 col-xl-4 p-2">
-            <div class="card h-100">
-                <div class="card-header pb-0 p-3">
-                    <h6 class="mb-0">certifications</h6>
-                </div>
-                <div class="card-body p-3">
-                    <ul class="list-group">
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">1- Teaching Math bachelor's degree from Standford university .</h6>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">2- Teaching Algabra Master's degree from Tkid university .</h6>
-                            </div>
-                        </li>
-
-                        <li class="list-group-item border-0 d-flex align-items-center px-0 mb-3">
-                            <div class="d-flex align-items-start flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">3- Teaching statistics Master's degree from Tkid university .</h6>
-                            </div>
-                        </li>
-
-
-                    </ul>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="ProfileSt" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModal">Profile settings</h5>
+                    <h5 class="modal-title">Profile settings</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body max-height-vh-80" style="overflow-y:auto">
-                    <form>
+                    <form class="row g-2"  id="editForm" method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="text-center">
                             <div class="avatar" id="avatar">
                                 <div id="preview"><img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" id="avatar-image" class="avatar_img" id="">
@@ -300,28 +272,27 @@
                                 <span id="name" tabindex="4" data-key="1" contenteditable="true"  onblur="changeAvatarName('blur', this.dataset.key, this.textContent)"></span>
                             </div>
                         </div>
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="Change profession" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Username" name="username" id="username">
+                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" name="email" id="email" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" name="phone" id="phone" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="number" placeholder="New experience Years" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Address" name="address" id="address" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" aria-label="add Lesson Title">
-
-                        <textarea class="form-control my-1 mb-2"  placeholder="Change profile information" rows="3"></textarea>
-                        <textarea class="form-control my-1 mb-2"  placeholder="Change experiences" rows="3"></textarea>
-                        <textarea class="form-control my-1 mb-2"  placeholder="Change certifications" rows="3"></textarea>
+                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" name="password" id="password" aria-label="add Lesson Title">
 
 
 
-                    </form>
-                </div>
+
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" >Save changes</button>
+                    <button type="submit" class="btn btn-outline-primary" >Save changes</button>
 
+                </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -424,6 +395,28 @@
     };
 
 
+</script>
+<script src="{{asset('js/axios.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    function getTeacherProfile(id) {
+        axios({
+            method:'get',
+            url:'/teacher/profile/' + id + '/edit'
+        })
+            .then(response =>{
+                if(response.status === 200){
+                    $('#editForm').attr('action','/teacher/profile/'+id);
+                    $('#phone').val(response.data.phone);
+                    $('#address').val(response.data.address);
+                    $('#email').val(response.data.email);
+                    $('#username').val(response.data.username);
+
+                    $('#editModal').modal('show');
+                }
+            })
+    }
 </script>
 </body>
 

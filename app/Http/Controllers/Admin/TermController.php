@@ -29,7 +29,7 @@ class TermController extends Controller
         // Search in the title and body columns from the posts table
         $terms = Term::query()
             ->where('name', 'LIKE', "%{$search}%")
-            ->get();
+            ->orderBy('id','DESC')->paginate(10);
 
 
         //$search = $request->get('search');

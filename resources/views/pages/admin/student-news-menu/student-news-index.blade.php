@@ -25,10 +25,12 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-8">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="search...">
-                    </div>
+                    <form action="{{ route('admin.grade-news') }}" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" placeholder="search..." name="search">
+                        </div>
+                    </form>
                 </div>
 
                 <div class="col-3 text-end">
@@ -54,7 +56,7 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr>
-                                            <th class="text-secondary purplel-color opacity-9 text-center ">Level</th>
+                                            <th class="text-secondary purplel-color opacity-9 text-center ">Grade</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">Term</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">News Title</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">News Details</th>
@@ -112,7 +114,9 @@
                                     {{$news->render()}}
                                 </div>
                             @else
-                                <p class="text-center text-danger">There are no news</p>
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no grade news ..!</p>
+                                </div>
                             @endif
                         </div>
                     </div>

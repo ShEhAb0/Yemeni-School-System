@@ -199,7 +199,11 @@
                         <div class="col-lg-12">
                             <h5 class="font-weight-bolder">News</h5>
                             <div class="max-height-vh-80  h-80" style="overflow-y: auto;">
-
+                                @foreach($news as $n)
+                                    <p class="mb-1 pt-2 text-bold">Published at : {{$n->created_at}} </p>
+                                    <h5 class="font-weight-bolder">News Title: {{$n->title}}</h5>
+                                    <p class="mb-5">{{substr($n->description ,0 , 50)}} {{strlen($n->description) > 50 ? "..." : ""}}</p>
+                                @endforeach
 
                             </div>
 

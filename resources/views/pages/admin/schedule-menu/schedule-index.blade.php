@@ -28,11 +28,12 @@
             <div class="row gx-4">
 
                 <div class="col-8">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search purplel-color" style="font-size: 20px;" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control" placeholder="search..." name="query">
-                    </div>
-
+                    <form action="{{ route('admin.schedules') }}" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" placeholder="search..." name="search">
+                        </div>
+                    </form>
                 </div>
 
 
@@ -62,7 +63,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-secondary opacity-9 purplel-color text-center">#</th>
-                                            <th class="text-secondary opacity-9 purplel-color text-center">level</th>
+                                            <th class="text-secondary opacity-9 purplel-color text-center">Grade</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">term</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Schedule</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Created Date</th>
@@ -110,12 +111,12 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="text-center my-5">
-                                    {{$schedules->render()}}
-                                </div>
+{{--                                <div class="text-center my-5">--}}
+{{--                                    {{$schedules->render()}}--}}
+{{--                                </div>--}}
                             @else
                                 <div class="text-center">
-                                    <p class="h5 text-danger">There are no grades schedule yet..!</p>
+                                    <p class="h5 text-danger">There are no grades schedule ..!</p>
                                 </div>
                             @endif
                         </div>

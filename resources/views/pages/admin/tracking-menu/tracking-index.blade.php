@@ -16,10 +16,12 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-12">
-                    <div class="input-group">
-                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                        <input type="text" class="form-control blue-color" placeholder="Type here...">
-                    </div>
+                    <form action="{{ route('admin.tracking') }}" method="GET">
+                        <div class="input-group">
+                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                            <input type="text" class="form-control" placeholder="search..." name="search">
+                        </div>
+                    </form>
                 </div>
 
 
@@ -77,7 +79,7 @@
                                 </div>
                             @else
                                 <div class="text-center">
-                                    <p class="h5 text-danger">There are no logs yet..!</p>
+                                    <p class="h5 text-danger">There are no logs ..!</p>
                                 </div>
                             @endif
                         </div>

@@ -26,6 +26,18 @@ class ScheduleController extends Controller
         return view('pages.admin.schedule-menu.schedule-index',compact('schedules','terms','grades'));
 
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $schedules = Schedule::query()
+            ->where('level_id', 'LIKE', "%{$search}%")
+            ->orWhere('term_id', 'LIKE', "%{$search}%")
+            ->get();
+        $terms = Term::all();
+        $grades = Grade::all();
+        return view('pages.admin.schedule-menu.schedule-index',compact('schedules' , 'terms','grades'));
+
+    }
 
     /**
      * Show the form for creating a new resource.

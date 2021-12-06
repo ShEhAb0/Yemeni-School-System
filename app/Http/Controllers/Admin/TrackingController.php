@@ -15,9 +15,22 @@ class TrackingController extends Controller
      */
     public function index()
     {
-        $logs = AdminLog::with('admin')->orderBy('created_at','desc')->paginate(10);
+        $logs = AdminLog::with('admin')->orderBy('id','DESC')->get();
 //        dd($logs);
         return view('pages.admin.tracking-menu.tracking-index',compact('logs'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $logs = AdminLog::query()
+            ->where('action', 'LIKE', "%{$search}%")
+            ->orWhere('detils', 'LIKE', "%{$search}%")
+            ->orWhere('action_name', 'LIKE', "%{$search}%")
+
+            ->orderBy('id','DESC')->paginate(10);
+        return view('pages.admin.tracking-menu.tracking-index',compact('logs'));
+
     }
 
     /**

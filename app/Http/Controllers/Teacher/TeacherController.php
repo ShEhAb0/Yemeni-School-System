@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
+use App\Models\News;
 use App\Models\StudentAssignment;
 use App\Models\TeacherSubject;
 use App\Models\User;
@@ -21,7 +22,9 @@ class TeacherController extends Controller
 
         $answers = StudentAssignment::whereIn('subject_id',$subject)->where('status',0)->with(['student','subjects'])->get();
 
-        return view('pages.teacher.index' , compact(  'answers','subject','students'));
+        $news = News::whereIn('type',[0,2])->where('status',1)->orderBy('created_at','desc')->get();
+
+        return view('pages.teacher.index' , compact(  'answers','subject','students' , 'news'));
     }
 
 }

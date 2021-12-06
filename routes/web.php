@@ -100,6 +100,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
         Route::get('/terms', 'App\Http\Controllers\Admin\TermController@search')->name('terms');
         Route::get('/grades', 'App\Http\Controllers\Admin\GradeController@search')->name('grades');
+        Route::get('/admins', 'App\Http\Controllers\Admin\AdminsController@search')->name('admins');
+        Route::get('/parents', 'App\Http\Controllers\Admin\ParentController@search')->name('parents');
+        Route::get('/schedules', 'App\Http\Controllers\Admin\ScheduleController@search')->name('schedules');
+        Route::get('/students', 'App\Http\Controllers\Admin\StudentController@search')->name('students');
+        Route::get('/grade-news', 'App\Http\Controllers\Admin\StudentNewsController@search')->name('grade-news');
+//        Route::get('/subjects', 'App\Http\Controllers\Admin\SubjectController@search')->name('subjects');
+        Route::get('/teachers', 'App\Http\Controllers\Admin\TeacherController@search')->name('teachers');
+        Route::get('/tracking', 'App\Http\Controllers\Admin\TrackingController@search')->name('tracking');
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });

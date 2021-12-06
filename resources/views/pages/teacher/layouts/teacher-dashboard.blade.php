@@ -48,7 +48,7 @@
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
 
-                    <a class="d-flex  py-1 cursor-pointer"  href="/teacher/profile">
+                    <a class="d-flex  py-1 cursor-pointer"  href="/teacher/profile/{{Auth::user()->id}}">
                         <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
                         <div style="margin: auto 10px;">
                             <span class="d-sm-inline text-dark text-bold">{{ Auth::user()->username}}</span>

@@ -52,7 +52,8 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $upro = User::where('id' , $id)->get();
+        return view('pages.user.profile',compact('upro'));
     }
 
     /**
@@ -85,7 +86,7 @@ class ProfileController extends Controller
 
         if ($request->input('password') != null){
             $request->validate([
-                'password' => 'required|confirmed|min:6'
+                'password' => 'required|min:6'
             ]);
         }
 
@@ -101,7 +102,7 @@ class ProfileController extends Controller
 
         $student->save();
 
-        return redirect('/profile')->withSuccess('Profile has been updated successfully..');
+        return redirect('/profile/'.$id)->withSuccess('Profile has been updated successfully..');
 
     }
 

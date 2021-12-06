@@ -109,6 +109,8 @@
                                     </table>
                                 </div>
                                 <div class="text-center my-5">
+                                    {{$news->render()}}
+
                                 </div>
                             @else
                                 <p class="text-center text-danger">There are no news</p>

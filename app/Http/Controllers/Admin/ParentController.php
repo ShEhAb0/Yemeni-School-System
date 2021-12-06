@@ -27,6 +27,20 @@ class ParentController extends Controller
         return view('pages.admin.parent-menu.parent-index' , compact('users','parents'));
 
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $users = User::all();
+        $parents = Parents::query()
+            ->where('parent_name', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('gender', 'LIKE', "%{$search}%")
+            ->orWhere('address', 'LIKE', "%{$search}%")
+            ->orWhere('phone', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->paginate(10);
+        return view('pages.admin.parent-menu.parent-index',compact('parents' , 'users'));
+    }
 
     public function getStudents()
     {

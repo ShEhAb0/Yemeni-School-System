@@ -87,6 +87,8 @@
                                 </table>
                             </div>
                                 <div class="text-center my-5">
+                                    {{$terms->render()}}
+
                                 </div>
                             @else
                                 <div class="text-center">

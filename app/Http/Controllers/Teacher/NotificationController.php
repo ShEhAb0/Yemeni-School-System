@@ -19,7 +19,7 @@ class NotificationController extends Controller
         //
 //        Notification::where('type',2)->where('status',0)->update(['status'=>1]);
         $notifications = Notification::where('type',2)->orderBy('created_at','desc')->paginate(10);
-        return view('',compact($notifications));
+        return view('pages.teacher.notifications',compact('notifications'));
     }
 
     /**

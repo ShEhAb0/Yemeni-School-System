@@ -21,10 +21,28 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = User::all();
+        $students = User::all()->partition(10);
         $terms = Term::all();
         $grades = Grade::all();
 
+        return view('pages.admin.student-menu.student-index' , compact('students' ,'terms' , 'grades'));
+
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $students = User::query()
+            ->where('student_name', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('gender', 'LIKE', "%{$search}%")
+            ->orWhere('address', 'LIKE', "%{$search}%")
+            ->orWhere('phone', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->get();
+
+        $terms = Term::all();
+        $grades = Grade::all();
         return view('pages.admin.student-menu.student-index' , compact('students' ,'terms' , 'grades'));
 
     }

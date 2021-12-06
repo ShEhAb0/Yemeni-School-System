@@ -100,7 +100,7 @@ class AttendanceController extends Controller
     {
         //
         $data = '';
-        $attends = Attendance::where('lesson_id',$id)->with('student')->get();
+        $attends = Attendance::where('lesson_id',$id)->where('status',1)->with('student')->get();
         if ($attends->count() > 0) {
             foreach ($attends as $attend) {
                 $data .= '

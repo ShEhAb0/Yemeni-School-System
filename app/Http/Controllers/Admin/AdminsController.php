@@ -19,9 +19,23 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        $admins = Admin::paginate(15);
+        $admins = Admin::paginate(10);
 
         return view('pages.admin.admin-menu.admin-index', compact('admins'));
+
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $admins = Admin::query()
+            ->where('admin_name', 'LIKE', "%{$search}%")
+            ->orWhere('username', 'LIKE', "%{$search}%")
+            ->orWhere('email', 'LIKE', "%{$search}%")
+            ->orWhere('gender', 'LIKE', "%{$search}%")
+            ->orWhere('type', 'LIKE', "%{$search}%")
+            ->orderBy('id','DESC')->paginate(10);
+        return view('pages.admin.admin-menu.admin-index',compact('admins'));
 
     }
 
