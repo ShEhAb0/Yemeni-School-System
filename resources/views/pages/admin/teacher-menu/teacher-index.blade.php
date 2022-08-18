@@ -75,13 +75,13 @@
                                         <tbody>
                                         @foreach($teachers as $teacher)
                                             <tr>
-                                                <th scope="row" class="text-sm font-weight-bold text-center">{{$teacher->id}}
+                                                <th scope="row" class="text-sm font-weight-bold text-center">{{$loop->iteration}}
                                                 </th>
 
                                                 <td>
                                                     <div class="d-flex px-2 py-1 justify-content-center">
                                                         <div >
-                                                            <img src="{{asset('/images/profile.png/')}}" class="avatar avatar-sm me-3" alt="user1">
+                                                            <img src="{{asset('/images/teachersProfiles/'.$teacher['image'])}}" class="avatar avatar-sm me-3" alt="user1">
                                                         </div>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm" >{{$teacher['teacher_name']}}</h6>

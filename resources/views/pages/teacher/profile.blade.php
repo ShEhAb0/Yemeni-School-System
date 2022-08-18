@@ -28,8 +28,14 @@
 <nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2">
     <div class="container-fluid py-1">
 
+        <div style="margin: auto 10px;">
+            <a href="/teacher/index">
+            <i class="fa fa-arrow-left cursor-pointer text-dark" aria-hidden="true"></i>
+            </a>
+            <span class="d-sm-inline text-dark text-bold"></span>
+{{--            <h6 class="text-dark font-weight-bolder ms-2">Profile</h6>--}}
 
-        <h6 class="text-dark font-weight-bolder ms-2">Profile</h6>
+        </div>
 
         <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -133,7 +139,7 @@
         <div class="row gx-4">
             <div class="col-auto">
                 <div class="avatar avatar-xl position-relative">
-                    <img src="{{asset('/img/bruce-mars.jpg')}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    <img src="{{asset('images/teachersProfiles/'.Auth::guard('teacher')->user()->image)}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                 </div>
             </div>
             <div class="col-auto my-auto">
@@ -260,11 +266,11 @@
                         @method('PUT')
                         <div class="text-center">
                             <div class="avatar" id="avatar">
-                                <div id="preview"><img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" id="avatar-image" class="avatar_img" id="">
+                                <div id="preview"><img src="{{asset('images/teachersProfiles/'.Auth::guard('teacher')->user()->image)}}"  class="avatar_img" id="image" >
                                 </div>
                                 <div class="avatar_upload" >
                                     <label class="upload_label">Upload
-                                        <input type="file" id="upload">
+                                        <input type="file" id="upload" name="upload" accept="image/png, image/gif, image/jpeg">
                                     </label>
                                 </div>
                             </div>

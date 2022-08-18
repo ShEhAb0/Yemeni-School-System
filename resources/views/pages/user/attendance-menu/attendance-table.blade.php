@@ -62,7 +62,7 @@
                             @foreach($attendances as $attendance)
                             <tr>
                                 <td>
-                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$attendance->id}}</p>
+                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                 </td>
 
                                 <td>

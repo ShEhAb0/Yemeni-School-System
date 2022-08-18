@@ -32,6 +32,28 @@ class ExamController extends Controller
 
     }
 
+    public function getSubjects($id)
+    {
+        $subjects = TeacherSubject::where('teacher_id',Auth::id())->where('level_id',$id)->where('status',1)->with('subject')->get();
+//        $subjects = Subject::where('level_id',Auth::user()->level_id)->where('status',1)->get();
+        if ($subjects->count() > 0) {
+            $data = '<option value="" disabled selected>Select the subject</option>';
+            foreach ($subjects as $subject) {
+                $data .= '
+            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_code . '</option>
+            ';
+            }
+            return response($data,200);
+        }
+        return response('',201);
+    }
+
+    public function getExams($grade,$subject)
+    {
+        $exams = Exam::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->orderBy('created_at' , 'desc')->paginate(15);
+        return view('pages.teacher.exam-menu.exam-index',compact('exams'))->render();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -141,10 +163,8 @@ class ExamController extends Controller
                                                    data-exam="'.$question->exam_id.'" onclick="editQues($(this))" role="button">
                                                     <i class="fas fa-edit purplel-color " style="font-size: 20px;"></i>
                                                 </a>
-
-                                                <a href="javascript:;"
-                                                   class="text-secondary font-weight-bold text-xs me-3"
-                                                   data-toggle="tooltip" data-original-title="Edit user">
+                                                <a class="text-secondary font-weight-bold text-xs me-3"
+                                                   onclick="deleteQues('.$question->id.')">
                                                     <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                                 </a>
 
@@ -168,7 +188,8 @@ class ExamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $exams = Exam::find($id);
+        return response($exams,200);
     }
 
     /**

@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
+use function GuzzleHttp\Promise\exception_for;
+
 class AssignmentController extends Controller
 {
     /**
@@ -46,54 +48,90 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request->has('saveAnswer')){
-            $subject = Subject::where('id',$request->subject_id)->first();
-            $path = public_path().'/Assignments/'.$subject->subject_name.'/Answers';
-            if (!File::exists($path)){
-                File::makeDirectory($path);
+        try {
+
+
+            if ($request->has('saveAnswer')) {
+                $subject = Subject::where('id', $request->subject_id)->first();
+                $path = public_path() . '/Assignments/' . $subject->subject_name . '/Answers';
+
+
+                $answer = new StudentAssignment();
+                $answer->subject_id = $request->subject_id;
+                $answer->assignment_id = $request->as_id;
+                $answer->student_id = Auth::id();
+                if ($answerFile = $request->file('answer') != null) {
+                    if (!File::exists($path)) {
+                        File::makeDirectory($path);
+                    }
+                    $answerFile = $request->file('answer');
+                    $filename = time() . '.' . $answerFile->getClientOriginalName();
+                    $request->file('answer')->move($path, $filename);
+                    $answer->file_name = $filename;
+                }
+                if ($request->input('answerText') != null) {
+                    $answer->answer = $request->input('answerText');
+                }
+                $answer->delivery_date = Carbon::now('Asia/Riyadh');
+                $answer->mark = 0;
+                $answer->status = 0;//($request->due >= Carbon::today('Asia/Riyadh')->format('Y-m-d') ? 1 : 0);
+                $answer->save();
+
+                $name = Auth::user()->student_name;
+                $notification = new Notification();
+                $notification->type = 2;
+                $notification->title = "Student submit assignment";
+                $notification->details = "Student ($name) submit ($subject->subject_name's) assignment.";
+                $notification->url = "/teacher/assignment/$answer->assignment_id";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                return redirect('/assignment/' . $answer->assignment_id)->withSuccess('Your answer has been uploaded successfully..');
+
+            } else {
+                $request->validate([
+                    'comment' => 'required'
+                ]);
+
+                $comment = new AssignmentComment();
+                $comment->assignment_id = $request->assignment_id;
+                $comment->user_id = Auth::id();
+                $comment->user_type = 0;
+                $comment->username = Auth::user()->student_name;
+                $comment->comment = $request->comment;
+                $comment->created_at = Carbon::now('Asia/Riyadh');
+                $comment->status = 1;
+                $comment->save();
+
+                $name = Auth::user()->student_name;
+                $notification = new Notification();
+                $notification->type = 2;
+                $notification->title = "Student comment ";
+                $notification->details = "Student ($name) submit new comment on the assignment.";
+                $notification->url = "/teacher/assignment/$request->assignment_id";
+                $notification->created_at = Carbon::now('Asia/Riyadh');
+                $notification->status = 0;
+                $notification->save();
+
+                if (!$comment->user_id == Auth::id()) {
+                    $notification = new Notification();
+                    $notification->type = 3;
+                    $notification->level_id = $request->level;
+                    $notification->title = "Student comment";
+                    $notification->details = "Student ($name) submit new comment on the assignment.";
+                    $notification->url = "/assignment/$request->assignment_id";
+                    $notification->created_at = Carbon::now('Asia/Riyadh');
+                    $notification->status = 0;
+                    $notification->save();
+                }
+
+                return redirect('/assignment/' . $request->assignment_id);
             }
-            $answerFile = $request->file('answer');
-            $filename = time() . '.' . $answerFile->getClientOriginalName();
-            $request->file('answer')->move($path, $filename);
-
-            $answer = new StudentAssignment();
-            $answer->subject_id = $request->subject_id;
-            $answer->assignment_id = $request->as_id;
-            $answer->student_id = Auth::id();
-            $answer->file_name = $filename;
-            $answer->delivery_date = Carbon::now('Asia/Riyadh');
-            $answer->mark = 0;
-            $answer->status = 0;//($request->due >= Carbon::today('Asia/Riyadh')->format('Y-m-d') ? 1 : 0);
-            $answer->save();
-
-            $name= Auth::user()->student_name;
-            $notification = new Notification();
-            $notification->type = 2;
-            $notification->title = "Student submit assignment";
-            $notification->details = "Student ($name) submit ($subject->subject_name's) assignment.";
-            $notification->url = "/teacher/assignment/$answer->assignment_id";
-            $notification->created_at = Carbon::now('Asia/Riyadh');
-            $notification->status = 0;
-            $notification->save();
-
-            return redirect('/assignment/'.$answer->assignment_id)->withSuccess('Your answer has been uploaded successfully..');
-
-        }else{
-            $request->validate([
-                'comment' => 'required'
-            ]);
-
-            $comment = new AssignmentComment();
-            $comment->assignment_id = $request->assignment_id;
-            $comment->user_id = Auth::id();
-            $comment->user_type = 0;
-            $comment->username = Auth::user()->student_name;
-            $comment->comment = $request->comment;
-            $comment->created_at = Carbon::now('Asia/Riyadh');
-            $comment->status = 1;
-            $comment->save();
-
-            return redirect('/assignment/'.$request->assignment_id);
+        }
+        catch (\Exception $exception )
+        {
+            return redirect()->back()->withErrors('Ops! Something Wrong Please Try Again Later. ');
         }
 
 
@@ -122,7 +160,7 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
-        $assignments = Assignment::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->with('teacher')->paginate(3);
+        $assignments = Assignment::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->with('teacher')->where('status',1)->paginate(3);
         return view('pages.user.assignment-menu.assignment-data',compact('assignments'));
 
     }

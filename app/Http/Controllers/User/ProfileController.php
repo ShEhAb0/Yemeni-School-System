@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use File;
 
 class ProfileController extends Controller
 {
@@ -64,8 +65,8 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $student = User::find($id);
-        return response($student,200);
+        $upro = User::find($id);
+        return response($upro,200);
     }
 
     /**
@@ -84,23 +85,37 @@ class ProfileController extends Controller
             'address' => 'required',
         ]);
 
-        if ($request->input('password') != null){
-            $request->validate([
-                'password' => 'required|min:6'
-            ]);
-        }
+//        if ($request->input('password') != null){
+//            $request->validate([
+//                'password' => 'required|min:6'
+//            ]);
+//        }
 
-        $student = User::find($id);
+        $upro = User::find($id);
 
-        $student->username = $request->input('username');
-        $student->email = $request->input('email');
-        $student->phone = $request->input('phone');
-        $student->address = $request->input('address');
+        $upro->username = $request->input('username');
+        $upro->email = $request->input('email');
+        $upro->phone = $request->input('phone');
+        $upro->address = $request->input('address');
         if ($request->input('password') != null) {
-            $student->password = Hash::make($request->input('password'));
+            $upro->password = Hash::make($request->input('password'));
         }
 
-        $student->save();
+        if ($request->file('upload') != null)
+        {
+            $path = public_path().'/images/usersProfiles/';
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $userProfile = $request->file('upload');
+            $filename = time() . '.' . $userProfile->getClientOriginalName();
+            $request->upload->move($path, $filename);
+            $upro->image=$filename;
+
+            $upro->save();
+
+        }
+
 
         return redirect('/profile/'.$id)->withSuccess('Profile has been updated successfully..');
 

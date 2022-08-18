@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class StudentController extends Controller
 {
@@ -21,9 +22,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = User::all()->partition(10);
+        $students = User::with('grade')->get();
         $terms = Term::all();
-        $grades = Grade::all();
+        $grades = Grade::where('status' , 1)->get();;
 
         return view('pages.admin.student-menu.student-index' , compact('students' ,'terms' , 'grades'));
 
@@ -42,7 +43,7 @@ class StudentController extends Controller
             ->orderBy('id','DESC')->get();
 
         $terms = Term::all();
-        $grades = Grade::all();
+        $grades = Grade::where('status' , 1)->get();
         return view('pages.admin.student-menu.student-index' , compact('students' ,'terms' , 'grades'));
 
     }
@@ -70,15 +71,18 @@ class StudentController extends Controller
             'student_name' => 'required|max:50',
             'username' => 'required|unique:users,username|min:3',
             'email' => 'required|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => ['required' , Password::min(6)->letters()->numbers()],
             'gender' => 'required',
-            'phone' => 'numeric',
+            'phone' => 'numeric|digits:9',
             'address' => 'required',
             'term' => 'required',
             'grade' => 'required',
             'status' => 'required',
 
         ]);
+        try {
+
+
         $student = new User();
         $student->student_name = $request->input('student_name');
         $student->username = $request->input('username');
@@ -106,7 +110,11 @@ class StudentController extends Controller
 
         return redirect('/admin/students')->withSuccess('New student has been added successfully..!');
 
-
+        }
+        catch (\Exception $exception)
+        {
+            return redirect()->back()->withErrors('Ops! Something Wrong Please Try Again Later ');
+        }
     }
 
     /**

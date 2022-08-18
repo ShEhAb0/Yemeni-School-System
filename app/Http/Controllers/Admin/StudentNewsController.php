@@ -33,6 +33,12 @@ class StudentNewsController extends Controller
     {
         $search = $request->input('search');
         $news = StudentNews::query()
+            ->whereHas('grade', function ($row) use ($search){
+                $row->where('grade_name','LIKE',"%$search%");
+            })
+            ->orWhereHas('term', function ($row) use ($search){
+                $row->where('name' , 'LIKE', "%{$search}%");
+            })
             ->where('title', 'LIKE', "%{$search}%")
             ->orWhere('description', 'LIKE', "%{$search}%")
             ->orderBy('id','DESC')->paginate(10);

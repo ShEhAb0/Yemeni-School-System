@@ -28,7 +28,14 @@
 <nav class="navbar navbar-main navbar-expand-lg bg-transparent shadow-none position-absolute px-4 w-100 z-index-2">
     <div class="container-fluid py-1">
 
-        <h6 class="text-dark font-weight-bolder ms-2">Profile</h6>
+        <div style="margin: auto 10px;">
+            <a href="/parent/index">
+                <i class="fa fa-arrow-left cursor-pointer text-dark" aria-hidden="true"></i>
+            </a>
+            <span class="d-sm-inline text-dark text-bold"></span>
+            {{--            <h6 class="text-dark font-weight-bolder ms-2">Profile</h6>--}}
+
+        </div>
 
 
         <div class="collapse navbar-collapse me-md-0 me-sm-4 mt-sm-0 mt-2" id="navbar">
@@ -132,7 +139,7 @@
         <div class="row gx-4">
             <div class="col-auto">
                 <div class="avatar avatar-xl position-relative">
-                    <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    <img src="{{asset('images/parentsProfiles/'.Auth::guard('parent')->user()->image)}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                 </div>
             </div>
             <div class="col-auto my-auto">
@@ -155,7 +162,7 @@
 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mb-0 px-0 py-1 " data-bs-toggle="modal" href="#ProfileSt" role="button">
+                            <a class="nav-link mb-0 px-0 py-1 " onclick="javascript:getParentProfile({{Auth::user()->id}})" role="button">
                                 <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                     <title>settings</title>
                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -182,6 +189,20 @@
     </div>
 </div>
 <div class="container-fluid py-4">
+    @if($message = Session::get('success'))
+        <div class="alert alert-success alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endif
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endforeach
+
+
     <div class="d-flex justify-content-center" style="flex-wrap: wrap;box-shadow: 0px -1px 6px 1px rgb(0 0 0 / 41%);background: #FFF;border-radius: 12px;width: 80%;margin: 0 auto; ">
         <div class="col-12 col-md-5 col-xl-5" >
             <div class="h-100">
@@ -195,8 +216,8 @@
                 <div class="card-body p-3">
                     <br/>
                     <ul class="list-group">
-                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ Auth::user()->parent_name}}</li>
-                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Profession:</strong> &nbsp; Teacher</li>
+                        <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; {{ Auth::user()->teacher_name}}</li>
+                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Username:</strong> &nbsp; {{ Auth::user()->username}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (+967) {{ Auth::user()->phone}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; {{ Auth::user()->email}}</li>
                         <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; {{ Auth::user()->address}}</li>
@@ -234,7 +255,7 @@
         </div>
 
     </div>
-    <div class="modal fade" id="ProfileSt" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -242,14 +263,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body max-height-vh-80" style="overflow-y:auto">
-                    <form>
+                    <form class="row g-2"  id="editForm" method="POST" action="" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="text-center">
                             <div class="avatar" id="avatar">
-                                <div id="preview"><img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png" id="avatar-image" class="avatar_img" id="">
+                                <div id="preview"><img  src="{{asset('images/teachersProfiles/'.Auth::guard('parent')->user()->image)}}"  class="avatar_img" id="image">
                                 </div>
                                 <div class="avatar_upload" >
                                     <label class="upload_label">Upload
-                                        <input type="file" id="upload">
+                                        <input type="file" id="upload" name="upload" accept="image/png, image/gif, image/jpeg">
                                     </label>
                                 </div>
                             </div>
@@ -257,28 +280,26 @@
                                 <span id="name" tabindex="4" data-key="1" contenteditable="true"  onblur="changeAvatarName('blur', this.dataset.key, this.textContent)"></span>
                             </div>
                         </div>
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Profession" aria-label="add Profession">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Username" name="username" id="username">
+                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" name="email" id="email" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="email" placeholder="New Email" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" name="phone" id="phone" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Phone" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Address" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Address" name="address" id="address" aria-label="add Lesson Title">
 
-                        <input class="form-control my-1 mb-2 " type="text" placeholder="New Job Address" aria-label="add Job Address">
-
-                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" aria-label="add Lesson Title">
+                        <input class="form-control my-1 mb-2 " type="password" placeholder="New Password" name="password" id="password" aria-label="add Lesson Title">
 
 
 
 
 
-                    </form>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-outline-primary" >Save changes</button>
+                    <button type="submit" class="btn btn-outline-primary" >Save changes</button>
 
+                </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -380,6 +401,28 @@
     };
 
 
+</script>
+<script src="{{asset('js/axios.min.js')}}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    function getParentProfile(id) {
+        axios({
+            method:'get',
+            url:'/parent/profile/' + id + '/edit'
+        })
+            .then(response =>{
+                if(response.status === 200){
+                    $('#editForm').attr('action','/parent/profile/'+id);
+                    $('#phone').val(response.data.phone);
+                    $('#address').val(response.data.address);
+                    $('#email').val(response.data.email);
+                    $('#username').val(response.data.username);
+
+                    $('#editModal').modal('show');
+                }
+            })
+    }
 </script>
 </body>
 

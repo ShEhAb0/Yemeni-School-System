@@ -26,7 +26,7 @@
                                 @foreach($schedules as $schedule)
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$schedule->id}}</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}   </p>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0 text-center">{{$schedule->term->name}}</p>

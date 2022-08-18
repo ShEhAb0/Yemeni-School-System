@@ -20,8 +20,8 @@ class TodayWorkController extends Controller
     public function index()
     {
         $today = Carbon::today('Asia/Riyadh');
-        $lessons = Lesson::whereDate('created_at' , $today)->where('level_id',Auth::user()->level_id)->with('teacher')->paginate(10);
-        $assignments = Assignment::whereDate('created_at' , $today)->where('level_id',Auth::user()->level_id)->with('teacher' , 'subjects' )->paginate(3);
+        $lessons = Lesson::whereDate('created_at' , $today)->where('level_id',Auth::user()->level_id)->where('status',0)->with('teacher')->get();
+            $assignments = Assignment::whereDate('created_at' , $today)->where('level_id',Auth::user()->level_id)->where('status',1)->with('teacher' , 'subjects' )->get();
 
         return view('pages.user.today-work-menu.today-work-index',compact('lessons' , 'assignments'));
 

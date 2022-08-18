@@ -52,7 +52,7 @@ class AssignmentController extends Controller
      */
     public function show($id)
     {
-        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','answer'])->first();
+        $assignment = Assignment::where('id',$id)->with(['teacher','subjects','answer' ,'photo','doc', 'assignmentComments'])->first();
         return view('pages.parent.assignment-menu.assignment-show' ,compact('assignment'));
 
     }
@@ -66,7 +66,7 @@ class AssignmentController extends Controller
     public function edit($id)
     {
         //
-        $assignments = Assignment::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->paginate(3);
+        $assignments = Assignment::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->where('status',1)->paginate(3);
         return view('pages.parent.assignment-menu.assignment-data',compact('assignments'));
     }
 
@@ -80,6 +80,7 @@ class AssignmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+
     }
 
     /**

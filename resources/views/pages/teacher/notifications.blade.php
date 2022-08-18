@@ -47,11 +47,11 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-item px-2 px-sm-2 px-lg-3  px-md-3  px-lx-3 d-flex align-items-center">
-                    <a href="./Message.html" class="nav-link text-body p-0">
-                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>
-                    </a>
-                </li>
+{{--                <li class="nav-item px-2 px-sm-2 px-lg-3  px-md-3  px-lx-3 d-flex align-items-center">--}}
+{{--                    <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <li class="nav-item px-1 px-sm-1 px-lg-2  px-md-2  px-lx-2 d-flex align-items-center">
                     <i class="fas fa-sign-out-alt text-dark me-sm-1"></i>
@@ -77,6 +77,8 @@
                     <div class="mb-1">
 
                         @foreach ($notifications as $notification)
+                            <a class="dropdown-item border-radius-md" href="/teacher/notifications/{{$notification->id}}">
+
                             <div class="card-body px-0 pt-0 pb-0">
 
 
@@ -127,7 +129,11 @@
 
 
                             </div>
+                            </a>
                         @endforeach
+                        <div>
+                            {{$notifications->render()}}
+                        </div>
                     </div>
                 </div>
             </div>

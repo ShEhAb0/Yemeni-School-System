@@ -73,21 +73,21 @@
 
 
 
-            <div class="container-fluid py-1" id="messages">
-                <div class="card my-2">
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <div class="text-center py-3" id="choose">
-                            <p class="h4 text-info">Choose Grade and Subject</p>
-                        </div>
-                        <div class="text-center py-3 hidden" id="loader">
-                            <i class="fa fa-spinner fa-3x fa-spin"></i>
-                        </div>
-                        <div class="text-center py-3 hidden" id="error">
-                            <p class="h4 text-danger">There are no subjects in this grade.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="container-fluid py-1" id="messages">--}}
+{{--                <div class="card my-2">--}}
+{{--                    <div class="card-body px-0 pt-0 pb-2">--}}
+{{--                        <div class="text-center py-3" id="choose">--}}
+{{--                            <p class="h4 text-info">Choose Grade and Subject</p>--}}
+{{--                        </div>--}}
+{{--                        <div class="text-center py-3 hidden" id="loader">--}}
+{{--                            <i class="fa fa-spinner fa-3x fa-spin"></i>--}}
+{{--                        </div>--}}
+{{--                        <div class="text-center py-3 hidden" id="error">--}}
+{{--                            <p class="h4 text-danger">There are no subjects in this grade.</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div id="content">
                 @include('pages.teacher.assignment-menu.assignment-table')
             </div>
@@ -106,7 +106,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form class="row g-2"  id="editForm" method="POST" action="">
+                            <form class="row g-2"  id="editForm" method="POST" action="" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -118,6 +118,10 @@
                                     <p>Assignment Description</p>
                                     <textarea name="description" class="form-control" id="description" rows="3" required></textarea>
                                 </div>
+{{--                                <div class="col-auto w-100">--}}
+{{--                                    <p>Assignment Question</p>--}}
+{{--                                    <textarea name="question" id="question" class="form-control" rows="3"></textarea>--}}
+{{--                                </div>--}}
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
                                     <select class="form-select" aria-label="Select Grade" name="term" id="term">
@@ -162,16 +166,36 @@
                                     <input class="form-control my-1 mb-2" type="date" name="date" id="date"
                                            aria-label="Choose DeadLine" required>
                                 </div>
-                                <div class="col-auto w_50">
+                                <h6>Add Attachments</h6>
+                                <div class="row g-2">
+                                    <div class="col-auto w_50 my-1 mb-2" >
+                                        <p>Upload Video</p>
+                                        <input class="form-control " type="file" id="upload_video" name="upload_video" accept="video/mp4,video/x-m4v,video/*" >
+                                    </div>
+                                    <div class="col-auto w_50 my-1 mb-2" >
+                                        <p>Upload Picture</p>
+
+                                        <input class="form-control " type="file"  name="upload_image"  accept="image/png, image/gif, image/jpeg" >
+                                    </div>
+
+                                </div>
+                                {{--                            <div class="col-auto w-100  my-1 mb-2" >--}}
+                                {{--                                <p>Upload File</p>--}}
+                                {{--                                <input class="form-control " type="file" id="upload_file" name="upload_file"  accept="application/pdf,application/msword,--}}
+                                {{--                                    application/vnd.openxmlformats-officedocument.wordprocessingml.document">--}}
+                                {{--                            </div>--}}
+
+                                <div class="col-auto w_50  my-1 mb-2">
                                     <p>Upload File</p>
-                                    <input class="form-control" type="file" name="file" id="file" >
+                                    <input class="form-control" type="file" name="file" accept="application/pdf,application/msword,
+                                    application/vnd.openxmlformats-officedocument.wordprocessingml.document" >
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Select Status</p>
                                     <select class="form-select" aria-label="Select Status" name="status" id="status" required>
                                         <option value="" disabled selected>Choose Status</option>
-                                        <option value="1">Enabled</option>
-                                        <option value="0">Disabled</option>
+                                        <option value="1">Published</option>
+                                        <option value="0">New</option>
                                     </select>
                                 </div>
 
@@ -213,6 +237,10 @@
                                     <p>Assignment Description</p>
                                     <textarea name="description" class="form-control" rows="3" required></textarea>
                                 </div>
+{{--                            <div class="col-auto w-100">--}}
+{{--                                <p>Assignment Question</p>--}}
+{{--                                <textarea name="question" class="form-control" rows="3"></textarea>--}}
+{{--                            </div>--}}
                                 <div class="col-auto w_50">
                                     <p>Select Term</p>
                                     <select class="form-select" aria-label="Select Grade" name="term" required>
@@ -257,16 +285,36 @@
                                     <input class="form-control my-1 mb-2" type="date" name="date"
                                            aria-label="Choose DeadLine" required>
                                 </div>
-                                <div class="col-auto w_50">
+                            <h6>Add Attachments</h6>
+                            <div class="row g-2">
+                                <div class="col-auto w_50 my-1 mb-2" >
+                                    <p>Upload Video</p>
+                                    <input class="form-control " type="file" id="upload_video" name="upload_video" accept="video/mp4,video/x-m4v,video/*" >
+                                </div>
+                                <div class="col-auto w_50 my-1 mb-2" >
+                                    <p>Upload Picture</p>
+
+                                    <input class="form-control " type="file" id="upload_image" name="upload_image"  accept="image/png, image/gif, image/jpeg" >
+                                </div>
+
+                            </div>
+{{--                            <div class="col-auto w-100  my-1 mb-2" >--}}
+{{--                                <p>Upload File</p>--}}
+{{--                                <input class="form-control " type="file" id="upload_file" name="upload_file"  accept="application/pdf,application/msword,--}}
+{{--                                    application/vnd.openxmlformats-officedocument.wordprocessingml.document">--}}
+{{--                            </div>--}}
+
+                                <div class="col-auto w_50  my-1 mb-2">
                                     <p>Upload File</p>
-                                    <input class="form-control" type="file" name="file" required>
+                                    <input class="form-control" type="file" name="file" accept="application/pdf,application/msword,
+                                    application/vnd.openxmlformats-officedocument.wordprocessingml.document" >
                                 </div>
                                 <div class="col-auto w-100">
                                     <p>Select Status</p>
                                     <select class="form-select" aria-label="Select Status" name="status" required>
                                         <option value="" disabled selected>Choose Status</option>
-                                        <option value="1">Enabled</option>
-                                        <option value="0">Disabled</option>
+                                        <option value="1">Published</option>
+                                        <option value="0">New</option>
                                     </select>
                                 </div>
 

@@ -67,7 +67,7 @@
                                         @foreach($news as $n)
                                             <tr>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$n->id}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                                 </td>
                                                 <td>
                                                     <p class="text-sm font-weight-bold mb-0 text-center">
@@ -113,7 +113,9 @@
 
                                 </div>
                             @else
-                                <p class="text-center text-danger">There are no news</p>
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no news ..!</p>
+                                </div>
                             @endif
 
                         </div>

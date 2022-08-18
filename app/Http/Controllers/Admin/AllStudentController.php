@@ -71,7 +71,7 @@ class AllStudentController extends Controller
             }
         }
 
-        return redirect('/admin/all/students');
+        return redirect('/admin/all-students');
     }
 
     /**

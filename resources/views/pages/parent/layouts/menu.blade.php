@@ -1,5 +1,5 @@
 <hr class="horizontal dark mt-0">
-<div class="collapse navbar-collapse  w-auto  max-height-vh-80 h-100 overflowfixside" id="sidenav-collapse-main">
+<div class="collapse navbar-collapse  w-auto  max-height-vh-60 h-100 overflowfix" id="sidenav-collapse-main">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link {{ request()->is('parent/index') ? 'active' : '' }} "  href="{{route('parent.index.index')}}">
@@ -30,7 +30,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  {{ request()->is('parent/today/work') ? 'active' : '' }} "  href="{{url('parent/today/work')}}">
+            <a class="nav-link {{ request()->is('parent/today/work') ? 'active' : '' }} "  href="{{url('parent/today/work')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <title>document</title>
@@ -72,7 +72,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link   {{ request()->is('parent/exam') ? 'active' : '' }} "  href="{{url('parent/exam')}}">
+            <a class="nav-link {{ request()->is('parent/exam') ? 'active' : '' }} "  href="{{url('parent/exam')}}"">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
 
                     <i class="fas fa-keyboard blue-color-icon" style="font-size: 12px;"></i>
@@ -106,7 +106,7 @@
 
 
         <li class="nav-item">
-            <a class="nav-link   {{ request()->is('parent/assignment') ? 'active' : '' }} "  href="{{url('parent/assignment')}}">
+            <a class="nav-link {{ request()->is('parent/assignment') ? 'active' : '' }} "  href="{{url('parent/assignment')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book-reader blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -115,7 +115,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link   {{ request()->is('parent/attendance') ? 'active' : '' }} " href="{{url('parent/attendance')}}">
+            <a class="nav-link    {{ request()->is('parent/attendance') ? 'active' : '' }} " href="{{url('parent/attendance')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-id-card-alt blue-color-icon" style="font-size: 12px;"></i>
                 </div>
@@ -131,7 +131,6 @@
                 <span class="nav-link-text ms-1">Student News</span>
             </a>
         </li>
-
         <li class="nav-item">
             <a class="nav-link  {{ request()->is('parent/news') ? 'active' : '' }} "  href="{{url('parent/news')}}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -142,5 +141,5 @@
             </a>
         </li>
     </ul>
-</div>
 
+</div>

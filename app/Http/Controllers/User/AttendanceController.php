@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attendance;
+use App\Models\Lesson;
 use App\Models\Notification;
 use App\Models\Subject;
 use App\Models\Term;
@@ -48,6 +49,7 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         //
+        try {
         $check = Attendance::where('student_id',Auth::id())->where('subject_id',$request->subject)
             ->where('level_id',Auth::user()->level_id)->where('term_id',$request->term)
             ->where('lesson_id',$request->lesson)->get();
@@ -79,6 +81,10 @@ class AttendanceController extends Controller
         }
 
         return redirect('/lesson/'.$request->lesson);
+        }
+        catch (\Exception $exception){
+            return redirect()->back()->withErrors('Problem happened try again later.');
+        }
     }
 
     /**
@@ -106,11 +112,11 @@ class AttendanceController extends Controller
     public function showAttendance($term, $subject){
         $attendances = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
             ->where('level_id',Auth::user()->level_id)->where('term_id',$term)->with('lessonsAttendances')->get();
-        $total = $attendances->count();
-        $absence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
-            ->where('level_id',Auth::user()->level_id)->where('term_id',$term)->where('status',0)->count();
+        $total = Lesson::where('subject_id',$subject)->where('term_id',$term)->where('level_id',Auth::user()->level_id)->count();
         $presence = Attendance::where('student_id',Auth::id())->where('subject_id',$subject)
             ->where('level_id',Auth::user()->level_id)->where('term_id',$term)->where('status',1)->count();
+        $absence = $total - $presence;
+
         return view('pages.user.attendance-menu.attendance-table',compact('attendances','total','absence','presence'));
 
     }

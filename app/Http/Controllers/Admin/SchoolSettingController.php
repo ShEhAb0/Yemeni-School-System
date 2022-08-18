@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SchoolSetting;
 use Illuminate\Http\Request;
+use File;
 
 class SchoolSettingController extends Controller
 {
@@ -15,9 +16,9 @@ class SchoolSettingController extends Controller
      */
     public function index()
     {
-        $school_setting = SchoolSetting::all();
+        $school_settings = SchoolSetting::first();
 
-        return view('pages.admin.school-setting-menu.school-setting-index' , compact('school_setting'))->with('school_settings' , $school_setting);
+        return view('pages.admin.school-setting-menu.school-setting-index' , compact('school_settings'));
 
     }
 
@@ -40,7 +41,7 @@ class SchoolSettingController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request ,[
+        $request->validate([
             'school_name' => 'required',
             'school_phone' => 'required',
             'school_email' => 'required',
@@ -50,21 +51,48 @@ class SchoolSettingController extends Controller
             'first_term_end' => 'required',
             'second_term_begin' => 'required',
             'second_term_end' => 'required',
-            'school_logo' => 'required|mimes:jpg,png,jpeg',
+//            'school_logo' => 'required|mimes:jpg,png,jpeg',
         ]);
-        $input = $request->all();
+//        $input = $request->all();
 
 
-        if ($school_logo = $request->file('school_logo')) {
+//        if ($school_logo = $request->file('school_logo')) {
+//
+//            $destinationPath =('images/school_logo/');
+//            $logoImage =  $school_logo->getClientOriginalName();
+//            $school_logo->move(public_path($destinationPath) , $logoImage );
+//            $input['school_logo'] = "$logoImage";
+//        }
 
-            $destinationPath =('images/school_logo/');
-            $logoImage =  $school_logo->getClientOriginalName();
-            $school_logo->move(public_path($destinationPath) , $logoImage );
-            $input['school_logo'] = "$logoImage";
+        $sc = new SchoolSetting();
+        $sc->school_name = $request->school_name;
+        $sc->school_phone = $request->school_phone;
+        $sc->school_email = $request->school_email;
+        $sc->academic_year = $request->academic_year;
+        $sc->school_address = $request->school_address;
+        $sc->first_term_begin = $request->first_term_begin;
+        $sc->first_term_end = $request->first_term_end;
+        $sc->second_term_begin = $request->second_term_begin;
+        $sc->second_term_end = $request->second_term_end;
+
+        if ($request->file('schoollogo') != null) {
+            $path = public_path().'/images/school_logo/';
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $sc = $request->file('schoollogo');
+            $filename = time() . '.' . $sc->getClientOriginalExtension();
+            $request->school_logo->move($path, $filename);
         }
 
-        SchoolSetting::create($input);
-        return view('pages.admin.school-setting-menu.school-setting-index');
+
+//        $sc = $request->file('school_logo');
+//        $filename = time().'.'.$sc->getClientOriginalName();
+//        $request->school_logo->move(public_path('images/school_logo') , $filename);
+//        $sc->school_logo=$filename;
+
+        $sc->save();
+        return redirect('/admin/school/settings')->withSuccess('Settings has been inserted successfully..!');
 
     }
 
@@ -88,7 +116,8 @@ class SchoolSettingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sc = SchoolSetting::find($id);
+        return response($sc,200);
     }
 
     /**
@@ -100,16 +129,48 @@ class SchoolSettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $input = SchoolSetting::findOrFail($request->id);
-        if($request->hasFile('school_logo')) {
-            $school_logo = $request->file('school_logo');
-            $filename = $school_logo->getClientOriginalName();
-            $school_logo->move(public_path('images/school_logo'), $filename);
-            $input->school_logo = $request->file('$school_logo')->getClientOriginalName();
-        }
-        $input->update($request->all());
+        $request->validate([
+            'school_name' => 'required',
+            'school_phone' => 'required',
+            'school_email' => 'required',
+            'academic_year' => 'required',
+            'school_address' => 'required',
+            'first_term_begin' => 'required',
+            'first_term_end' => 'required',
+            'second_term_begin' => 'required',
+            'second_term_end' => 'required',
 
-        return  redirect('/admin/school/settings');
+        ]);
+
+        $sc = SchoolSetting::find($id);
+        $sc->school_name = $request->input('school_name');
+        $sc->school_phone = $request->input('school_phone');
+        $sc->school_email = $request->input('school_email');
+        $sc->academic_year = $request->input('academic_year');
+        $sc->school_address = $request->input('school_address');
+        $sc->first_term_begin = $request->input('first_term_begin');
+        $sc->first_term_end = $request->input('first_term_end');
+        $sc->second_term_begin = $request->input('second_term_begin');
+        $sc->second_term_end = $request->input('second_term_end');
+
+
+
+
+        if ($request->file('school_logo') != null) {
+            $path = public_path().'/images/school_logo/'.$sc->school_logo;
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $logoFile = $request->file('school_logo');
+            $filename = time() . '.' . $logoFile->getClientOriginalName();
+            $request->school_logo->move($path, $filename);
+
+        }
+
+        $sc->save();
+
+        return redirect('/admin/school/settings')->withSuccess('Settings has been updated successfully..!');
+
     }
 
     /**

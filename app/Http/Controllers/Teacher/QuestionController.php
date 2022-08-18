@@ -39,10 +39,10 @@ class QuestionController extends Controller
     {
         //
         $request->validate([
-           'question' => 'required',
-           'mark' => 'required',
-           'correct' => 'required',
-           'answer' => 'required',
+            'question' => 'required',
+            'mark' => 'required',
+            'correct' => 'required',
+            'answer' => 'required',
         ]);
 
 
@@ -108,7 +108,7 @@ class QuestionController extends Controller
         $question->choice_4 = $request->answer[3];
         $question->correct_answer = $request->correct;
         $question->mark = $request->mark;
-        $question->exam_id = $request->questionExamId;
+//        $question->exam_id = $request->questionExamId;
         $question->save();
 
         return redirect('/teacher/exam')->withSuccess('Question has been updated successfully..');
@@ -123,5 +123,8 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         //
+        $question = Question::destroy($id);
+
+        return redirect('/teacher/exam')->withSuccess('Question has been deleted successfully..!');
     }
 }

@@ -52,7 +52,7 @@
                                     @foreach($logs as $log)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$log->id}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">

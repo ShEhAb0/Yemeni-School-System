@@ -45,8 +45,8 @@
                 </div>
                 <br/>
                 @else
-                    <div class="text-center text-danger py-3">
-                        There are no lessons for today ..!
+                    <div class="text-center">
+                        <p class="h5 text-danger">There are no lessons for today ..!</p>
                     </div>
                 @endif
             </div>
@@ -85,8 +85,8 @@
                 @endforeach
             </div>
             @else
-                <div class="text-sm-center text-danger py-3">
-                    There are no assignments for today ..!
+                <div class="text-center">
+                    <p class="h5 text-danger">There are no assignments for today ..!</p>
                 </div>
             @endif
 

@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{url('/img/apple-icon.png')}}">
     <link rel="icon" type="image/png" href=" {{url('/img/favicon.png')}}">
     <title>
-        Yemeni School E-learning
+        Y-Class
     </title>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
@@ -56,7 +56,7 @@
 
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
+                    <a  class="nav-link text-body font-weight-bold px-0">
                         <i class="fa fa-user me-sm-1 text-dark"></i>
                         <span class="d-sm-inline text-dark text-bold">{{ Auth::user()->username}}</span>
                     </a>

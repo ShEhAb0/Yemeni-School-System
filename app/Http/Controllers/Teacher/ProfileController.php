@@ -7,6 +7,8 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use File;
+
 
 class ProfileController extends Controller
 {
@@ -92,7 +94,27 @@ class ProfileController extends Controller
         if ($request->input('password') != null) {
             $tpro->password = Hash::make($request->input('password'));
         }
-        $tpro->save();
+        if ($request->file('upload') != null)
+        {
+            $path = public_path().'/images/teachersProfiles/';
+            if (!File::exists($path)){
+                File::makeDirectory($path);
+            }
+            $teacherProfile = $request->file('upload');
+            $filename = time() . '.' . $teacherProfile->getClientOriginalName();
+            $request->upload->move($path, $filename);
+            $tpro->image=$filename;
+
+            $tpro->save();
+
+        //    Teacher::find($id)->update(['image'=>$filename]);
+        }
+
+
+        //$teacherProfile = $request->file('image');
+//        $filename = time().'.'.$teacherProfile->getClientOriginalName();
+//        $request->teacherProfile->move(public_path('images/teachers_profiles') , $filename);
+//        $tpro->imge=$filename;
 
         return redirect('/teacher/profile/'.$id)->withSuccess('Profile has been updated successfully..!');
 

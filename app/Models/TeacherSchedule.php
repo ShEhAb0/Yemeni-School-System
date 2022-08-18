@@ -10,6 +10,7 @@ class TeacherSchedule extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    public $table= 'teacher_schedules';
 
     public function teacher()
     {

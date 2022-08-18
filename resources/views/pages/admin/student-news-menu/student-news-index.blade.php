@@ -56,6 +56,7 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr>
+                                            <th class="text-secondary opacity-9 purplel-color text-center">#</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">Grade</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">Term</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center ">News Title</th>
@@ -68,6 +69,9 @@
                                         <tbody>
                                         @foreach($news as $n)
                                             <tr>
+                                                <td>
+                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
+                                                </td>
                                                 <td>
                                                     <p class="text-sm font-weight-bold mb-0 text-center">
                                                         {{$n->grade->grade_name}}

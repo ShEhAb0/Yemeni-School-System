@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/img/apple-icon.png')}}">
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
     <title>
-        Yemeni School E-learning
+        Y-Class
 
     </title>
     <!--     Fonts and icons     -->
@@ -49,7 +49,7 @@
                 <li class="nav-item d-flex align-items-center">
 
                     <a class="d-flex  py-1 cursor-pointer"  href="/parent/profile">
-                        <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
+                        <img src="{{asset('images/parentsProfiles/'.Auth::guard('parent')->user()->image)}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
                         <div style="margin: auto 10px;">    <span class="d-sm-inline text-dark text-bold">{{ Auth::user()->username}}</span>
                         </div>
                     </a>
@@ -63,11 +63,11 @@
                          </div>
                      </a>
                  </li> -->
-                <li class="nav-item px-3 d-flex align-items-center">
-                    <a href="./Message.html" class="nav-link text-body p-0">
-                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>
-                    </a>
-                </li>
+{{--                <li class="nav-item px-3 d-flex align-items-center">--}}
+{{--                    <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="nav-item dropdown pe-2 d-flex align-items-center ">
                     <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bell cursor-pointer text-dark"></i>
@@ -179,7 +179,7 @@
                                 <div class="list-group mb-1">
                                     <div href="" class="list-group-item">
                                         <div class="d-flex  py-1">
-                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                            <img src="{{asset('/images/usersProfiles/'.$p->user->image)}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                                             <div style="margin: auto 10px;">
                     <span >
                       <span class="text-dark text-bold">{{$p->user->student_name}}</span><br/>
@@ -216,7 +216,7 @@
                 <div class="list-group mb-1">
                     <div href="" class="list-group-item">
                         <div class="d-flex  py-1">
-                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                            <img src="{{asset('/images/usersProfiles/'.$p->user->image)}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                             <div style="margin: auto 10px;">
                     <span >
                       <span class="text-dark text-bold">{{$p->user->student_name}}</span><br/>

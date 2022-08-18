@@ -69,7 +69,7 @@ class AttendanceController extends Controller
             $data = '<option value="" disabled selected>Select the subject</option>';
             foreach ($subjects as $subject) {
                 $data .= '
-            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_name . '</option>
+            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_code . '</option>
             ';
             }
             return response($data,200);
@@ -106,7 +106,7 @@ class AttendanceController extends Controller
                 $data .= '
                     <div class="list-group mb-1">
                     <a href="" class="list-group-item"><div class="d-flex  py-1">
-                    <img src="" class="rounded-circle" alt="Cinque Terre" width="50" height="50"/>
+                    <img src="' .asset('/images/usersProfiles/'. $attend->student->image).'" class="rounded-circle" alt="Cinque Terre" width="50" height="50"/>
 <div style="margin: auto 10px;"><span class="text-dark text-bold">' . $attend->student->student_name . '</span> <br/>
 <span  style="font-size: 15px;" class="text-primary">
 <i class="fas fa-clock me-2" style="font-size: 14px;"></i>' . $attend->view_date . '</span>

@@ -27,7 +27,7 @@ class TeacherLoginController extends Controller
             'password' => 'required|min:6'
         ]);
         // Attempt to log the user in
-        if (Auth::guard('teacher')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Auth::guard('teacher')->attempt(['username' => $request->username, 'password' => $request->password , 'status'=>1])) {
             // if successful, then redirect to their intended location
             return redirect()->intended(route('teacher.index'));
         }

@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('/img/apple-icon.png')}}">
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
     <title>
-        Yemeni School E-learning | Login
+        Y-Class | Login
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -31,8 +31,8 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                 <div class="container-fluid">
-                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="#">
-                        <i class="fa fa-chart-pie opacity-6 text-dark me-1" style="font-size: 36px;"></i> <span style="font-size: 30px;">Courses</span>
+                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="">
+                        <i class="fa fa-chart-pie opacity-6 text-dark me-1" style="font-size: 36px;"></i> <span style="font-size: 30px;">Y-Class</span>
                     </a>
                     <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon mt-2">
@@ -81,8 +81,8 @@
 
                                     <label>Choose User Type</label>
                                     <div class="mb-3">
-                                        <select class="form-select" aria-label="Default select example" id="menu1" name="menu1" onchange="changeForm(this.selectedIndex);">
-                                            <option hidden selected>Choose User Type</option>
+                                        <select class="form-select" aria-label="Default select example" id="menu1" required name="menu1" onchange="changeForm(this.selectedIndex);">
+                                            <option value="" disabled selected>Choose User Type</option>
                                             <option>Teacher</option>
                                             <option>Student</option>
                                             <option>Parent</option>
@@ -90,11 +90,11 @@
                                     </div>
                                     <label>Username</label>
                                     <div class="mb-3">
-                                        <input type="username" class="form-control" placeholder="Username" aria-label="Enter ID number" name="username"  >
+                                        <input type="username" class="form-control" placeholder="Username" aria-label="Enter ID number" name="username" required  >
                                     </div>
                                     <label>Password</label>
                                     <div class="mb-3" style="position: relative;">
-                                        <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password" id="password">
+                                        <input type="password" class="form-control" required placeholder="Password" aria-label="Password" aria-describedby="password-addon" name="password" id="password">
                                         <div class="eye" id="switch"><i class="fas fa-eye-slash" style="font-size: 18px;"></i></div>
                                     </div>
                                     <div class="form-check form-switch">
@@ -108,12 +108,12 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                <p class="mb-4 text-sm mx-auto">
+{{--                            <div class="card-footer text-center pt-0 px-lg-2 px-1">--}}
+{{--                                <p class="mb-4 text-sm mx-auto">--}}
 
-                                    <a href="./Newpassword.html" class="text-dark text-gradient font-weight-bold">Forget Password?</a>
-                                </p>
-                            </div>
+{{--                                    <a href="./Newpassword.html" class="text-dark text-gradient font-weight-bold">Forget Password?</a>--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
                         </div>
                     </div>
                     <div class="col-md-6 pos_res">

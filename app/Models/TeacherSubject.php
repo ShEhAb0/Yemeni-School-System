@@ -31,5 +31,9 @@ class TeacherSubject extends Model
     {
         return $this->belongsTo('App\Models\Term' , 'term_id');
     }
+    public function assignment()
+    {
+        return $this->hasMany('App\Models\StudentAssignment' , 'subject_id' , 'subject_id')->where('status' , 0);
+    }
 
 }

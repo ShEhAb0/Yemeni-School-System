@@ -23,7 +23,7 @@
 
 {{--                <br/>--}}
 {{--                <br/>--}}
-                <form method="POST" action="/admin/all/students" class="row g2">
+                <form method="POST" action="/admin/all-students" class="row g2">
                     @csrf
                     @method('POST')
                     <div class="col-auto w-50">
@@ -136,7 +136,7 @@
             var term = $('#term').val();
             axios({
                 method:'get',
-                url:'/admin/all/students/' + term + '/' + grade
+                url:'/admin/allstudents/' + term + '/' + grade
             })
                 .then(response =>{
                         $('#tableData').html(response.data);

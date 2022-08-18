@@ -63,16 +63,16 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-sm font-weight-bold">{{$exam->exam_time}}</span>
                                             </td>
-                                            <td class="align-middle text-center">
-                                                {{--                                            @php($time = \Illuminate\Support\Carbon::make($exam->exam_time)->format('H:m:s'))--}}
-                                                @php($time = new \Carbon\Carbon($exam->exam_time,'Asia/Riyadh'))
-                                                {{--                                            @if($exam->exam_time == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && $time->diffInMinutes(\Illuminate\Support\Carbon::now('Asia/Riyadh')) <= $exam->duration_m)--}}
-                                                @if($time->format('Y-m-d') == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && \Illuminate\Support\Carbon::now('Asia/Riyadh') >= $time && \Illuminate\Support\Carbon::now('Asia/Riyadh') <= $time->addMinutes($exam->duration_m))
-                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/{{$exam->id}}">Start Exam  </a></span>
-                                                @else
-                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100 disabled">Start Exam</a></span>
-                                                @endif
-                                            </td>
+{{--                                            <td class="align-middle text-center">--}}
+{{--                                                --}}{{--                                            @php($time = \Illuminate\Support\Carbon::make($exam->exam_time)->format('H:m:s'))--}}
+{{--                                                @php($time = new \Carbon\Carbon($exam->exam_time,'Asia/Riyadh'))--}}
+{{--                                                --}}{{--                                            @if($exam->exam_time == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && $time->diffInMinutes(\Illuminate\Support\Carbon::now('Asia/Riyadh')) <= $exam->duration_m)--}}
+{{--                                                @if($time->format('Y-m-d') == \Illuminate\Support\Carbon::today('Asia/Riyadh')->format('Y-m-d') && \Illuminate\Support\Carbon::now('Asia/Riyadh') >= $time && \Illuminate\Support\Carbon::now('Asia/Riyadh') <= $time->addMinutes($exam->duration_m))--}}
+{{--                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100" href="exam/{{$exam->id}}">Start Exam  </a></span>--}}
+{{--                                                @else--}}
+{{--                                                    <span class="text-secondary text-sm font-weight-bold"><a class="btn btn-outline-primary btn mb-0 w-100 disabled">Start Exam</a></span>--}}
+{{--                                                @endif--}}
+{{--                                            </td>--}}
                                         </tr>
                                     @endforeach
                                     </tbody>

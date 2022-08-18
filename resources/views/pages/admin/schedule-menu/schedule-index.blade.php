@@ -74,7 +74,7 @@
                                         <tbody>
                                         @foreach($schedules as $schedule)
                                             <tr>
-                                                <th scope="row" class="text-sm font-weight-bold text-center">{{$schedule->id}}
+                                                <th scope="row" class="text-sm font-weight-bold text-center">{{$loop->iteration}}
                                                 </th>
 
                                                 <td class="text-center" >
@@ -201,7 +201,7 @@
 
                                     <select name="level" class="form-select my-1 mb-2" required>
                                         @if($grades->count()>0)
-                                        <option value="" disabled selected>Choose level</option>
+                                        <option value="" disabled selected>Choose Grade</option>
                                         @foreach($grades as $grade)
                                         <option value="{{$grade->id}}">{{$grade->grade_name}}</option>
                                             @endforeach

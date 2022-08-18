@@ -74,7 +74,7 @@
                                     @foreach($grades as $grade)
                                         <tr>
                                             <td class="text-secondary text-sm font-weight-bold text-center">
-                                                {{$grade->id}}
+                                                {{$loop->iteration}}
                                             </td>
                                             <td class="text-sm font-weight-bold mb-0 text-center">
                                                 {{$grade->grade_name}}

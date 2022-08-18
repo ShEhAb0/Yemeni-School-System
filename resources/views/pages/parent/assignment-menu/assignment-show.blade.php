@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
 
     <title>
-        School
+        Y-Class
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -204,11 +204,11 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item px-3 d-flex align-items-center">
-                                <a href="./Message.html" class="nav-link text-body p-0">
-                                    <i class="fas fa-envelope cursor-pointer text-dark" ></i>
-                                </a>
-                            </li>
+{{--                            <li class="nav-item px-3 d-flex align-items-center">--}}
+{{--                                <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                                    <i class="fas fa-envelope cursor-pointer text-dark" ></i>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
                             <li class="nav-item dropdown pe-2 d-flex align-items-center ">
                                 <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-bell cursor-pointer text-dark"></i>
@@ -327,27 +327,39 @@
 
 
                     <div class="d-flex p-2">
-{{--                        <div class="pe-5">--}}
-{{--                            <h4 class="mt-3 pb-2" >Photos </h4>--}}
-{{--                            <div class="d-flex justify-content-around">--}}
+                        <div class="pe-5">
+                            <h4 class="mt-3 pb-2" >Photos </h4>
+                            <div class="d-flex justify-content-around">
 
-{{--                                <div>--}}
-{{--                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                @if($assignment->image_name)
+                                    <div>
+                                        <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" download="{{$assignment->image_name}}"><img src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
+                                    </div>
+                                @endif
+                            </div>
 
-{{--                            <div class="d-flex justify-content-around mt-2">--}}
-{{--                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                            <div class="d-flex justify-content-around mt-2">
+                                @if($assignment->image_name)
+                                    <div>
+                                        <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" download="{{$assignment->image_name}}"><img src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;">
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                         <!--File section-->
                         <div class="ps-5">
                             <h4 class="mt-3 pb-2">Files </h4>
                             <div class="d-flex justify-content-around ">
 
-                                <div>
-                                    <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$assignment->file_name}}</span></a>
-                                </div>
+                                @if($assignment->file_name)
+                                    <div>
+                                        <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" download="{{$assignment->file_name}}">
+                                            <i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;">
+                                            </i> <span class="black">{{$assignment->file_name}}</span>
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -372,6 +384,9 @@
 
                     data-setup="{}"
                 >
+                    @if($assignment->video_name)
+                        <source src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->video_name)}}" type="video/mp4" />
+                    @endif
 {{--                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />--}}
 {{--                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                     <p class="vjs-no-js">
@@ -408,80 +423,51 @@
     <div>
         <h3>Comments</h3>
         <hr/>
-        <div class="chatsBody2  mb-3" id="BodyText">
+        <div class="chatsBody2 mb-3" id="BodyText">
+            @if(count($assignment->assignmentComments) > 0)
+                @foreach($assignment->assignmentComments as $comment)
+                    @if($comment->user_type == 0)
+                        <div class="sender2 bg_gr w-50">
+                            <div>
+                                <img src="" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2"><strong>{{$comment->username}}</strong></span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2">{{$comment->comment}}</span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <small class="ms-2">{{$comment->created_at}}</small>
+                            </div>
 
+                        </div>
+                    @else
+                        <div class="receiver2 bg_gr w-50">
+                            <div>
+                                <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2"><strong>T. {{$comment->username}}</strong></span>
 
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">heyy! much better</span>
+                            </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <span class="ms-2">{{$comment->comment}}</span>
+                            </div>
 
-                </div>
+                            <div class="w-100" style="margin: auto 0;">
+                                <small class="ms-2">{{$comment->created_at}}</small>
+                            </div>
 
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">How did the interview go? was it good?</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
-                </div>
-
-            </div>
-
-            <div class="d-flex sender2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Wow I'm soo happy for you</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}"" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">your most welcome</span>
-
-                </div>
-
-            </div>
-            <div class="d-flex receiver2 bg_gr">
-                <div>
-                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
-                </div>
-                <div class="d-flex justify-content-between w-100" style="margin: auto 0;">
-                    <span class="ms-2">Thanks</span>
-
-
-
-                </div>
-
-            </div>
-            <hr/>
-            <hr/>
+                        </div>
+                    @endif
+                @endforeach
+            @else
+                <strong class="text-danger">No comments yet.</strong>
+            @endif
         </div>
+        <hr/>
+    </div>
 
     </div>
 

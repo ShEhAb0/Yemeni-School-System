@@ -26,7 +26,7 @@ class SubjectController extends Controller
         $subjects = TeacherSubject::with(['subject','teacher','term','grade'])->orderBy('id','DESC')->get();
 
         $terms = Term::all();
-        $grades = Grade::all();
+        $grades = Grade::where('status' , 1)->get();
         $teachers = Teacher::all();
         return view('pages.admin.subject-menu.subject-index', compact('subjects','terms','grades','teachers'));
 
@@ -37,9 +37,14 @@ class SubjectController extends Controller
         $subjects = Subject::query()
             ->where('subject_name', 'LIKE', "%{$search}%")
             ->orWhere('subject_code', 'LIKE', "%{$search}%")
-            ->orderBy('id','DESC')->get();
+            ->orwhereHas('grade', function ($row) use ($search){
+                $row->where('grade_name','LIKE',"%$search%");
+            })
+            ->orWhereHas('term', function ($row) use ($search){
+                $row->where('name' , 'LIKE', "%{$search}%");
+            })->get();
         $terms = Term::all();
-        $grades = Grade::all();
+            $grades = Grade::where('status' , 1)->get();
         $teachers = Teacher::all();
         return view('pages.admin.subject-menu.subject-index', compact('subjects','terms','grades','teachers'));
 

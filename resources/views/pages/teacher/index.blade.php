@@ -103,25 +103,26 @@
                         <div class="col-lg-12">
                             <h5 class="font-weight-bolder">Delivered Assignments</h5>
                             <div class="modal-body max-height-vh-80" style="overflow-y:auto">
-                                @if($answers->count() > 0)
-                                    @foreach($answers as $answer)
+                                @if($assignments->count() > 0)
+                                    @foreach($assignments as $assignment)
+                                    @foreach($assignment->assignment as $a)
                                 <div class="list-group mb-1">
 
                                     <div class="list-group-item">
                                         <div class="d-flex  py-1">
-                                            <img src="../assets/img/home-decor-2.jpg" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
-                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">{{$answer->student->student_name}}</span>
+                                            <img src="{{asset('/images/usersProfiles/'.$a->student->image)}}" class="rounded-circle mt-3 mt-sm-3 mt-lg-0 mt-md-0 mt-xl-0" alt="Cinque Terre" width="50" height="50">
+                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">{{$a->student->student_name}}</span>
                                                 <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>{{$answer->delivery_date}}</span>
+                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-clock me-2" style="font-size: 14px;"></i>{{$a->delivery_date}}</span>
                                             </div>
-                                            <div style="margin: auto 10;" class="ms-2 ms-sm-6 ms-md-8 ms-lg-3 ms-xl-3 font_dash1"><span class="text-dark text-bold">{{$answer->assignment->title}}</span>
+                                            <div style="margin: auto 10;" class="ms-sm-2 ms-md-4 ms-lg-2 ms-xl-2 font_dash1"><span class="text-dark text-bold">{{$a->title}}</span>
                                                 <br/>
-                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>Grade 1</span>
+                                                <span  style="font-size: 15px;" class="text-primary font_dash"><i class="fas fa-book-reader me-2" style="font-size: 14px;"></i>{{$a->subjects->subject_name}}</span>
                                             </div>
                                             <div class="align-middle text-center " style="margin-top: 3px;">
-          <span onclick="Assigment($(this))" data-id="{{$answer->id}}" data-name="{{$answer->student->student_name}}"
-                data-date="{{$answer->delivery_date}}" data-attch="{{asset('/Assignments/'.$answer->subjects->subject_name.'/Answers/'.$answer->file_name)}}"
-                data-fname="{{$answer->file_name}}" class="text-secondary font-weight-bold text-xs me-3" >
+          <span onclick="Assigment($(this))" data-id="{{$a->id}}" data-name="{{$a->student->student_name}}"
+                data-date="{{$a->delivery_date}}" data-attch="{{asset('/Assignments/'.$a->subjects->subject_name.'/Answers/'.$a->file_name)}}"
+                data-fname="{{$a->file_name}}" data-answer="{{$a->answer}}" data-mark="{{$a->mark}}" class="text-secondary font-weight-bold text-xs me-3" >
             <a class="ms-4 mt-3 mt-sm-2 mt-lg-0 mt-md-0 mt-xl-0  ms-sm-6 ms-md-8 ms-lg-5 ms-xl-5" ><i class="fas fa-share-square font_dash2" style="font-size: 48px;"></i></a>
           </span>
                                             </div>
@@ -134,8 +135,11 @@
 
                                 </div>
                                     @endforeach
+                                    @endforeach
                                 @else
-                                    <p class="text-center h5">No answers yet..</p>
+                                    <div class="text-center">
+                                        <p class="h5 text-danger">There are no answers ..!</p>
+                                    </div>
                                 @endif
 
 
@@ -178,6 +182,7 @@
                                 <div class="my-1 mb-2">
                                     <a href="" id="attch" class="btn btn-block btn-secondary bg-dark text-white w-100 py-1 pb-3 pt-3 mt-3" download="">
                                         <i class="fas fa-arrow-circle-up white me-2" style="font-size: 18px;"></i>Student Attachments</a></div>
+                                <textarea class="form-control my-1 mb-2"  placeholder="Answer" id="answerText" rows="5"></textarea>
                                 <input class="form-control my-1 mb-2" name="mark" type="number" placeholder="Enter Student Marks" required>
                             </div>
                             <div class="modal-footer">
@@ -199,13 +204,20 @@
                         <div class="col-lg-12">
                             <h5 class="font-weight-bolder">News</h5>
                             <div class="max-height-vh-80  h-80" style="overflow-y: auto;">
+                                @if($news->count() > 0 )
+
                                 @foreach($news as $n)
                                     <p class="mb-1 pt-2 text-bold">Published at : {{$n->created_at}} </p>
                                     <h5 class="font-weight-bolder">News Title: {{$n->title}}</h5>
-                                    <p class="mb-5">{{substr($n->description ,0 , 50)}} {{strlen($n->description) > 50 ? "..." : ""}}</p>
+                                    <p class="mb-5">{{substr($n->description ,0 , 1000)}} {{strlen($n->description) > 1000 ? "..." : ""}}</p>
                                 @endforeach
 
                             </div>
+                            @else
+                                <div class="text-center">
+                                    <p class="h5 text-danger">There are no news ..!</p>
+                                </div>
+                            @endif
 
                         </div>
                     </div>
@@ -228,11 +240,16 @@
         var date = d.data('date');
         var attch = d.data('attch');
         var fname = d.data('fname');
-        $('#formData').attr('action','/teacher/assignment/'+id);
+        var answer =d.data('answer');
+        var mark =d.data('mark');
+
+        $('#formData').attr('action','/teacher/index/');
         $('#studentName').html(name);
         $('#recDate').html(date);
         $('#attch').attr('href',attch);
         $('#attch').attr('download',fname);
+        $('#answerText').html(answer);
+        $('#mark').val(mark);
         $('#Assigment').modal('toggle');
     }
 </script>

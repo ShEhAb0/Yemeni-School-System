@@ -88,8 +88,17 @@
                                 </table>
                             </div>
                             @else
-                                <div class="text-center text-danger">
-                                    No exams yet.
+                                <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
+                                    <div class="row gx-4">
+                                        <div class="col-12 text-center">
+                                            <div class="noExam">
+
+                                            </div>
+                                            <div class="text-center">
+                                                <h2>There is no Exam Today..</h2>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>

@@ -72,7 +72,7 @@
                                     @foreach($parents as $parent)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$parent->id}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}  </p>
                                             </td>
                                             <td >
                                                 <div class="d-flex px-2 py-1 justify-content-center">

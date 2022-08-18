@@ -60,7 +60,7 @@ class NotificationController extends Controller
                         </li>
                 ';
             }
-            $note .= '<hr><div class="text-center"><a href="/teacher/notifications">Show all</a></div>';
+            $note .= '<hr><div class="text-center"><a href="/teacher/notifications" target="_blank">Show all</a></div>';
         }else
             $note = '<div class="text-center"><p>No notifications</p></div> <hr><div class="text-center"><a href="/teacher/notifications">Show all</a></div>';
 

@@ -28,7 +28,7 @@
                                 @foreach($assignments as $assignment)
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$assignment->id}}</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0 text-center">{{$assignment->title}}</p>
@@ -39,8 +39,8 @@
                                             <span class="text-secondary text-sm font-weight-bold">{{date('Y-m-d' , strtotime($assignment->due_date))}}</span>
                                         </td>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center {{$assignment->status == 1 ? "text-danger" : "text-info"}}">
-                                                {{$assignment->status == 1 ? "New" : "Published"}}
+                                            <p class="text-sm font-weight-bold mb-0 text-center {{$assignment->status == 1 ? "text-info" : "text-danger"}}">
+                                                {{$assignment->status == 1 ? "Published" : "New"}}
                                             </p>
                                         </td>
                                         <td class="align-middle text-center">
@@ -56,7 +56,7 @@
                                                 <i class="fas fa-trash blue-color" style="font-size: 20px;"></i>
                                             </a>
                                             <a class="text-secondary font-weight-bold text-xs"
-                                               href="/teacher/assignment/{{$assignment->id}}" role="button">
+                                               href="/teacher/assignment/{{$assignment->id}}" target="_blank" role="button">
                                                 <i class="fas fa-external-link-alt purplel-color"
                                                    style="font-size: 20px;"></i>
                                             </a>

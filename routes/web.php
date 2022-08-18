@@ -69,8 +69,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::middleware(['guest:admin'])->group(function(){
         Route::get('/','App\Http\Controllers\Auth\AdminLoginController@showLoginForm')->name('login');
-        Route::get('/login','App\Http\Controllers\Auth\AdminLoginController@showLoginForm')->name('login');
-        Route::post('/login', 'App\Http\Controllers\Auth\AdminLoginController@login')->name('login');
+        Route::get('/login','App\Http\Controllers\Auth\AdminLoginController@showLoginForm');
+        Route::post('/login', 'App\Http\Controllers\Auth\AdminLoginController@login');
 //        Route::view('/' , 'pages.admin.login')->name('login');
 //        Route::post('/check',[AdminController::class,'check'])->name('check');
     });
@@ -93,8 +93,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('/tracking' , 'App\Http\Controllers\Admin\TrackingController');
         Route::resource('/school/settings' , 'App\Http\Controllers\Admin\SchoolSettingController');
         Route::resource('/notifications' , 'App\Http\Controllers\Admin\NotificationController');
-        Route::resource('/all/students' , 'App\Http\Controllers\Admin\AllStudentController');
-        Route::get('/all/students/{term}/{grade}' , 'App\Http\Controllers\Admin\AllStudentController@showStudents');
+        Route::resource('/all-students' , 'App\Http\Controllers\Admin\AllStudentController');
+        Route::get('/allstudents/{term}/{grade}' , 'App\Http\Controllers\Admin\AllStudentController@showStudents');
 
 
         Route::get('/news', 'App\Http\Controllers\Admin\NewsController@search')->name('news');
@@ -105,9 +105,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/schedules', 'App\Http\Controllers\Admin\ScheduleController@search')->name('schedules');
         Route::get('/students', 'App\Http\Controllers\Admin\StudentController@search')->name('students');
         Route::get('/grade-news', 'App\Http\Controllers\Admin\StudentNewsController@search')->name('grade-news');
-//        Route::get('/subjects', 'App\Http\Controllers\Admin\SubjectController@search')->name('subjects');
+       Route::get('/subjects', 'App\Http\Controllers\Admin\SubjectController@search')->name('subjects');
         Route::get('/teachers', 'App\Http\Controllers\Admin\TeacherController@search')->name('teachers');
         Route::get('/tracking', 'App\Http\Controllers\Admin\TrackingController@search')->name('tracking');
+        Route::get('/teacher_schedule' , 'App\Http\Controllers\Admin\TeacherScheduleController@search')->name('teacher.schedules');
 
         Route::post('/logout',[AdminLoginController::class,'logout'])->name('logout');
     });
@@ -118,7 +119,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 
-Route::view('/','welcome')->name('login');
+Route::view('/','welcome');
 
 
 Route::prefix('teacher')->name('teacher.')->group(function(){
@@ -126,7 +127,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
     Route::middleware(['guest:teacher'])->group(function(){
         //Route::view('/login','pages.teacher.login')->name('login');
         //   Route::post('/check',[TeacherController::class,'check'])->name('check');
-        Route::post('/login', 'App\Http\Controllers\Auth\TeacherLoginController@login')->name('login');
+        Route::post('/login', 'App\Http\Controllers\Auth\TeacherLoginController@login');
 
     });
 
@@ -193,6 +194,8 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
         Route::resource('/notifications','App\Http\Controllers\User\NotificationController');
 
 
+//        Route::get('/lessons', 'App\Http\Controllers\User\LessonController@search')->name('lessons');
+
 //        Route::post('/logout',[UserLoginController::class,'logout'])->name('logout');
     });
 
@@ -210,7 +213,7 @@ Route::prefix('teacher')->name('teacher.')->group(function(){
 Route::prefix('parent')->name('parent.')->group(function () {
 
     Route::middleware(['guest:parent'])->group(function(){
-        Route::post('/login', 'App\Http\Controllers\Auth\ParentLoginController@login')->name('login');
+        Route::post('/login', 'App\Http\Controllers\Auth\ParentLoginController@login');
 
     });
 
@@ -239,6 +242,3 @@ Route::prefix('parent')->name('parent.')->group(function () {
     });
 
 });
-
-
-

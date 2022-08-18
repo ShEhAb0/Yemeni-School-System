@@ -285,7 +285,7 @@
                             <div class="w-100" style="margin: auto 0;">
                                 <span class="ms-2"><strong>{{$comment->username}}</strong></span>
                             </div>
-                            <div class="w-100" style="margin: auto 0;">
+                             <div class="w-100" style="margin: auto 0;">
                                 <span class="ms-2">{{$comment->comment}}</span>
                             </div>
                             <div class="w-100" style="margin: auto 0;">

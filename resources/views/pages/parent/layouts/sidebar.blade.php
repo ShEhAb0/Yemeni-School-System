@@ -16,7 +16,7 @@
         <div class="list-group mb-1">
             <div href="" class="list-group-item">
                 <div class="d-flex ">
-                    <img src="{{asset('/img/'.session('student_image'))}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                    <img src="{{asset('/images/usersProfiles/'.session('student_image'))}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                     <div style="margin: auto 10px;">
             <span >
               <span class="text-dark text-bold text-sm">{{session('student_name')}}</span><br/>
@@ -32,6 +32,7 @@
             </div>
         </div>
     </div>
+
     @include('pages.parent.layouts.menu')
 
 </aside>

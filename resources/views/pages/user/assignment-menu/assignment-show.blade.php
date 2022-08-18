@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
 
     <title>
-        School
+        Y-Class
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -169,9 +169,10 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg blur blur-rounded top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
                 <div class="container-fluid">
-                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/parent/assignment">
-                        Courses
+                    <a href="/index">
+                        <i class="fa fa-arrow-left cursor-pointer text-dark" aria-hidden="true"></i>
                     </a>
+                    <span class="d-sm-inline text-dark text-bold"></span>
                     <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon mt-2">
                     <span class="navbar-toggler-bar bar1"></span>
@@ -187,99 +188,99 @@
                             <li class="nav-item">
 
                                 <a class="d-flex d-flex align-items-center  py-1 cursor-pointer"  href="./ParentProfile.html">
-                                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
+                                    <img src="{{asset('/images/usersProfiles/'.Auth::guard('web')->user()->image)}}" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
                                     <div style="margin: auto 10px;">    <span class="d-sm-inline d-none text-dark text-bold">{{Auth::user()->username}}</span>
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item  ps-3 d-flex align-items-center ">
-                                <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                                    <div class="sidenav-toggler-inner">
-                                        <i class="sidenav-toggler-line"></i>
-                                        <i class="sidenav-toggler-line"></i>
-                                        <i class="sidenav-toggler-line"></i>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item px-3 d-flex align-items-center">
-                                <a href="./Message.html" class="nav-link text-body p-0">
-                                    <i class="fas fa-envelope cursor-pointer text-dark" ></i>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown pe-2 d-flex align-items-center ">
-                                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-bell cursor-pointer text-dark"></i>
-                                </a>
+{{--                            <li class="nav-item  ps-3 d-flex align-items-center ">--}}
+{{--                                <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">--}}
+{{--                                    <div class="sidenav-toggler-inner">--}}
+{{--                                        <i class="sidenav-toggler-line"></i>--}}
+{{--                                        <i class="sidenav-toggler-line"></i>--}}
+{{--                                        <i class="sidenav-toggler-line"></i>--}}
+{{--                                    </div>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li class="nav-item px-3 d-flex align-items-center">--}}
+{{--                                <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                                    <i class="fas fa-envelope cursor-pointer text-dark" ></i>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li class="nav-item dropdown pe-2 d-flex align-items-center ">--}}
+{{--                                <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">--}}
+{{--                                    <i class="fa fa-bell cursor-pointer text-dark"></i>--}}
+{{--                                </a>--}}
 
-                                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-                                    <li class="mb-2">
-                                        <a class="dropdown-item border-radius-md" href="javascript:;">
-                                            <div class="d-flex py-1">
-                                                <div class="my-auto">
-                                                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="avatar avatar-sm  me-3 ">
-                                                </div>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm font-weight-normal mb-1">
-                                                        <span class="font-weight-bold">Notify 1</span>details
-                                                    </h6>
-                                                    <p class="text-xs text-secondary mb-0">
-                                                        <i class="fa fa-clock me-1"></i>
-                                                        13 minutes ago
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="mb-2">
-                                        <a class="dropdown-item border-radius-md" href="javascript:;">
-                                            <div class="d-flex py-1">
-                                                <div class="my-auto">
-                                                    <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
-                                                </div>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm font-weight-normal mb-1">
-                                                        <span class="font-weight-bold">Notify 2</span>details
-                                                    </h6>
-                                                    <p class="text-xs text-secondary mb-0">
-                                                        <i class="fa fa-clock me-1"></i>
-                                                        1 day
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item border-radius-md" href="javascript:;">
-                                            <div class="d-flex py-1">
-                                                <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">
-                                                    <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                        <title>credit-card</title>
-                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                                                                <g transform="translate(1716.000000, 291.000000)">
-                                                                    <g transform="translate(453.000000, 454.000000)">
-                                                                        <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>
-                                                                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>
-                                                                    </g>
-                                                                </g>
-                                                            </g>
-                                                        </g>
-                                                    </svg>
-                                                </div>
-                                                <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="text-sm font-weight-normal mb-1">
-                                                        Notify 3 type without details
-                                                    </h6>
-                                                    <p class="text-xs text-secondary mb-0">
-                                                        <i class="fa fa-clock me-1"></i>
-                                                        2 days
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+{{--                                <ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">--}}
+{{--                                    <li class="mb-2">--}}
+{{--                                        <a class="dropdown-item border-radius-md" href="javascript:;">--}}
+{{--                                            <div class="d-flex py-1">--}}
+{{--                                                <div class="my-auto">--}}
+{{--                                                    <img src="{{asset('/img/home-decor-2.jpg')}}" class="avatar avatar-sm  me-3 ">--}}
+{{--                                                </div>--}}
+{{--                                                <div class="d-flex flex-column justify-content-center">--}}
+{{--                                                    <h6 class="text-sm font-weight-normal mb-1">--}}
+{{--                                                        <span class="font-weight-bold">Notify 1</span>details--}}
+{{--                                                    </h6>--}}
+{{--                                                    <p class="text-xs text-secondary mb-0">--}}
+{{--                                                        <i class="fa fa-clock me-1"></i>--}}
+{{--                                                        13 minutes ago--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li class="mb-2">--}}
+{{--                                        <a class="dropdown-item border-radius-md" href="javascript:;">--}}
+{{--                                            <div class="d-flex py-1">--}}
+{{--                                                <div class="my-auto">--}}
+{{--                                                    <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">--}}
+{{--                                                </div>--}}
+{{--                                                <div class="d-flex flex-column justify-content-center">--}}
+{{--                                                    <h6 class="text-sm font-weight-normal mb-1">--}}
+{{--                                                        <span class="font-weight-bold">Notify 2</span>details--}}
+{{--                                                    </h6>--}}
+{{--                                                    <p class="text-xs text-secondary mb-0">--}}
+{{--                                                        <i class="fa fa-clock me-1"></i>--}}
+{{--                                                        1 day--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a class="dropdown-item border-radius-md" href="javascript:;">--}}
+{{--                                            <div class="d-flex py-1">--}}
+{{--                                                <div class="avatar avatar-sm bg-gradient-secondary  me-3  my-auto">--}}
+{{--                                                    <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">--}}
+{{--                                                        <title>credit-card</title>--}}
+{{--                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">--}}
+{{--                                                            <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF" fill-rule="nonzero">--}}
+{{--                                                                <g transform="translate(1716.000000, 291.000000)">--}}
+{{--                                                                    <g transform="translate(453.000000, 454.000000)">--}}
+{{--                                                                        <path class="color-background" d="M43,10.7482083 L43,3.58333333 C43,1.60354167 41.3964583,0 39.4166667,0 L3.58333333,0 C1.60354167,0 0,1.60354167 0,3.58333333 L0,10.7482083 L43,10.7482083 Z" opacity="0.593633743"></path>--}}
+{{--                                                                        <path class="color-background" d="M0,16.125 L0,32.25 C0,34.2297917 1.60354167,35.8333333 3.58333333,35.8333333 L39.4166667,35.8333333 C41.3964583,35.8333333 43,34.2297917 43,32.25 L43,16.125 L0,16.125 Z M19.7083333,26.875 L7.16666667,26.875 L7.16666667,23.2916667 L19.7083333,23.2916667 L19.7083333,26.875 Z M35.8333333,26.875 L28.6666667,26.875 L28.6666667,23.2916667 L35.8333333,23.2916667 L35.8333333,26.875 Z"></path>--}}
+{{--                                                                    </g>--}}
+{{--                                                                </g>--}}
+{{--                                                            </g>--}}
+{{--                                                        </g>--}}
+{{--                                                    </svg>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="d-flex flex-column justify-content-center">--}}
+{{--                                                    <h6 class="text-sm font-weight-normal mb-1">--}}
+{{--                                                        Notify 3 type without details--}}
+{{--                                                    </h6>--}}
+{{--                                                    <p class="text-xs text-secondary mb-0">--}}
+{{--                                                        <i class="fa fa-clock me-1"></i>--}}
+{{--                                                        2 days--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
                             <li class="nav-item px-3 d-flex align-items-center">
                                 <i class="fas fa-sign-out-alt text-dark me-sm-1"></i>
 
@@ -333,27 +334,39 @@
 
 
                     <div class="d-flex p-2">
-{{--                        <div class="pe-5">--}}
-{{--                            <h4 class="mt-3 pb-2" >Photos </h4>--}}
-{{--                            <div class="d-flex justify-content-around">--}}
+                        <div class="pe-5">
+                            <h4 class="mt-3 pb-2" >Photos </h4>
+                            <div class="d-flex justify-content-around">
 
-{{--                                <div>--}}
-{{--                                    <a href="{{asset('/img/home-decor-2.jpg')}}" download="filename"><img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                                @if($assignment->image_name)
+                                <div>
+                                    <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" download="{{$assignment->image_name}}"><img src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" class="rounded-circle" alt="Cinque Terre" width="100" height="100"></a>
+                                </div>
+                                @endif
+                            </div>
 
-{{--                            <div class="d-flex justify-content-around mt-2">--}}
-{{--                                <div><a href="{{asset('/img/home-decor-2.jpg')}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> </a>       </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                            <div class="d-flex justify-content-around mt-2">
+                                @if($assignment->image_name)
+                                    <div>
+                                        <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" download="{{$assignment->image_name}}"><img src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->image_name)}}" class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;">
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
                         <!--File section-->
                         <div class="ps-5">
                             <h4 class="mt-3 pb-2">Files </h4>
                             <div class="d-flex justify-content-around ">
-
-                                <div>
-                                    <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" class="files" download="filename"><i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;"></i> <span class="black">{{$assignment->file_name}}</span></a>
-                                </div>
+                                @if($assignment->file_name)
+                                    <div>
+                                        <a href="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->file_name)}}" download="{{$assignment->file_name}}">
+                                            <i class="fas fa-cloud-download-alt me-2 purplel-color" style="font-size:15px;">
+                                            </i> <span class="black">{{$assignment->file_name}}</span>
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -378,12 +391,15 @@
 
                     data-setup="{}"
                 >
+                    @if($assignment->video_name)
+                        <source src="{{asset('/Assignments/'.$assignment->subjects->subject_name.'/'.$assignment->video_name)}}" type="video/mp4" />
+                    @endif
 {{--                    <source src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4" type="video/mp4" />--}}
 {{--                    <source src="https://file-examples-com.github.io/uploads/2017/04/file_example_MP4_480_1_5MG.mp4" type="video/mp4" />--}}
                     <p class="vjs-no-js">
                         To view this video please enable JavaScript, and consider upgrading to a
                         web browser that
-{{--                        <a href="https://videojs.com/html5-video-support/" target="_blank"--}}
+                        <a href="https://videojs.com/html5-video-support/" target="_blank"
                         >supports HTML5 video</a
                         >
                     </p>
@@ -419,7 +435,7 @@
                 @method('POST')
             <div  class="mov" >
                 <div class="form-group inputDnD w_30 me-7">
-                    <input type="file" name="answer" class="form-control-file grey font-weight-bold" id="inputFile" onchange="readUrl(this)" data-title="Drag and drop a file" required>
+                    <input type="file" name="answer" class="form-control-file grey font-weight-bold" id="inputFile" onchange="readUrl(this)" data-title="Drag and drop a file"  >
                 </div>
             </div>
             <div class="text-center mart">
@@ -428,13 +444,17 @@
                     <input type="hidden" name="subject_id" value="{{$assignment->subject_id}}">
                     <input type="hidden" name="as_id" value="{{$assignment->id}}">
                     <input type="hidden" name="due" value="{{$assignment->due_date}}">
-                        <button type="submit" name="saveAnswer" class="btn btn--primary btn--inside uppercase">Submit</button>
+                    <textarea class="form__field" placeholder="Enter Your Answer (optional) .." name="answerText" ></textarea>
+
+                    <button type="submit" name="saveAnswer" class="btn btn--primary btn--inside uppercase">Submit</button>
                 </div>
+
             </div>
             </form>
             @else
                     <div class="text-center pt-12">
                     <p class="h4 text-white">you already sent your answer.</p>
+                    <p class="h4 text-white">your mark: {{$assignment->answer->mark}}</p>
                 </div>
             @endif
         </div>
@@ -462,9 +482,9 @@
             @if(count($assignment->assignmentComments) > 0)
                 @foreach($assignment->assignmentComments as $comment)
                     @if($comment->user_type == 0)
-                        <div class="sender2 bg_gr w-50">
+                        <div class="sender2 bg_gr_light w-50">
                                             <div>
-                                                <img src="../assets/img/kal-visuals-square.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                                <img src="{{asset('/images/usersProfiles/'.Auth::guard()->user()->image)}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                                             </div>
                             <div class="w-100" style="margin: auto 0;">
                                 <span class="ms-2"><strong>{{$comment->username}}</strong></span>
@@ -480,7 +500,7 @@
                     @else
                         <div class="receiver2 bg_gr w-50">
                                             <div>
-                                                <img src="../assets/img/bruce-mars.jpg" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
+                                                <img src="{{asset('/images/teachersProfiles/'.$comment->image)}}" class="rounded-circle" alt="Cinque Terre" width="50" height="50">
                                             </div>
                             <div class="w-100" style="margin: auto 0;">
                                 <span class="ms-2"><strong>T. {{$comment->username}}</strong></span>

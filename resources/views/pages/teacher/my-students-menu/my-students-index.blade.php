@@ -27,42 +27,22 @@
 
                 <div class="col-auto w_50">
                     <p>Select Grade</p>
-                    <select class="form-select" aria-label="Select Grade" id="Grade" name="Grade">
+                    <select class="form-select" aria-label="Select Grade"  id="grades" name="grade" onchange="getSubjects(this.value);">
+                        <option disabled="disabled" selected="selected">Select Grade</option>
 
-                        <option value="1">Grade 1</option>
-                        <option value="2">Grade 2</option>
-                        <option value="3">Grade 3</option>
-
-
-                        <option value="4">Grade 4</option>
-                        <option value="5">Grade 5</option>
-                        <option value="6">Grade 6</option>
-
-
-                        <option value="7">Grade 7</option>
-                        <option value="8">Grade 8</option>
-                        <option value="9">Grade 9</option>
-
-
-                        <option value="10">Grade 10</option>
-                        <option value="11">Grade 11</option>
-                        <option value="12">Grade 12</option>
-                        <option value="13">Grade 13</option>
-
+                        @if($grades->count()>0)
+                            @foreach($grades as $grade)
+                                @foreach($grade as $g)
+                                    <option value="{{$g->grade->id}}">{{$g->grade->grade_name}}</option>
+                                @endforeach
+                            @endforeach
+                        @endif
                     </select>
                 </div>
                 <div class="col-auto w_50">
                     <p>Select Subject</p>
-                    <select class="form-select" aria-label="Select Class" id="Subject" name="Subject">
-
-                        <option value="1">Math</option>
-                        <option value="2">Arabic</option>
-                        <option value="3">Biolody</option>
-                        <option value="4">English</option>
-                        <option value="5">science</option>
-                        <option value="6">chemistry</option>
-                        <option value="7">History</option>
-
+                    <select class="form-select" aria-label="Select Class" id="subjects" name="subjects" disabled>
+                        <option value="" disabled selected>Select the Grade First</option>
                     </select>
                 </div>
 
@@ -92,12 +72,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+
                                 <tr>
                                     <td>
                                         <p class="text-sm font-weight-bold mb-0 text-center">1</p>
                                     </td>
                                     <td>
-                                        <p class="text-sm font-weight-bold mb-0 text-center">Moahmmed</p>
+                                        <p class="text-sm font-weight-bold mb-0 text-center"></p>
                                     </td>
 
                                     <td class="align-middle text-center">
@@ -109,7 +90,6 @@
                                         </a>
                                     </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </div>

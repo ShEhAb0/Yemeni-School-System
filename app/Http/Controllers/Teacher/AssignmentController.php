@@ -11,6 +11,7 @@ use App\Models\StudentAssignment;
 use App\Models\TeacherSubject;
 use App\Models\Term;
 use Carbon\Carbon;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use File;
@@ -24,7 +25,7 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        $assignments = Assignment::where('teacher_id',Auth::id())->paginate(10);
+        $assignments = Assignment::where('teacher_id',Auth::id())->orderBy('created_at' , 'desc')->paginate(15);
         $terms = Term::all();
         $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
         $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
@@ -42,7 +43,7 @@ class AssignmentController extends Controller
             $data = '<option value="" disabled selected>Select the subject</option>';
             foreach ($subjects as $subject) {
                 $data .= '
-            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_name . '</option>
+            <option value="' . $subject->subject_id . '">' . $subject->subject->subject_code . '</option>
             ';
             }
             return response($data,200);
@@ -52,7 +53,7 @@ class AssignmentController extends Controller
 
     public function getAssignments($grade,$subject)
     {
-        $assignments = Assignment::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->paginate(10);
+        $assignments = Assignment::where('teacher_id',Auth::id())->where('subject_id',$subject)->where('level_id',$grade)->orderBy('created_at' , 'desc')->paginate(15);
         return view('pages.teacher.assignment-menu.assignment-table',compact('assignments'))->render();
     }
 
@@ -104,10 +105,22 @@ class AssignmentController extends Controller
             $comment->user_id = Auth::id();
             $comment->user_type = 1;
             $comment->username = Auth::user()->teacher_name;
+          //  $comment->profile = Auth::user()->image;
             $comment->comment = $request->comment;
             $comment->created_at = Carbon::now('Asia/Riyadh');
             $comment->status = 1;
             $comment->save();
+
+            $notification = new Notification();
+            $notification->type = 3;
+            $notification->level_id = $request->level;
+            $notification->title = "Teacher comment";
+            $notification->details = "Your Teacher ($comment->username) submit new comment on the assignment.";
+            $notification->url = "/assignment/$request->assignment_id";
+            $notification->created_at = Carbon::now('Asia/Riyadh');
+            $notification->status = 0;
+            $notification->save();
+
             return redirect('/teacher/assignment/'.$request->assignment_id);
         }
 
@@ -120,17 +133,35 @@ class AssignmentController extends Controller
            'term' => 'required',
            'subject' => 'required',
            'grade' => 'required',
-           'file' => 'required',
+           //'file' => 'required',
            'status' => 'required',
         ]);
 
-        $assignmentFile = $request->file('file');
-        $filename = time() . '.' . $assignmentFile->getClientOriginalName();
+        if ($request->file('file') != null) {
+            $assignmentFile = $request->file('file');
+            $filename = time() . '_' . $assignmentFile->getClientOriginalName();
+        }
+        if ($request->file('upload_video') != null) {
+            $assignmentVideo = $request->file('upload_video');
+            $videoname = time() . '_' . $assignmentVideo->getClientOriginalName();
+        }
+        if ($request->file('upload_image') != null) {
+            $assignmentImage = $request->file('upload_image');
+            $imagename = time() . '_' . $assignmentImage->getClientOriginalName();
+        }
 
         $assignment = new Assignment();
         $assignment->title = $request->input('title');
         $assignment->description = $request->input('description');
-        $assignment->file_name = $filename;
+        if ($request->file('file') != null) {
+            $assignment->file_name = $filename;
+        }
+        if ($request->file('upload_video') != null) {
+            $assignment->video_name = $videoname;
+        }
+        if ($request->file('upload_image') != null) {
+            $assignment->image_name = $imagename;
+        }
         $assignment->teacher_id = Auth::id();
         $assignment->subject_id = $request->input('subject');
         $assignment->level_id = $request->input('grade');
@@ -161,10 +192,24 @@ class AssignmentController extends Controller
         $notification->save();
 
         $path = public_path().'/Assignments/'.$assignment->subjectsAssignments->subject_name;
-        if (!File::exists($path)){
-            File::makeDirectory($path);
+        if ($request->file('file') != null) {
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $request->file('file')->move($path, $filename);
         }
-        $request->file('file')->move($path, $filename);
+        if ($request->file('upload_video') != null) {
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $request->file('upload_video')->move($path, $videoname);
+        }
+        if ($request->file('upload_image') != null) {
+            if (!File::exists($path)) {
+                File::makeDirectory($path);
+            }
+            $request->file('upload_image')->move($path, $imagename);
+        }
 
         return redirect('/teacher/assignment')->withSuccess('New assignment has been added successfully..');
     }
@@ -178,7 +223,9 @@ class AssignmentController extends Controller
     public function show($id)
     {
         $assignment = Assignment::where('id' , $id)->with('assignmentComments')->first();
-        $answers = StudentAssignment::where('assignment_id',$id)->where('status',0)->with('student')->get();
+        $answers = StudentAssignment::where('assignment_id',$id)->with('student')->get();
+       // $answers = StudentAssignment::whereIn('subject_id',$subject)->where('status',0)->with(['student','subjects'])->orderBy('created_at','desc')->get();
+
         return view('pages.teacher.assignment-menu.assignment-show' , compact('assignment','answers'));
 
     }
@@ -225,16 +272,35 @@ class AssignmentController extends Controller
                 'status' => 'required',
             ]);
 
+
             $assignment = Assignment::find($id);
             $assignment->title = $request->input('title');
             $assignment->description = $request->input('description');
             if ($request->file('file') != null) {
                 $path = public_path() . '/Assignments/' . $assignment->subjectsAssignments->subject_name;
                 $assignmentFile = $request->file('file');
-                $filename = time() . '.' . $assignmentFile->getClientOriginalName();
+                $filename = time() . '_' . $assignmentFile->getClientOriginalName();
                 $request->file('file')->move($path, $filename);
                 $assignment->file_name = $filename;
             }
+            if ($request->file('upload_video') != null) {
+                $path = public_path() . '/Assignments/' . $assignment->subjectsAssignments->subject_name;
+                $assignmentVideo = $request->file('upload_video');
+                $filevideo = time() . '_' . $assignmentVideo->getClientOriginalName();
+                $request->file('upload_video')->move($path, $filevideo);
+                $assignment->video_name = $filevideo;
+            }
+
+
+            if ($request->file('upload_image') != null) {
+                $path = public_path() . '/Assignments/' . $assignment->subjectsAssignments->subject_name;
+                $assignmentImage = $request->file('upload_image');
+                $fileimage = time() . '_' . $assignmentImage->getClientOriginalName();
+                $request->file('upload_image')->move($path, $fileimage);
+                $assignment->image_name = $fileimage;
+
+            }
+
             $assignment->teacher_id = Auth::id();
             $assignment->subject_id = $request->input('subject');
             $assignment->level_id = $request->input('grade');
@@ -245,6 +311,7 @@ class AssignmentController extends Controller
 
             return redirect('/teacher/assignment')->withSuccess('Assignment has been updated successfully..!');
         }
+
     }
 
     /**

@@ -28,7 +28,7 @@
         <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
             <div class="row gx-4">
                 <div class="col-8">
-                    <form action="" method="GET">
+                    <form action="/admin/subjects" method="GET">
                         <div class="input-group">
                             <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
                             <input type="text" class="form-control" placeholder="search..." name="search">
@@ -76,10 +76,12 @@
                                     @foreach($subjects as $subject)
                                         <tr>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->id}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                             </td>
                                             <td>
-                                                <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->subject_name}}</p>
+                                                <p class="text-sm font-weight-bold mb-0 text-center">
+                                                    {{$subject->subject->subject_name}}
+                                                </p>
                                             </td>
                                             <td>
                                                 <p class="text-sm font-weight-bold mb-0 text-center">{{$subject->subject->subject_code}}</p>

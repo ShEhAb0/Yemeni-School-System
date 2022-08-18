@@ -97,7 +97,7 @@ class NewsController extends Controller
                     $notification->details = $news->description;
                     $notification->url = "/admin/news";
                     $notification->created_at = Carbon::now('Asia/Riyadh');
-                    $notification->status = 0;
+                    $notification->status = 1;
                     $notification->save();
 
                     $notification = new Notification();
@@ -106,7 +106,7 @@ class NewsController extends Controller
                     $notification->details = $news->description;
                     $notification->url = "/teacher/news";
                     $notification->created_at = Carbon::now('Asia/Riyadh');
-                    $notification->status = 0;
+                    $notification->status = 1;
                     $notification->save();
 
                     $notification = new Notification();
@@ -116,7 +116,7 @@ class NewsController extends Controller
                     $notification->details = $news->description;
                     $notification->url = "/news";
                     $notification->created_at = Carbon::now('Asia/Riyadh');
-                    $notification->status = 0;
+                    $notification->status = 1;
                     $notification->save();
 
                     $notification = new Notification();
@@ -126,7 +126,7 @@ class NewsController extends Controller
                     $notification->details = $news->description;
                     $notification->url = "/parent/news";
                     $notification->created_at = Carbon::now('Asia/Riyadh');
-                    $notification->status = 0;
+                    $notification->status = 1;
                     $notification->save();
                 break;
             case 1:
@@ -136,7 +136,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/admin/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 2:
@@ -146,7 +146,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/teacher/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 3:
@@ -157,7 +157,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
 
                 $notification = new Notification();
@@ -167,7 +167,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/parent/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 4:
@@ -178,7 +178,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/parent/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
         }
@@ -252,7 +252,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/admin/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
 
                 $notification = new Notification();
@@ -261,7 +261,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/teacher/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
 
                 $notification = new Notification();
@@ -270,7 +270,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
 
                 $notification = new Notification();
@@ -279,7 +279,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/parent/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 1:
@@ -289,7 +289,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/admin/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 2:
@@ -299,7 +299,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/teacher/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 3:
@@ -309,7 +309,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
 
                 $notification = new Notification();
@@ -318,7 +318,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/parent/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
             case 4:
@@ -328,7 +328,7 @@ class NewsController extends Controller
                 $notification->details = $news->description;
                 $notification->url = "/parent/news";
                 $notification->created_at = Carbon::now('Asia/Riyadh');
-                $notification->status = 0;
+                $notification->status = 1;
                 $notification->save();
                 break;
         }

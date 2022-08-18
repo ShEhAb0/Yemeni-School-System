@@ -62,7 +62,7 @@
                                         <tr>
                                             <th class="text-secondary opacity-9 purplel-color text-center">#</th>
                                             <th class="text-secondary opacity-9 purplel-color text-center">Student Name</th>
-                                            <th class="text-secondary opacity-9 purplel-color text-center">Preformance</th>
+{{--                                            <th class="text-secondary opacity-9 purplel-color text-center">Preformance</th>--}}
                                             <th class="text-secondary purplel-color opacity-9 text-center">Grade</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Username</th>
                                             <th class="text-secondary purplel-color opacity-9 text-center">Status</th>
@@ -74,12 +74,12 @@
 
                                             <tr>
                                                 <td>
-                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$students->id}}</p>
+                                                    <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                                 </td>
                                                 <td >
                                                     <div class="d-flex px-2 py-1 justify-content-center">
                                                         <div>
-                                                            <img src="{{asset('/images/profile.png/')}}" class="avatar avatar-sm me-3" alt="user1">
+                                                            <img src="{{asset('/images/usersProfiles/'.$students->image)}}" class="avatar avatar-sm me-3" alt="user1">
                                                         </div>
                                                         <div class="d-flex flex-column justify-content-center">
                                                             <h6 class="mb-0 text-sm">{{$students->student_name}}</h6>
@@ -87,12 +87,12 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">90%</p>
+{{--                                                <td class="text-center">--}}
+{{--                                                    <p class="text-sm font-weight-bold mb-0">90%</p>--}}
 
-                                                </td>
+{{--                                                </td>--}}
                                                 <td class="text-center">
-                                                    <p class="text-sm font-weight-bold mb-0">{{$students->level_id}} + name</p>
+                                                    <p class="text-sm font-weight-bold mb-0">{{$students->grade->grade_name}}</p>
 
                                                 </td>
                                                 <td class="align-middle text-center">

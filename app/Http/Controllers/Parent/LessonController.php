@@ -64,7 +64,7 @@ class LessonController extends Controller
      */
     public function edit($id)
     {
-        $lessons = Lesson::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->paginate(3);
+        $lessons = Lesson::where('subject_id',$id)->where('level_id',session('student_level'))->with('teacher')->where('status',0)->paginate(3);
         return view('pages.parent.lesson-menu.lesson-data',compact('lessons'));
     }
 

@@ -40,22 +40,30 @@
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
 
-                    <a class="d-flex  py-1 cursor-pointer"  href="./TeacherProfile.html">
+                    <a class="d-flex  py-1 cursor-pointer"  href="/profile/{{Auth::user()->id}}">
                         <img src="../assets/img/home-decor-2.jpg" class="rounded-circle" alt="Cinque Terre" width="40" height="40">
-                        <div style="margin: auto 0 auto 10;">    <span class="d-sm-inline  text-dark text-bold title_Dash">Username</span>
-
+                        <div style="margin: auto 10px;"><span
+                                class="d-sm-inline  text-dark text-bold">{{ Auth::user()->username}}</span>
                         </div>
                     </a>
                 </li>
-                <li class="nav-item px-2 px-sm-2 px-lg-3  px-md-3  px-lx-3 d-flex align-items-center">
-                    <a href="./Message.html" class="nav-link text-body p-0">
-                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>
+{{--                <li class="nav-item px-2 px-sm-2 px-lg-3  px-md-3  px-lx-3 d-flex align-items-center">--}}
+{{--                    <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                        <i class="fas fa-envelope cursor-pointer text-dark" ></i>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+
+                <li class="nav-item px-3 d-flex align-items-center">
+
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                      document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt text-dark me-sm-1"></i>
                     </a>
-                </li>
 
-                <li class="nav-item px-1 px-sm-1 px-lg-2  px-md-2  px-lx-2 d-flex align-items-center">
-                    <i class="fas fa-sign-out-alt text-dark me-sm-1"></i>
-
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </div>
@@ -77,7 +85,9 @@
                     <div class="mb-1">
 
                         @foreach ($notifications as $notification)
-                        <div class="card-body px-0 pt-0 pb-0">
+                            <a class="dropdown-item border-radius-md" href="/notifications/{{$notification->id}}">
+
+                            <div class="card-body px-0 pt-0 pb-0">
 
 
                             <div class="d-flex justify-content-around bg-gray-100 border-radius-lg mt-1 stud_card_resp1">
@@ -127,7 +137,11 @@
 
 
                         </div>
+                            </a>
                         @endforeach
+                            <div>
+                                {{$notifications->render()}}
+                            </div>
                     </div>
                 </div>
             </div>

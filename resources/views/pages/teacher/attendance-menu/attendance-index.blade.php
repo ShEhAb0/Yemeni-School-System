@@ -25,15 +25,15 @@
     <div class="card card-body blur shadow-blur mx-4 mt-n6 overflow-hidden">
         <div class="row gx-4">
             <div class="col-12">
-                <div class="input-group">
-                    <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="search...">
-                </div>
+{{--                <div class="input-group">--}}
+{{--                    <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>--}}
+{{--                    <input type="text" class="form-control" placeholder="search...">--}}
+{{--                </div>--}}
             </div>
 
 
-            <br/>
-            <br/>
+{{--            <br/>--}}
+{{--            <br/>--}}
             <div class="row g2">
 
                 <div class="col-auto w_50">

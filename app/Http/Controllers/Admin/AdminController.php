@@ -19,7 +19,7 @@ class AdminController extends Controller
         $students = User::all()->count();
         $teachers = Teacher::all()->count();
         $grades = Grade::all()->count();
-        $news = News::all();
+        $news = News::where('status',1)->get();
         return view('pages.admin.index' ,compact('students', 'teachers', 'grades' , 'news'));
     }
 }

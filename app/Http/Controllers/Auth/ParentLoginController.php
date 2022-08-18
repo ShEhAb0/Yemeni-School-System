@@ -27,7 +27,7 @@ class ParentLoginController extends Controller
             'password' => 'required|min:6'
         ]);
         // Attempt to log the user in
-        if (Auth::guard('parent')->attempt(['username' => $request->username, 'password' => $request->password])) {
+        if (Auth::guard('parent')->attempt(['username' => $request->username, 'password' => $request->password , 'status'=>1])) {
             // if successful, then redirect to their intended location
             return redirect()->intended(route('parent.index.index'));
         }

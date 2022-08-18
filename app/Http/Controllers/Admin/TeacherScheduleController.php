@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdminLog;
+use App\Models\Grade;
+//use App\Models\Schedule;
 use App\Models\Teacher;
 use App\Models\TeacherSchedule;
 use App\Models\Term;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class TeacherScheduleController extends Controller
 {
@@ -20,11 +23,28 @@ class TeacherScheduleController extends Controller
      */
     public function index()
     {
-        //
-        $schedules = TeacherSchedule::with(['teacher','term'])->paginate(10);
+            $schedules = TeacherSchedule::with(['teacher','term'])->paginate(10);
+            $terms = Term::all();
+            $teachers = Teacher::all();
+            return view('pages.admin.schedule-teacher-menu.schedule-teacher-index',compact('schedules','terms','teachers'));
+    }
+
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $schedules = TeacherSchedule::whereHas('teacher', function ($row) use ($search){
+                $row->where('teacher_name','LIKE',"%$search%");
+            })
+            ->orWhereHas('term', function ($row) use ($search){
+                $row->where('name' , 'LIKE', "%$search%");
+            })
+            ->orderBy('id','DESC')->paginate('10');
+        $grades = Grade::all();
         $terms = Term::all();
         $teachers = Teacher::all();
-        return view('pages.admin.schedule-teacher-menu.schedule-teacher-index',compact('schedules','terms','teachers'));
+        return view('pages.admin.schedule-teacher-menu.schedule-teacher-index',compact('schedules' ,'grades', 'terms','teachers'));
+
     }
 
     /**

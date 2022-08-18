@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
 
     <title>
-        Yemeni School E-learning
+        Y-Class
 
     </title>
     <!--     Fonts and icons     -->
@@ -53,8 +53,8 @@
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
 
-                    <a class="d-flex  py-1 cursor-pointer" href="/profile/{{Auth::user()->id}}">
-                        <img src="{{asset('/img/home-decor-2.jpg')}}" class="rounded-circle" alt="Cinque Terre"
+                    <a class="d-flex  py-1 cursor-pointer" href="/profile/{{Auth::user()->id}}" target="_blank">
+                        <img src="{{asset('images/usersProfiles/'.Auth::guard('web')->user()->image)}}" class="rounded-circle" alt="Cinque Terre"
                              width="40" height="40">
                         <div style="margin: auto 10px;"><span
                                 class="d-sm-inline  text-dark text-bold">{{ Auth::user()->username}}</span>
@@ -70,11 +70,11 @@
                          </div>
                      </a>
                  </li> -->
-                <li class="nav-item px-3 d-flex align-items-center">
-                    <a href="./Message.html" class="nav-link text-body p-0">
-                        <i class="fas fa-envelope cursor-pointer text-dark"></i>
-                    </a>
-                </li>
+{{--                <li class="nav-item px-3 d-flex align-items-center">--}}
+{{--                    <a href="./Message.html" class="nav-link text-body p-0">--}}
+{{--                        <i class="fas fa-envelope cursor-pointer text-dark"></i>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
                 <li class="nav-item dropdown pe-2 d-flex align-items-center ">
                     <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton"
                        data-bs-toggle="dropdown" aria-expanded="false">

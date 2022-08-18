@@ -4,6 +4,13 @@
 @endsection
 @section('content')
 
+
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger alert-dismissible text-white fade show mx-4 mt-4" role="alert">
+            {{$error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">×</button>
+        </div>
+    @endforeach
     <div class="d-flex justify-content-around "  style="max-height: 800px;"  >
         <div class="card overflow-hidden" >
             <div class="card-header pb-3 p-3">
@@ -95,10 +102,5 @@
         });
     </script>
 @endsection
-
-
-
-
-
 @endsection
 

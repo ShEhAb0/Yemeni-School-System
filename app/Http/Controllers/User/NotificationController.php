@@ -19,7 +19,7 @@ class NotificationController extends Controller
     {
         //
 //        Notification::where('type',3)->whereIn('level_id',[0,Auth::user()->level_id])->where('status',0)->update(['status'=>1]);
-        $notifications = Notification::where('type',3)->whereIn('level_id',[0,Auth::user()->level_id])->orderBy('created_at','desc')->get();
+        $notifications = Notification::where('type',3)->whereIn('level_id',[0,Auth::user()->level_id])->orderBy('created_at','desc')->paginate(10);
         return view('pages.user.notifications',compact('notifications'));
     }
 

@@ -7,6 +7,7 @@ use App\Models\Lesson;
 use App\Models\LessonComment;
 use App\Models\Notification;
 use App\Models\Subject;
+use App\Models\Term;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,25 @@ class LessonController extends Controller
         $lessons = Lesson::where('id',0)->paginate(3);
         return view('pages.user.lesson-menu.lesson-index',compact('subjects','lessons'));
     }
+
+//    public function search(Request $request)
+//    {
+//        $search = $request->input('search');
+//
+//        // Search in the title and body columns from the posts table
+//        $lessons = Lesson::query()
+//            ->where('subject_id', Auth::id())
+//            ->where('title', 'LIKE', "%{$search}%")
+//            ->orWhere('description', 'LIKE', "%{$search}%")
+//            ->paginate(10);
+//        $terms = Term::all();
+//        $teacher_sub = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('subject')->get();
+//        $grades = TeacherSubject::where('teacher_id',Auth::id())->where('status',1)->with('grade')->get()->groupBy('level_id')->map(function ($row){
+//            return $row->take(1);
+//        });
+//        return view('pages.user.lesson-menu.lesson-index',compact('lessons','terms','teacher_sub','grades'));
+//
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -105,7 +125,7 @@ class LessonController extends Controller
     public function edit($id)
     {
         //
-        $lessons = Lesson::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->with('teacher')->paginate(3);
+        $lessons = Lesson::where('subject_id',$id)->where('level_id',Auth::user()->level_id)->where('term_id',Auth::user()->term_id)->where('status',0)->with('teacher')->paginate(3);
         return view('pages.user.lesson-menu.lesson-data',compact('lessons'));
     }
 

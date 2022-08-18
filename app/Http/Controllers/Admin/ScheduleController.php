@@ -22,7 +22,7 @@ class ScheduleController extends Controller
     {
         $schedules = Schedule::with(['grade','term'])->paginate(10);
         $terms = Term::all();
-        $grades = Grade::all();
+        $grades = Grade::where('status' , 1)->get();
         return view('pages.admin.schedule-menu.schedule-index',compact('schedules','terms','grades'));
 
     }
@@ -30,11 +30,15 @@ class ScheduleController extends Controller
     {
         $search = $request->input('search');
         $schedules = Schedule::query()
-            ->where('level_id', 'LIKE', "%{$search}%")
-            ->orWhere('term_id', 'LIKE', "%{$search}%")
+            ->whereHas('grade', function ($row) use ($search){
+                $row->where('grade_name','LIKE',"%$search%");
+            })
+            ->orWhereHas('term', function ($row) use ($search){
+                $row->where('name' , 'LIKE', "%{$search}%");
+            })
             ->get();
         $terms = Term::all();
-        $grades = Grade::all();
+        $grades = Grade::where('status' , 1)->get();
         return view('pages.admin.schedule-menu.schedule-index',compact('schedules' , 'terms','grades'));
 
     }

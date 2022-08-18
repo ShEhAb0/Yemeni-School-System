@@ -24,7 +24,7 @@
 
                                     <tr>
                                         <td>
-                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$a->id}}</p>
+                                            <p class="text-sm font-weight-bold mb-0 text-center">{{$loop->iteration}}</p>
                                         </td>
                                         <td>
                                             <p class="text-sm font-weight-bold mb-0 text-center">{{$a->title}}</p>
@@ -41,7 +41,7 @@
                                                     <input type="hidden" name="subject" value="{{$a->subject_id}}">
                                                     <input type="hidden" name="term" value="{{$a->term_id}}">
                                                     <input type="hidden" name="date" value="{{$a->created_at}}">
-                                                    <a  class="text-secondary font-weight-bold text-xs"   href="/assignment/{{$a->id}}" role="button">
+                                                    <a  class="text-secondary font-weight-bold text-xs"   href="/assignment/{{$a->id}}" target="_blank" role="button">
                                                         <i class="fas fa-external-link-alt purplel-color" style="font-size: 20px;"></i>
                                                     </a>
                                                 </form>

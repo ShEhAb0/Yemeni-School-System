@@ -62,4 +62,22 @@ class Assignment extends Model
         return $this->hasMany('App\Models\AssignmentComment' , 'assignment_id');
 
     }
+    public function video()
+    {
+        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',1);
+    }
+
+    public function photo()
+    {
+        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',2);
+    }
+
+    public function doc()
+    {
+        return $this->hasOne('App\Models\Attachment' , 'type_id')->where('type',1)->where('attachment_type',3);
+    }
+    public function grade()
+    {
+        return $this->belongsTo('App\Models\Grade' , 'level_id');
+    }
 }

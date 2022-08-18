@@ -16,7 +16,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = TeacherSchedule::where('teacher_id',Auth::id())->with('term')->get();
+        $schedules = TeacherSchedule::where('teacher_id',Auth::id())->where('status',1)->with('term')->get();
         return view('pages.teacher.schedule-menu.schedule-index',compact('schedules'));
 
     }

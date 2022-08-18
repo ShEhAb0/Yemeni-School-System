@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Parent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use App\Models\News;
+use App\Models\StudentNews;
+use App\Models\Subject;
 use App\Models\User;
 use App\Models\UserParent;
 use Illuminate\Http\Request;
@@ -18,12 +21,23 @@ class ParentController extends Controller
      */
     public function index()
     {
-        $news = News::where('type' , 3 )->get();
+        //$news = News::where('type' , 3 )->get();
+        $terms = User::with('term')->get();
+        //$terms = Term::all();
+        $subjects = Subject::where('level_id',session('student_level'))->get();
+        $assignments = Assignment::where('level_id',session('student_level'))->where('status',1)->orderBy('created_at','desc')->with('teacher' , 'subjects' )->get();
+        $news = News::whereIn('type',[0,4])->where('status',1)->orderBy('created_at','desc')->get();
+        $student_news = StudentNews::where('level_id',session('student_level'))->where('status',1)->orderBy('created_at','desc')->get();
+      //  return view('pages.user.index' ,compact('subjects','assignments' , 'terms' , 'news' , 'student_news'));
+
+
+
+
         $student_id = session('student_id');
         if($student_id) {
             //
 //            $parents_us = UserParent::where('parent_id', Auth::id())->with('user')->get();
-            return view('pages.parent.index' , compact('news'));
+            return view('pages.parent.index' , compact('subjects','assignments' , 'terms' , 'news' , 'student_news'));
         }else{
             return redirect('/parent/choose-student');
         }
@@ -40,6 +54,7 @@ class ParentController extends Controller
         session()->put('student_image',$student->image);
         session()->put('student_level',$student->level_id);
         session()->put('student_term',$student->term_id);
+
         return redirect('/parent/index');
     }
 
